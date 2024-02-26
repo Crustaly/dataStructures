@@ -6,7 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
 
-public class TTTFrame extends JFrame implements KeyListener {
+public class TTTFrame extends JFrame implements WindowListener, MouseListener{
     // Display message
     private String text = "";
     // the letter you are playing as
