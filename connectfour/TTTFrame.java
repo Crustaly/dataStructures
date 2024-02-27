@@ -133,11 +133,21 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
         }
         else col = 6;
 
+        int r = -1;
         for(int i = 6; i >= 0; i--){
             if(gameData.getGrid()[i][col] == ' '){
-                makeMove(col, i, player);
+                r = i; break;
             }
         }
+
+        if(col!=-1) {
+            try {
+                os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + col + r + player));
+            } catch (Exception o) {
+                o.printStackTrace();
+            }
+        }
+
     }
 
     @Override

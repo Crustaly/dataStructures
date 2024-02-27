@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a12107f-2a9f-4035-a7cd-bba666fd6c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/connectfour/ClientsListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/ClientsListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectfour/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/GameData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectfour/TTTFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/TTTFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +29,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/cryst/OneDrive/Desktop/GitHub/dataStructures"
   }
 }]]></component>
