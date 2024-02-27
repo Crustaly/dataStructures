@@ -1,46 +1,47 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.awt.event.KeyListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
 
-public class TTTFrame extends JFrame implements WindowListener, MouseListener{
+public class TTTFrame extends JFrame implements WindowListener, MouseListener {
     // Display message
     private String text = "";
     // the letter you are playing as
-    private char player;
+    private String player;
     // stores all the game data
     private GameData gameData = null;
     // output stream to the server
     ObjectOutputStream os;
 
-    public TTTFrame(GameData gameData, ObjectOutputStream os, char player)
+    public TTTFrame(GameData gameData, ObjectOutputStream os, String player)
     {
-        super("TTT Game");
+        super("Connect 4 Game");
         // sets the attributes
         this.gameData = gameData;
         this.os = os;
         this.player = player;
 
         // adds a KeyListener to the Frame
-        addKeyListener(this);
+        addMouseListener(this);
 
         // makes closing the frame close the program
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Set initial frame message
-        if(player == 'X')
-            text = "Waiting for O to Connect";
+        if(player == "Black")
+            text = "Waiting for Red to Connect";
+        else text = "Waiting for Black to Connect";
 
-        setSize(400,460);
+        setSize(760,750);
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
     }
 
-      public void paint(Graphics g)
+    public void paint(Graphics g)
     {
         // draws the background
         g.setColor(Color.YELLOW);
@@ -67,13 +68,14 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener{
                 g.drawString(""+gameData.getGrid()[r][c],c*133+42,r*133+150);
     }
 
+
     public void setText(String text) {
         this.text = text;
         repaint();
     }
 
 
-    public void setTurn(char turn) {
+    public void setTurn(String turn) {
         if(turn==player)
             text = "Your turn";
         else
@@ -89,72 +91,89 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener{
         repaint();
     }
 
-    @Override
-    public void keyTyped(KeyEvent event) {
-        char key = event.getKeyChar();
-        int r;
-        int c;
 
-        // sets the row and column, based on the entered key
-        switch(key)
-        {
-            case '1':
-                r=0;
-                c=0;
-                break;
-            case '2':
-                r=0;
-                c=1;
-                break;
-            case '3':
-                r=0;
-                c=2;
-                break;
-            case '4':
-                r=1;
-                c=0;
-                break;
-            case '5':
-                r=1;
-                c=1;
-                break;
-            case '6':
-                r=1;
-                c=2;
-                break;
-            case '7':
-                r=2;
-                c=0;
-                break;
-            case '8':
-                r=2;
-                c=1;
-                break;
-            case '9':
-                r=2;
-                c=2;
-                break;
-            default:
-                r=c=-1;
-        }
-        // if a valid enter was entered, send the move to the server
-        if(c!=-1) {
-            try {
-                os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + c + r + player));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void mousePressed(MouseEvent e){
+        float pos = e.getX();
+        int col = -1;
+        //7 columns
+        if(pos > 35 && pos < 135) {
+            col = 0;
+        }
+        else if(pos > 135 && pos < 235){
+            col = 1;
+        }
+        else if(pos > 235 && pos < 335){
+            col = 2;
+        }
+        else if(pos > 335 && pos < 435){
+            col = 3;
+        }
+        else if(pos > 435 && pos < 535){
+            col = 4;
+        }
+        else if(pos > 535 && pos < 635){
+            col = 5;
+        }
+        else col = 6;
+
+        for(int i = 6; i >= 0; i--){
+            if(gameData)
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
 
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
 
     }
 }

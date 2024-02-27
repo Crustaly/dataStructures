@@ -1,6 +1,6 @@
 public class GameData
 {
-    private char[][] grid = {{' ',' ', ' '},{' ',' ', ' '},{' ',' ', ' '}};
+    private char[][] grid = {{' ',' ', ' ', ' ', ' ', ' ', ' '},{' ',' ', ' ', ' ', ' ', ' ', ' '},{' ',' ', ' ', ' ', ' ', ' ', ' '},{' ',' ', ' ', ' ', ' ', ' ', ' '},{' ',' ', ' ', ' ', ' ', ' ', ' '},{' ',' ', ' ', ' ', ' ', ' ', ' '}};
 
     public char[][] getGrid()
     {
@@ -10,7 +10,7 @@ public class GameData
     public void reset()
     {
 
-        grid = new char[3][3];
+        grid = new char[6][7];
         for(int r=0;r<grid.length; r++)
             for(int c=0; c<grid[0].length; c++)
                 grid[r][c]=' ';
