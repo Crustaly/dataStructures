@@ -10,13 +10,13 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
     // Display message
     private String text = "";
     // the letter you are playing as
-    private String player;
+    private char player;
     // stores all the game data
     private GameData gameData = null;
     // output stream to the server
     ObjectOutputStream os;
 
-    public TTTFrame(GameData gameData, ObjectOutputStream os, String player)
+    public TTTFrame(GameData gameData, ObjectOutputStream os, char player)
     {
         super("Connect 4 Game");
         // sets the attributes
@@ -31,7 +31,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Set initial frame message
-        if(player == "Black")
+        if(player == 'B')
             text = "Waiting for Red to Connect";
         else text = "Waiting for Black to Connect";
 
@@ -75,7 +75,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
     }
 
 
-    public void setTurn(String turn) {
+    public void setTurn(char turn) {
         if(turn==player)
             text = "Your turn";
         else
@@ -123,7 +123,9 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
         else col = 6;
 
         for(int i = 6; i >= 0; i--){
-            if(gameData)
+            if(gameData.getGrid()[i][col] == ' '){
+                makeMove(col, i, player);
+            }
         }
     }
 

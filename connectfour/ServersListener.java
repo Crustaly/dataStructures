@@ -11,7 +11,7 @@ public class ServersListener implements Runnable
     private char player;
 
     // static data that is shared between both listeners
-    private static char turn = 'X';
+    private static char turn = 'B';
     private static GameData gameData = new GameData();
     private static ArrayList<ObjectOutputStream> outs = new ArrayList<>();
 
@@ -33,8 +33,8 @@ public class ServersListener implements Runnable
 
                 // handle the received command
                 if(cfc.getCommand()==CommandFromClient.MOVE &&
-                    turn==player && !gameData.isWinner('X')
-                        && !gameData.isWinner('O')
+                    turn==player && !gameData.isWinner('B')
+                        && !gameData.isWinner('R')
                         && !gameData.isCat())
                 {
                     // pulls data for the move from the data field

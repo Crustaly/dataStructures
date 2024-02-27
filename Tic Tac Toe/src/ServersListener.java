@@ -11,7 +11,7 @@ public class ServersListener implements Runnable
     private char player;
 
     // static data that is shared between both listeners
-    private static char turn = 'X';
+    private static char turn = 'B';
     private static GameData gameData = new GameData();
     private static ArrayList<ObjectOutputStream> outs = new ArrayList<>();
 
