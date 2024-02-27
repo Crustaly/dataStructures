@@ -56,10 +56,21 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
 
         for(int i =0;i<6;i++){
             for(int j =0;j<7;j++){
-                g.setColor(Color.WHITE);
-                g.fillOval(100*j+35, 100*i+110, 90 , 90);
+                if(gameData.getGrid()[i][j]==' '){
+                    g.setColor(Color.WHITE);
+                    g.fillOval(100*j+35, 100*i+110, 90 , 90);
+                }
+                else if(gameData.getGrid()[i][j]=='R'){
+                    g.setColor(Color.RED);
+                    g.fillOval(100*j+35, 100*i+110, 90 , 90);
+                }
+                else{
+                    g.setColor(Color.BLACK);
+                    g.fillOval(100*j+35, 100*i+110, 90 , 90);
+                }
             }
         }
+        //change oval
 
         // draws the player moves to the screen
         g.setFont(new Font("Times New Roman",Font.BOLD,70));
