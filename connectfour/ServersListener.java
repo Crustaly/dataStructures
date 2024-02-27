@@ -74,9 +74,9 @@ public class ServersListener implements Runnable
 
         // informs both client of the new player turn
         if (turn == 'X')
-            sendCommand(new CommandFromServer(CommandFromServer.X_TURN, null));
+            sendCommand(new CommandFromServer(CommandFromServer.BLACK_TURN, null));
         else
-            sendCommand(new CommandFromServer(CommandFromServer.O_TURN, null));
+            sendCommand(new CommandFromServer(CommandFromServer.RED_TURN, null));
     }
 
     public void checkGameOver()
@@ -85,9 +85,9 @@ public class ServersListener implements Runnable
         if(gameData.isCat())
             command = CommandFromServer.TIE;
         else if(gameData.isWinner('X'))
-            command = CommandFromServer.X_WINS;
+            command = CommandFromServer.BLACK_WINS;
         else if(gameData.isWinner('O'))
-            command = CommandFromServer.O_WINS;
+            command = CommandFromServer.RED_WINS;
 
         // if the game ended, informs both clients of the game's end state
         if(command!=-1)
