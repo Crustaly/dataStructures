@@ -40,10 +40,10 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener{
         setVisible(true);
     }
 
-    public void paint(Graphics g)
+      public void paint(Graphics g)
     {
         // draws the background
-        g.setColor(Color.BLACK);
+        g.setColor(Color.YELLOW);
         g.fillRect(0,0,getWidth(),getHeight());
 
         // draws the display text to the screen
@@ -52,11 +52,13 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener{
         g.drawString(text,20,55);
 
         // draws the tic-tac-toe grid lines to the screen
-        g.setColor(Color.RED);
-        for(int y =0;y<=1; y++)
-            g.drawLine(0,(y+1)*133+60,getWidth(),(y+1)*133+60);
-        for(int x =0;x<=1; x++)
-            g.drawLine((x+1)*133,60,(x+1)*133,getHeight());
+
+        for(int i =0;i<6;i++){
+            for(int j =0;j<7;j++){
+                g.setColor(Color.WHITE);
+                g.fillOval(100*j+35, 100*i+110, 90 , 90);
+            }
+        }
 
         // draws the player moves to the screen
         g.setFont(new Font("Times New Roman",Font.BOLD,70));
