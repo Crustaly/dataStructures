@@ -121,6 +121,10 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
             col = 5;
         }
         else col = 6;
+
+        for(int i = 6; i >= 0; i--){
+            if(gameData)
+        }
     }
 
     @Override
