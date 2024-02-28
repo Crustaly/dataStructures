@@ -140,13 +140,6 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
             }
         }
 
-        if(col!=-1) {
-            try {
-                os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + col + r + player));
-            } catch (Exception o) {
-                o.printStackTrace();
-            }
-        }
 
     }
 
