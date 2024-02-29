@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a12107f-2a9f-4035-a7cd-bba666fd6c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectfour/CommandFromClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/CommandFromClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/connectfour/TTTFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/TTTFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
