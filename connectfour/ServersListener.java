@@ -39,20 +39,20 @@ public class ServersListener implements Runnable
                 {
                     // pulls data for the move from the data field
                     String data=cfc.getData();
-                    int c = data.charAt(0) - '0';
+                    int c = data.charAt(0)-'0';
+
                     int r = data.charAt(1) - '0';
 
                     // if the move is invalid it, do not process it
-                    if(gameData.getGrid()[r][c]!=' ')
+                    if(gameData.getGrid()[r][data.charAt(0) - '0']!=' ')
                         continue;
 
                     // changes the server side game board
-                    gameData.getGrid()[r][c] = player;
+                    gameData.getGrid()[r][data.charAt(0) - '0'] = player;
 
                     // sends the move out to both players
                     sendCommand(new CommandFromServer(CommandFromServer.MOVE,data));
 
-                    // changes the turn and checks to see if the game is over
                     changeTurn();
                     checkGameOver();
                 }

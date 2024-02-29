@@ -19,6 +19,7 @@ public class ClientMain
             CommandFromServer cfs = (CommandFromServer) is.readObject();
             TTTFrame frame;
 
+
             // Create the Frame based on which player the server says this client is
             if(cfs.getCommand() == CommandFromServer.CONNECTED_AS_BLACK)
                 frame = new TTTFrame(gameData,os,'B');
