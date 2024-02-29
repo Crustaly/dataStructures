@@ -77,13 +77,13 @@ public class ServersListener implements Runnable
     public void changeTurn()
     {
         // changes the turn
-        if(turn=='X')
-            turn = 'O';
+        if(turn=='B')
+            turn = 'R';
         else
-            turn ='X';
+            turn ='B';
 
         // informs both client of the new player turn
-        if (turn == 'X')
+        if (turn == 'B')
             sendCommand(new CommandFromServer(CommandFromServer.BLACK_TURN, null));
         else
             sendCommand(new CommandFromServer(CommandFromServer.RED_TURN, null));
