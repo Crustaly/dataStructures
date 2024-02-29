@@ -32,16 +32,6 @@ public class ServersListener implements Runnable
                 CommandFromClient cfc = (CommandFromClient) is.readObject();
 
                 // handle the received command
-                if(cfc.getCommand()==CommandFromClient.CLOSING){
-                    sendCommand(new CommandFromServer(CommandFromServer.CLOSING, null));
-                }
-                if(cfc.getCommand()==CommandFromClient.CONFIRM){
-                    sendCommand(new CommandFromServer(CommandFromServer.CONFIRM, null));
-                }
-                if(cfc.getCommand() == CommandFromClient.RESTART){
-                    gameData.reset();
-                    resetTurn();
-                }
                 if(cfc.getCommand()==CommandFromClient.MOVE &&
                     turn==player && !gameData.isWinner('B')
                         && !gameData.isWinner('R')
@@ -49,20 +39,20 @@ public class ServersListener implements Runnable
                 {
                     // pulls data for the move from the data field
                     String data=cfc.getData();
-                    int c = data.charAt(0) - '0';
+                    int c = data.charAt(0)-'0';
+
                     int r = data.charAt(1) - '0';
 
                     // if the move is invalid it, do not process it
-                    if(gameData.getGrid()[r][c]!=' ')
+                    if(gameData.getGrid()[r][data.charAt(0) - '0']!=' ')
                         continue;
 
                     // changes the server side game board
-                    gameData.getGrid()[r][c] = player;
+                    gameData.getGrid()[r][data.charAt(0) - '0'] = player;
 
                     // sends the move out to both players
                     sendCommand(new CommandFromServer(CommandFromServer.MOVE,data));
 
-                    // changes the turn and checks to see if the game is over
                     changeTurn();
                     checkGameOver();
                 }
@@ -89,19 +79,14 @@ public class ServersListener implements Runnable
             sendCommand(new CommandFromServer(CommandFromServer.RED_TURN, null));
     }
 
-    public void resetTurn(){
-        turn = 'B';
-        sendCommand(new CommandFromServer(CommandFromServer.RESET, null));
-    }
-
     public void checkGameOver()
     {
         int command = -1;
         if(gameData.isCat())
             command = CommandFromServer.TIE;
-        else if(gameData.isWinner('B'))
+        else if(gameData.isWinner('X'))
             command = CommandFromServer.BLACK_WINS;
-        else if(gameData.isWinner('R'))
+        else if(gameData.isWinner('O'))
             command = CommandFromServer.RED_WINS;
 
         // if the game ended, informs both clients of the game's end state
