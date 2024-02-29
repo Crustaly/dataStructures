@@ -70,6 +70,12 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
                 }
             }
         }
+        if(checkWin('R')){
+
+        }
+        else if(checkWin('B')){
+
+    }
         //change oval
 
         // draws the player moves to the screen
@@ -79,6 +85,52 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
                 g.drawString(""+gameData.getGrid()[r][c],c*133+42,r*133+150);
 
      */
+    }
+
+    public boolean checkWin(char player) {
+        char[][] grid = gameData.getGrid();
+        // Check horizontal
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 4; col++) {
+                if (grid[row][col] == player &&
+                        grid[row][col + 1] == player &&
+                        grid[row][col + 2] == player &&
+                        grid[row][col + 3] == player) {
+                    return true;
+                }
+            }
+        }
+        for (int col = 0; col < 7; col++) {
+            for (int row = 0; row < 3; row++) {
+                if (grid[row][col] == player &&
+                        grid[row + 1][col] == player &&
+                        grid[row + 2][col] == player &&
+                        grid[row + 3][col] == player) {
+                    return true;
+                }
+            }
+        }
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 4; col++) {
+                if (grid[row][col] == player &&
+                        grid[row + 1][col + 1] == player &&
+                        grid[row + 2][col + 2] == player &&
+                        grid[row + 3][col + 3] == player) {
+                    return true;
+                }
+            }
+        }
+        for (int row = 3; row < 6; row++) {
+            for (int col = 0; col < 4; col++) {
+                if (grid[row][col] == player &&
+                        grid[row - 1][col + 1] == player &&
+                        grid[row - 2][col + 2] == player &&
+                        grid[row - 3][col + 3] == player) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 
