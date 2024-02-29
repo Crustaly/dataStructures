@@ -76,11 +76,6 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
         }
 
 
-        // draws the player moves to the screen
-        g.setFont(new Font("Times New Roman",Font.BOLD,70));
-        for(int r=0; r<gameData.getGrid().length; r++)
-            for(int c=0; c<gameData.getGrid().length; c++)
-                g.drawString(""+gameData.getGrid()[r][c],c*133+42,r*133+150);
     }
 
 
