@@ -23,7 +23,19 @@ public class ClientsListener implements Runnable
             while(true)
             {
                 CommandFromServer cfs = (CommandFromServer)is.readObject();
-
+                if(cfs.getCommand()==CommandFromServer.CLOSING) {
+                    try {
+                        frame.closing();
+                    } catch (InterruptedException e) {
+                        System.out.println("Exception exit");
+                    }
+                }
+                if(cfs.getCommand()== CommandFromServer.CONFIRM) {
+                    System.out.println("Confirming repaint from clientlistener");
+                    frame.resetGrid();
+                    frame.setTurn('B');
+                    frame.repaint();
+                }
                 // processes the received command
                 if(cfs.getCommand() == CommandFromServer.BLACK_TURN)
                     frame.setTurn('B');
@@ -43,14 +55,17 @@ public class ClientsListener implements Runnable
                 else if(cfs.getCommand() == CommandFromServer.TIE)
                 {
                     frame.setText("Tie game.");
+                    frame.setTurn('t');
                 }
                 else if(cfs.getCommand() == CommandFromServer.BLACK_WINS)
                 {
                     frame.setText("Black wins!");
+                    frame.setTurn('t');
                 }
                 else if(cfs.getCommand() == CommandFromServer.RED_WINS)
                 {
                     frame.setText("Red wins!");
+                    frame.setTurn('t');
                 }
             }
         }
