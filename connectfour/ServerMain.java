@@ -19,10 +19,10 @@ public class ServerMain
 
             // Lets the client know they are the X player
             xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_BLACK,null));
-            System.out.println("Black has Connected.");
+            System.out.println("X has Connected.");
 
             // Creates a Thread to listen to the X client
-            ServersListener sl = new ServersListener(xis,xos,'B');
+            ServersListener sl = new ServersListener(xis,xos,'X');
             Thread t = new Thread(sl);
             t.start();
 
@@ -33,10 +33,10 @@ public class ServerMain
 
             // Lets the client know they are the X player
             oos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_RED,null));
-            System.out.println("Red has Connected.");
+            System.out.println("O has Connected.");
 
             // Creates a Thread to listen to the X client
-            sl = new ServersListener(ois,oos,'R');
+            sl = new ServersListener(ois,oos,'O');
             t = new Thread(sl);
             t.start();
 

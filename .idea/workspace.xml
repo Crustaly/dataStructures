@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a12107f-2a9f-4035-a7cd-bba666fd6c01" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Connect4/Connect4.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/Connect4/src/TTTFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Connect4/src/TTTFrame.java" afterDir="false" />
 =======
+=======
+>>>>>>> parent of 36bb6be ( n)
       <change beforePath="$PROJECT_DIR$/connectfour/ClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/Connect4/src/ClientMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/connectfour/ClientsListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Connect4/src/ClientsListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/connectfour/CommandFromClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Connect4/src/CommandFromClient.java" afterDir="false" />
@@ -21,7 +22,14 @@
       <change beforePath="$PROJECT_DIR$/connectfour/ServersListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Connect4/src/ServersListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/connectfour/TTTFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Connect4/src/TTTFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tic Tac Toe/ServersListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tic Tac Toe/ServersListener.class" afterDir="false" />
+<<<<<<< HEAD
 >>>>>>> parent of 36bb6be ( n)
+=======
+>>>>>>> parent of 36bb6be ( n)
+=======
+      <change beforePath="$PROJECT_DIR$/connectfour/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/GameData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectfour/TTTFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/TTTFrame.java" afterDir="false" />
+>>>>>>> parent of 0fd7ec3 (m)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,9 +43,12 @@
     <option name="stateVersion" value="1" />
   </component>
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
+=======
+>>>>>>> parent of 36bb6be ( n)
 =======
 >>>>>>> parent of 36bb6be ( n)
   <component name="ProjectId" id="2cxLbBeoKCdD5x9Z0uPcuIjCsmx" />
@@ -63,36 +74,23 @@
 =======
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.ClientMain (1).executor": "Run",
-    "Application.ClientMain.executor": "Run",
-    "Application.ServerMain (1).executor": "Run",
-    "Application.ServerMain.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
+<<<<<<< HEAD
     "jdk.selected.JAVA_MODULE": "openjdk-21",
     "last_opened_file_path": "C:/Users/cryst/OneDrive/Desktop/GitHub/dataStructures",
     "onboarding.tips.debug.path": "/Users/kai/Desktop/dataStructures/Connect4/src/Main.java"
 >>>>>>> parent of 36bb6be ( n)
+=======
+    "last_opened_file_path": "C:/Users/cryst/OneDrive/Desktop/GitHub/dataStructures"
+>>>>>>> parent of 0fd7ec3 (m)
   }
 }</component>
   <component name="RunManager" selected="Application.ClientMain">
-    <configuration name="ClientMain" type="Application" factoryName="Application">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ClientMain" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ClientMain" />
-      <module name="Connect4" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientMain" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ClientMain" />
-      <module name="dataStructures" />
+      <module name="Tic Tac Toe" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -104,24 +102,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ServerMain" />
-      <module name="Connect4" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="Application.ServerMain (1)" />
       <item itemvalue="Application.ClientMain" />
       <item itemvalue="Application.ServerMain" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ClientMain" />
-        <item itemvalue="Application.ServerMain (1)" />
         <item itemvalue="Application.ServerMain" />
-        <item itemvalue="Application.ClientMain" />
       </list>
     </recent_temporary>
   </component>
