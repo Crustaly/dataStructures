@@ -20,10 +20,10 @@ public class ClientMain
             TTTFrame frame;
 
             // Create the Frame based on which player the server says this client is
-            if(cfs.getCommand() == CommandFromServer.CONNECTED_AS_BLACK)
-                frame = new TTTFrame(gameData,os,'B');
+            if(cfs.getCommand() == CommandFromServer.CONNECTED_AS_RED)
+                frame = new TTTFrame(gameData,os,'R');
             else
-                frame = new TTTFrame(gameData,os, 'R');
+                frame = new TTTFrame(gameData,os, 'B');
 
             // Starts a thread that listens for commands from the server
             ClientsListener cl = new ClientsListener(is,os,frame);
