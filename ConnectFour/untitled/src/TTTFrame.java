@@ -32,6 +32,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
         // adds a KeyListener to the Frame
         addMouseListener(this);
         addWindowListener((WindowListener)this);
+        addKeyListener(this);
         // makes closing the frame close the program
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -242,8 +243,10 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-        if(keyEvent.getKeyChar() == 'r') {
+        if(keyEvent.getKeyChar() =='r') {
             if (gameData.isWinner('B') || gameData.isWinner('R') || gameData.isCat()) {
+
+                // } else {
                 if (confirmReset) {
                     try {
                         os.writeObject(new CommandFromClient(CommandFromClient.CONFIRM, ""));
@@ -257,6 +260,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
                 try {
                     os.writeObject(new CommandFromClient(CommandFromClient.RESTART, ""));
                 } catch (Exception e) {
+                    System.out.println("Exception reset");
                     e.printStackTrace();
                 }
 
