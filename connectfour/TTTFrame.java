@@ -77,7 +77,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
         for(int r=0; r<gameData.getGrid().length; r++)
             for(int c=0; c<gameData.getGrid().length; c++)
                 g.drawString(""+gameData.getGrid()[r][c],c*133+42,r*133+150);
-                
+
      */
     }
 
@@ -141,7 +141,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
                 r = i; break;
             }
         }
-
+    makeMove(r,col, 'B');
 
     }
 
