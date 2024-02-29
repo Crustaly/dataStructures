@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
@@ -163,38 +164,21 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e){
-        float pos = e.getX();
-        int col = -1;
-        //7 columns
-        if(pos > 35 && pos < 135) {
-            col = 0;
-        }
-        else if(pos > 135 && pos < 235){
-            col = 1;
-        }
-        else if(pos > 235 && pos < 335){
-            col = 2;
-        }
-        else if(pos > 335 && pos < 435){
-            col = 3;
-        }
-        else if(pos > 435 && pos < 535){
-            col = 4;
-        }
-        else if(pos > 535 && pos < 635){
-            col = 5;
-        }
-        else col = 6;
-
-        int r = -1;
-        for(int i = 6; i >= 0; i--){
-            if(gameData.getGrid()[i][col] == ' '){
-                r = i; break;
+    public void mousePressed(MouseEvent e) {
+        int mouseX = e.getX();
+        int column = (mouseX - 50) / 100;
+        if (column >= 0 && column < 7) {
+            if (player == turn) {
+                int row = gameData.addToLowest(column + 1, player); // Adjust column to 1-based index
+                if (row != -1) {
+                    try {
+                        os.writeObject(new CommandFromClient(CommandFromClient.MOVE, "" + column + row + player));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
         }
-    makeMove(r,col, player);
-
     }
 
     @Override
@@ -211,7 +195,6 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
     @Override
     public void windowOpened(WindowEvent e) {
 
