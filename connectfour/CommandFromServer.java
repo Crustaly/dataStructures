@@ -16,9 +16,6 @@ public class CommandFromServer implements Serializable
     public static final int BLACK_WINS=5;
     public static final int RED_WINS=6;
     public static final int TIE=7;
-    public static final int RESET = 8;
-    public static final int CLOSING = 9;
-    public static final int CONFIRM = 10;
 
     public CommandFromServer(int command, String data) {
         this.command = command;
