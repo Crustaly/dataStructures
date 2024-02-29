@@ -8,14 +8,17 @@ public class CommandFromServer implements Serializable
     private String data ="";
 
     // Command list
-    public static final int CONNECTED_AS_BLACK=0;
-    public static final int CONNECTED_AS_RED=1;
-    public static final int BLACK_TURN=2;
-    public static final int RED_TURN=3;
+    public static final int CONNECTED_AS_X=0;
+    public static final int CONNECTED_AS_O=1;
+    public static final int X_TURN=2;
+    public static final int O_TURN=3;
     public static final int MOVE=4;
-    public static final int BLACK_WINS=5;
-    public static final int RED_WINS=6;
+    public static final int X_WINS=5;
+    public static final int O_WINS=6;
     public static final int TIE=7;
+    public static final int RESET = 8;
+    public static final int CLOSING = 9;
+    public static final int CONFIRMRESET = 10;
 
     public CommandFromServer(int command, String data) {
         this.command = command;

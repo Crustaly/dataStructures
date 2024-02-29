@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a12107f-2a9f-4035-a7cd-bba666fd6c01" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/connectfour/CommandFromClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/CommandFromClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/connectfour/TTTFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/TTTFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectfour/CommandFromServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/CommandFromServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/connectfour/GameData.java" beforeDir="false" afterPath="$PROJECT_DIR$/connectfour/GameData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,10 +33,17 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/cryst/Downloads/2023 Connect Four Files-20240229T010608Z-001&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.ServerMain">
+  <component name="RunManager" selected="Application.ServerMain (1)">
     <configuration name="ClientMain" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ClientMain" />
       <module name="Tic Tac Toe" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerMain (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ServerMain" />
+      <module name="dataStructures" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -48,13 +56,15 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.ServerMain (1)" />
       <item itemvalue="Application.ClientMain" />
       <item itemvalue="Application.ServerMain" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ServerMain" />
+        <item itemvalue="Application.ServerMain (1)" />
         <item itemvalue="Application.ClientMain" />
+        <item itemvalue="Application.ServerMain" />
       </list>
     </recent_temporary>
   </component>
