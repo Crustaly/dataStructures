@@ -18,11 +18,11 @@ public class ServerMain
             ObjectInputStream xis = new ObjectInputStream(xCon.getInputStream());
 
             // Lets the client know they are the X player
-            xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_BLACK,null));
-            System.out.println("Black has Connected.");
+            xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_RED,null));
+            System.out.println("RED has Connected.");
 
             // Creates a Thread to listen to the X client
-            ServersListener sl = new ServersListener(xis,xos,'B');
+            ServersListener sl = new ServersListener(xis,xos,'R');
             Thread t = new Thread(sl);
             t.start();
 
@@ -32,17 +32,17 @@ public class ServerMain
             ObjectInputStream ois = new ObjectInputStream(oCon.getInputStream());
 
             // Lets the client know they are the X player
-            oos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_RED,null));
-            System.out.println("Red has Connected.");
+            oos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_BLACK,null));
+            System.out.println("BLACK has Connected.");
 
             // Creates a Thread to listen to the X client
-            sl = new ServersListener(ois,oos,'R');
+            sl = new ServersListener(ois,oos,'B');
             t = new Thread(sl);
             t.start();
 
 
-            xos.writeObject(new CommandFromServer(CommandFromServer.BLACK_TURN,null));
-            oos.writeObject(new CommandFromServer(CommandFromServer.BLACK_TURN,null));
+            xos.writeObject(new CommandFromServer(CommandFromServer.RED_TURN,null));
+            oos.writeObject(new CommandFromServer(CommandFromServer.RED_TURN,null));
         }
         catch (Exception e)
         {
