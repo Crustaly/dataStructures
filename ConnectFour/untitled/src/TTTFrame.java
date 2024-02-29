@@ -207,7 +207,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
         System.exit(0);
     }
 
-    public void confirm(String m, String title){
+    public void confirm(String s, String title){
         confirmReset = true;
         text = "Other client wants to reset. Press R to reset.";
         repaint();

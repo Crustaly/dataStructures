@@ -31,9 +31,17 @@ public class ClientsListener implements Runnable
                     }
                 }
                 if(cfs.getCommand()== CommandFromServer.CONFIRM) {
-                    System.out.println("Confirming repaint from clientlistener");
                     frame.resetGrid();
                     frame.setTurn('B');
+                    frame.repaint();
+                }
+
+                if(cfs.getCommand() == CommandFromServer.RESET){
+                    if(!frame.getResetRequest()) {
+                        frame.confirm("Press OK to accept a rematch, else exit out the pop up", "Rematch Request");
+
+                    }
+                    //display for only one of the frames
                     frame.repaint();
                 }
                 // processes the received command
