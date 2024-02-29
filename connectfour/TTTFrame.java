@@ -141,7 +141,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener {
                 r = i; break;
             }
         }
-    makeMove(r,col, 'B');
+    makeMove(r,col, player);
 
     }
 
