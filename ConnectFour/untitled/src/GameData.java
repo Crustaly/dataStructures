@@ -49,8 +49,8 @@ public class GameData
         }
 
         //diagonal
-        for(int i = 0; i+3 < grid.length; i++) {
-            for(int j = 0; j+3 < grid[0].length; j++) {
+        for(int i = 0; i < grid.length; i++) {
+            for(int j = 0; j < grid[0].length; j++) {
                 if(diag('R', i, j) || diag('B', i, j)) return true;
             }
         }
