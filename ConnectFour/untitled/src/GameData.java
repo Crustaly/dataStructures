@@ -49,8 +49,8 @@ public class GameData
         }
 
         //diagonal
-        for(int i = 0; i+3 < grid.length; i++) {
-            for(int j = 0; j+3 < grid[0].length; j++) {
+        for(int i = 0; i < grid.length; i++) {
+            for(int j = 0; j < grid[0].length; j++) {
                 if(diag('R', i, j) || diag('B', i, j)) return true;
             }
         }
@@ -61,7 +61,8 @@ public class GameData
     {
         int row = r;
         int col = c;
-        int cnt = 0;
+        int cnt =0;
+
         while (row >= 0  && col >= 0) {
             if (grid[row][col] == player) cnt++;
             else { break; }
