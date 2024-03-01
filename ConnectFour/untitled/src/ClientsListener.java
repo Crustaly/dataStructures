@@ -31,18 +31,18 @@ public class ClientsListener implements Runnable
                     }
                 }
                 if(cfs.getCommand()== CommandFromServer.CONFIRM) {
-                    frame.resetGrid();
-                    frame.setTurn('B');
                     frame.repaint();
                 }
 
                 if(cfs.getCommand() == CommandFromServer.RESET){
                     if(!frame.getResetRequest()) {
                         frame.confirm("Press OK to accept a rematch, else exit out the pop up", "Rematch Request");
-
                     }
                     //display for only one of the frames
+                    frame.resetGrid();
+                    frame.setTurn('R');
                     frame.repaint();
+
                 }
                 // processes the received command
                 if(cfs.getCommand() == CommandFromServer.BLACK_TURN)

@@ -41,7 +41,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
             text = "Waiting for Red to Connect";
         else text = "Waiting for Black to Connect";
 
-        setSize(670,750);
+        setSize(770,750);
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
@@ -61,7 +61,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
         // draws the tic-tac-toe grid lines to the screen
 
         for(int i = gameData.getGrid().length-1; i >= 0; i--){
-            for(int j = 0; j<gameData.getGrid()[0].length-1; j++){
+            for(int j = 0; j<gameData.getGrid()[0].length; j++){
                 //change oval
                 if(gameData.getGrid()[i][j]=='B'){
                     g.setColor(Color.BLACK);
@@ -246,7 +246,6 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
         if(keyEvent.getKeyChar() =='r') {
             if (gameData.isWinner('B') || gameData.isWinner('R') || gameData.isCat()) {
 
-                // } else {
                 if (confirmReset) {
                     try {
                         os.writeObject(new CommandFromClient(CommandFromClient.CONFIRM, ""));
@@ -256,15 +255,12 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
                     return;
                 }
                 resetRequest = true;
-                //reset
                 try {
                     os.writeObject(new CommandFromClient(CommandFromClient.RESTART, ""));
                 } catch (Exception e) {
                     System.out.println("Exception reset");
                     e.printStackTrace();
                 }
-
-                return;
             }
         }
     }

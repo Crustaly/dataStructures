@@ -37,8 +37,10 @@ public class ServersListener implements Runnable
                 }
                 if(cfc.getCommand()==CommandFromClient.CONFIRM){
                     sendCommand(new CommandFromServer(CommandFromServer.CONFIRM, null));
+
                 }
                 if(cfc.getCommand() == CommandFromClient.RESTART){
+                    sendCommand(new CommandFromServer(CommandFromServer.RESET, null));
                     gameData.reset();
                     resetTurn();
                 }
