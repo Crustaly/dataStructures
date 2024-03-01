@@ -110,7 +110,26 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if (e.getModifiers() == MouseEvent.BUTTON3_MASK && e.getClickCount() == 1) {
+            if (gameData.isWinner('B') || gameData.isWinner('R') || gameData.isCat()) {
 
+                if (confirmReset) {
+                    try {
+                        os.writeObject(new CommandFromClient(CommandFromClient.CONFIRM, ""));
+                    } catch (IOException o) {
+                        o.printStackTrace();
+                    }
+                    return;
+                }
+                resetRequest = true;
+                try {
+                    os.writeObject(new CommandFromClient(CommandFromClient.RESTART, ""));
+                } catch (Exception o) {
+                    System.out.println("Exception reset");
+                    o.printStackTrace();
+                }
+            }
+        }
     }
     @Override
     public void mousePressed(MouseEvent e){
@@ -243,26 +262,7 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-        if(keyEvent.getKeyChar() =='r') {
-            if (gameData.isWinner('B') || gameData.isWinner('R') || gameData.isCat()) {
 
-                if (confirmReset) {
-                    try {
-                        os.writeObject(new CommandFromClient(CommandFromClient.CONFIRM, ""));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return;
-                }
-                resetRequest = true;
-                try {
-                    os.writeObject(new CommandFromClient(CommandFromClient.RESTART, ""));
-                } catch (Exception e) {
-                    System.out.println("Exception reset");
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     @Override
