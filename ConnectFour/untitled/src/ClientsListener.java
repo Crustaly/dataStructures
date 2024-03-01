@@ -31,18 +31,17 @@ public class ClientsListener implements Runnable
                     }
                 }
                 if(cfs.getCommand()== CommandFromServer.CONFIRM) {
+                    frame.confirm();
+                    frame.setTurn('R');
                     frame.repaint();
+                    frame.resetGrid();
                 }
 
                 if(cfs.getCommand() == CommandFromServer.RESET){
                     if(!frame.getResetRequest()) {
-                        frame.confirm("Press OK to accept a rematch, else exit out the pop up", "Rematch Request");
+                        frame.confirm();
                     }
-                    //display for only one of the frames
-                    frame.resetGrid();
-                    frame.setTurn('R');
                     frame.repaint();
-
                 }
                 // processes the received command
                 if(cfs.getCommand() == CommandFromServer.BLACK_TURN)
@@ -62,17 +61,17 @@ public class ClientsListener implements Runnable
                 // handles the various end game states
                 else if(cfs.getCommand() == CommandFromServer.TIE)
                 {
-                    frame.setText("Tie game.");
+                    frame.setText("Tie game. Press R to reset.");
                     frame.setTurn('t');
                 }
                 else if(cfs.getCommand() == CommandFromServer.BLACK_WINS)
                 {
-                    frame.setText("Black wins!");
+                    frame.setText("Black wins! Press R to reset.");
                     frame.setTurn('t');
                 }
                 else if(cfs.getCommand() == CommandFromServer.RED_WINS)
                 {
-                    frame.setText("Red wins!");
+                    frame.setText("Red wins! Press R to reset.");
                     frame.setTurn('t');
                 }
             }
