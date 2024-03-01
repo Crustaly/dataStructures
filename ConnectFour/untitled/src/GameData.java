@@ -61,7 +61,8 @@ public class GameData
     {
         int row = r;
         int col = c;
-        int cnt = 0;
+        int cnt =0;
+
         while (row >= 0  && col >= 0) {
             if (grid[row][col] == player) cnt++;
             else { break; }
