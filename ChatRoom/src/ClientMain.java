@@ -8,7 +8,7 @@ public class ClientMain
     {
         try {
             // create an object for the TTT game
-            Data data = new Data();
+            Data gameData = new Data();
 
             // create a connection to server
             Socket socket = new Socket("127.0.0.1",8001);
