@@ -32,7 +32,6 @@ public class TTTFrame extends JFrame implements WindowListener, MouseListener, K
         // adds a KeyListener to the Frame
         addMouseListener(this);
         addWindowListener((WindowListener)this);
-        addKeyListener(this);
         // makes closing the frame close the program
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
