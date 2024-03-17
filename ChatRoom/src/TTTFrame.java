@@ -20,7 +20,9 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     private JTextArea namesArea;
 
     private JScrollPane namesPane;
+    private JTextArea sendArea;
     private JTextArea msgsArea;
+
     private JScrollPane msgsPane; //for messages to show up, lines separated by names
 
     public TTTFrame(Data data, ObjectOutputStream os, String name)
@@ -34,22 +36,25 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         msgsArea = new JTextArea(name + " has connected.\n");
         msgsPane = new JScrollPane(msgsArea);
 
-        msgsPane.setBounds(10,10,500,650); //crystal pls change the size idk
+        msgsArea.setBounds(50,50,7*50,7*50);
 
         namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
+        namesArea.setBounds(50*9,50,50*2,50*7);
         namesPane = new JScrollPane(namesArea);
-
+        sendArea = new JTextArea();
+        sendArea.setBounds(50,9*50,7*50,2*50);
         //crystal help set bounds plsss
-
+        // i gotchu
         send = new JButton("Send");
+        send.setBounds(9*50, 9*50, 100, 25);
         exit = new JButton("Exit"); //on clicked closes window add action listener
-
+        send.setBounds(9*50, 10*50, 100, 25);
         setLayout(null);
         addWindowListener((WindowListener)this);
         // makes closing the frame close the program
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        setSize(770,750);
+        setSize(12*50, 12*50);
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
@@ -79,26 +84,15 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     @Override
     public void windowClosing(WindowEvent e) {
         try {
-            os.writeObject(new CommandFromClient(CommandFromClient.CLOSING, ""+player));
+            os.writeObject(new CommandFromClient(CommandFromClient.CLOSING, ""));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
     public void closing() throws InterruptedException {
-        start = System.currentTimeMillis();
-        long prev = -1;
-        while(true){
-            long secondsPassed = (System.currentTimeMillis() - start)/1000;
-            if(secondsPassed > prev){
-                text = "Other client disconnected. Closing in: " + (5-secondsPassed);
-                prev = secondsPassed;
-                repaint();
-            }
-            if(secondsPassed >= 6) break;
-        }
 
-        System.exit(0);
+
     }
 
     @Override
@@ -130,5 +124,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     public void windowDeactivated(WindowEvent e) {
 
     }
+
+
 
 }
