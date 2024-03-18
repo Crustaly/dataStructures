@@ -43,7 +43,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
         send = new JButton("Send");
         send.setBounds(9 * 50, 9 * 50, 100, 25);
-        send.addActionListener(e -> {sendMessage();});
+        send.addActionListener(e -> {addMsg(sendArea.getText());});
         exit = new JButton("Exit"); // on clicked closes window add action listener
         exit.setBounds(9 * 50, 10 * 50, 100, 25);
         exit.addActionListener(e -> this.dispose());
