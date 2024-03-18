@@ -6,12 +6,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
+import java.util.*;
 
 public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     // the letter you are playing as
     private String name;
-    // stores all the game data
-    private Data data = null;
     // output stream to the server
     ObjectOutputStream os;
 
@@ -25,7 +24,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
     private JScrollPane msgsPane; //for messages to show up, lines separated by names
 
-    public TTTFrame(ObjectOutputStream os, String name) {
+    public TTTFrame(Data data, ObjectOutputStream os, String name) {
         super("Chat Room");
         this.os = os;
         this.name = name;
@@ -77,7 +76,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     public void addMsg(String msg)
     {
         data.getMsgs().add(name + ": " + msg);
-    }
+    }//command to client
 
     @Override
     public void windowOpened(WindowEvent e) {
