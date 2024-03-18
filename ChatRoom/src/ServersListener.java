@@ -54,7 +54,7 @@ public class ServersListener implements Runnable
                     checkGameOver();
                 }
             }
-        }
+
         catch(Exception e)
         {
             e.printStackTrace();
