@@ -1,6 +1,7 @@
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class ClientMain
 {
@@ -29,6 +30,24 @@ public class ClientMain
             ClientsListener cl = new ClientsListener(is,os,frame);
             Thread t = new Thread(cl);
             t.start();
+
+            String text = "";
+            Scanner keyboard = new Scanner(System.in);
+            do {
+                System.out.print("Enter text to send to the server (\"Exit\" to Quit): ");
+                text = keyboard.next();
+
+
+                if(!text.equals("exit"))
+                {
+                    // write the given text to the server
+                    os.writeObject(text);
+                    os.reset();
+                    // reads the text back from the server
+                    String echo = (String) is.readObject();
+                    System.out.println("\t echo: " + echo);
+                }
+            }while(!text.equals("exit"));
         }
         catch(Exception e)
         {
