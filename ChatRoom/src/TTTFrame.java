@@ -63,9 +63,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         add(send);
         add(exit);
     }
-    public void sendMessage(){
 
-    }
     public void exitButton(){
         
     }
