@@ -14,6 +14,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     // output stream to the server
     ObjectOutputStream os;
 
+    private Data data;
     private JButton send;
     private JButton exit;
     private JTextArea namesArea;
@@ -28,7 +29,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         super("Chat Room");
         this.os = os;
         this.name = name;
-
+        this.data = data;
         msgsArea = new JTextArea(name + " has connected.\n");
         msgsPane = new JScrollPane(msgsArea);
         msgsArea.setBounds(50, 50, 7 * 50, 7 * 50);
@@ -81,7 +82,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
     public void addMsg(String msg)
     {
-        data.getMsgs().add(name + ": " + msg);
+        data.sendMsg(name + ": " + msg);
     }//command to client
 
     @Override
