@@ -19,7 +19,6 @@ public class ServerMain
 
             // Lets the client know they are the X player
             xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED,null));
-            System.out.println("RED has Connected.");
 
             // Creates a Thread to listen to the X client
             ServersListener sl = new ServersListener(xis,xos,'R');

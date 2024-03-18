@@ -16,37 +16,26 @@ public class ClientMain
             ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
 
-            // determine if playing as X or O
             CommandFromServer cfs = (CommandFromServer) is.readObject();
-            TTTFrame frame;
+            TTTFrame frame = null;
 
-            // Create the Frame based on which player the server says this client is
-            if(cfs.getCommand() == CommandFromServer.CONNECTED_AS_RED)
-                frame = new TTTFrame(gameData,os,"R");
-            else
-                frame = new TTTFrame(gameData,os, "B");
+            String name = "";
+            String ip = "";
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter your name: ");
+            name = sc.next();
+            System.out.println("Enter the server ip address: ");
+            ip = sc.next();
+
+            if(cfs.getCommand() == CommandFromServer.CONNECTED){
+                frame = new TTTFrame(gameData, os, name);
+                System.out.println("Connected as " + name);
+            }
 
             // Starts a thread that listens for commands from the server
             ClientsListener cl = new ClientsListener(is,os,frame);
             Thread t = new Thread(cl);
             t.start();
-
-            String name = "";
-            String ip = "";
-            Scanner keyboard = new Scanner(System.in);
-            do {
-
-
-                if(!text.equals("exit"))
-                {
-                    // write the given text to the server
-                    os.writeObject(text);
-                    os.reset();
-                    // reads the text back from the server
-                    String echo = (String) is.readObject();
-                    System.out.println("\t echo: " + echo);
-                }
-            }while(!text.equals("exit"));
         }
         catch(Exception e)
         {

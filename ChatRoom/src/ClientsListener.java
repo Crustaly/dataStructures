@@ -30,23 +30,6 @@ public class ClientsListener implements Runnable
                         System.out.println("Exception exit");
                     }
                 }
-                if(cfs.getCommand()== CommandFromServer.CONFIRM) {
-
-                }
-
-                if(cfs.getCommand() == CommandFromServer.RESET){
-
-                }
-                // processes the received command
-
-                else if(cfs.getCommand() == cfs.MOVE)
-                {
-                    String data = cfs.getData();
-                    // pulls data for the move from the data field
-                    int c = data.charAt(0) - '0';
-                    int r = data.charAt(1) - '0';
-
-                }
 
             }
         }
