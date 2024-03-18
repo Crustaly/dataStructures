@@ -93,7 +93,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     @Override
     public void windowClosing(WindowEvent e) {
         try {
-            os.writeObject(new CommandFromClient(CommandFromClient.CLOSING, ""));
+            os.writeObject(new CommandFromClient(CommandFromClient.EXIT, ""));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
