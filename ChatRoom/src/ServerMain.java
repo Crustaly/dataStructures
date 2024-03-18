@@ -18,7 +18,7 @@ public class ServerMain
             ObjectInputStream xis = new ObjectInputStream(xCon.getInputStream());
 
             // Lets the client know they are the X player
-            xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_RED,null));
+            xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED,null));
             System.out.println("RED has Connected.");
 
             // Creates a Thread to listen to the X client
