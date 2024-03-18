@@ -28,6 +28,7 @@ public class ClientMain
             ip = sc.next();
 
             if(cfs.getCommand() == CommandFromServer.CONNECTED){
+                gameData.sendMsg(name + " has connected.");
                 frame = new TTTFrame(gameData, os, name);
                 System.out.println("Connected as " + name);
             }

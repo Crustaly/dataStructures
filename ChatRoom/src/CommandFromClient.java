@@ -8,7 +8,7 @@ public class CommandFromClient implements Serializable
     private String data ="";
 
     // Command list
-    public static final int SEND   =0;
+    public static final int SEND = 0;
     public static final int EXIT = 1;
 
     public CommandFromClient(int command, String data) {

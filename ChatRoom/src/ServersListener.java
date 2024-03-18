@@ -12,7 +12,6 @@ public class ServersListener implements Runnable
 
     // static data that is shared between both listeners
     private static ArrayList<String> names = new ArrayList<>();
-    private static Data gameData = new Data();
     private static ArrayList<ObjectOutputStream> outs = new ArrayList<>();
 
 

@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="970e7e5b-80fa-4614-8ae4-7d120b421748" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../ConnectFour/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ClientMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CommandFromClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CommandFromClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ServersListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ServersListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
