@@ -20,28 +20,9 @@ public class ServerMain
             // Lets the client know they are the X player
             xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED,null));
 
-            // Creates a Thread to listen to the X client
-            ServersListener sl = new ServersListener(xis,xos,'R');
+            ServersListener sl = new ServersListener(xis,xos);
             Thread t = new Thread(sl);
             t.start();
-
-            // allow O to connect and build streams to / from O
-            Socket oCon = serverSocket.accept();
-            ObjectOutputStream oos = new ObjectOutputStream(oCon.getOutputStream());
-            ObjectInputStream ois = new ObjectInputStream(oCon.getInputStream());
-
-            // Lets the client know they are the X player
-            oos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED_AS_BLACK,null));
-            System.out.println("BLACK has Connected.");
-
-            // Creates a Thread to listen to the X client
-            sl = new ServersListener(ois,oos,'B');
-            t = new Thread(sl);
-            t.start();
-
-
-            xos.writeObject(new CommandFromServer(CommandFromServer.RED_TURN,null));
-            oos.writeObject(new CommandFromServer(CommandFromServer.RED_TURN,null));
         }
         catch (Exception e)
         {

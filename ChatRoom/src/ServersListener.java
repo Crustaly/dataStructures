@@ -8,18 +8,18 @@ public class ServersListener implements Runnable
     private ObjectOutputStream os;
 
     // Stores the which player this listener is for
-    private char player;
+    private String name;
 
     // static data that is shared between both listeners
-    private static char turn = 'R';
+    private static ArrayList<String> names = new ArrayList<>();
     private static Data gameData = new Data();
     private static ArrayList<ObjectOutputStream> outs = new ArrayList<>();
 
 
-    public ServersListener(ObjectInputStream is, ObjectOutputStream os, char player) {
+    public ServersListener(ObjectInputStream is, ObjectOutputStream os) {
         this.is = is;
         this.os = os;
-        this.player = player;
+        //this.name = name;
         outs.add(os);
     }
 
@@ -32,63 +32,18 @@ public class ServersListener implements Runnable
                 CommandFromClient cfc = (CommandFromClient) is.readObject();
 
                 // handle the received command
-                if(cfc.getCommand()==CommandFromClient.CLOSING){
-                    sendCommand(new CommandFromServer(CommandFromServer.CLOSING, null));
-                }
-                if(cfc.getCommand()==CommandFromClient.CONFIRM){
-                    sendCommand(new CommandFromServer(CommandFromServer.CONFIRM, null));
+                if(cfc.getCommand()==CommandFromClient.EXIT){
+                    //sendCommand(new CommandFromServer(CommandFromServer.CLOSING, null));
                 }
 
-                    // pulls data for the move from the data field
-                    String data=cfc.getData();
-                    int c = data.charAt(0) - '0';
-                    int r = data.charAt(1) - '0';
-
-                    // if the move is invalid it, do not process it
-
-                    // sends the move out to both players
-                    sendCommand(new CommandFromServer(CommandFromServer.MOVE,data));
-
-                    // changes the turn and checks to see if the game is over
-                    changeTurn();
-                    checkGameOver();
-                }
             }
-
+        }
         catch(Exception e)
         {
             e.printStackTrace();
         }
     }
 
-    public void changeTurn()
-    {
-        // changes the turn
-        if(turn=='R')
-            turn = 'B';
-        else
-            turn ='R';
-
-        // informs both client of the new player turn
-        if (turn == 'R')
-            sendCommand(new CommandFromServer(CommandFromServer.RED_TURN, null));
-        else
-            sendCommand(new CommandFromServer(CommandFromServer.BLACK_TURN, null));
-    }
-
-    public void resetTurn(){
-        turn = 'R';
-        sendCommand(new CommandFromServer(CommandFromServer.RESET, null));
-    }
-
-    public void checkGameOver()
-    {
-        int command = -1;
-
-        // if the game ended, informs both clients of the game's end state
-        if(command!=-1)
-            sendCommand(new CommandFromServer(command, null));
-    }
     public void sendCommand(CommandFromServer cfs)
     {
         // Sends command to both players
