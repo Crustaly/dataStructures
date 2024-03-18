@@ -31,11 +31,10 @@ public class ClientMain
             Thread t = new Thread(cl);
             t.start();
 
-            String text = "";
+            String name = "";
+            String ip = "";
             Scanner keyboard = new Scanner(System.in);
             do {
-                System.out.print("Enter text to send to the server (\"Exit\" to Quit): ");
-                text = keyboard.next();
 
 
                 if(!text.equals("exit"))
