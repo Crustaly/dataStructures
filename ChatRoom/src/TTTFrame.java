@@ -25,41 +25,44 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
     private JScrollPane msgsPane; //for messages to show up, lines separated by names
 
-    public TTTFrame(Data data, ObjectOutputStream os, String name)
-    {
+    public TTTFrame(ObjectOutputStream os, String name) {
         super("Chat Room");
-        // sets the attributes
-        this.data = data;
         this.os = os;
         this.name = name;
 
         msgsArea = new JTextArea(name + " has connected.\n");
         msgsPane = new JScrollPane(msgsArea);
-
-        msgsArea.setBounds(50,50,7*50,7*50);
+        msgsArea.setBounds(50, 50, 7 * 50, 7 * 50);
 
         namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
-        namesArea.setBounds(50*9,50,50*2,50*7);
+        namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
         namesPane = new JScrollPane(namesArea);
-        sendArea = new JTextArea();
-        sendArea.setBounds(50,9*50,7*50,2*50);
-        //crystal help set bounds plsss
-        // i gotchu
-        send = new JButton("Send");
-        send.setBounds(9*50, 9*50, 100, 25);
-        exit = new JButton("Exit"); //on clicked closes window add action listener
-        send.setBounds(9*50, 10*50, 100, 25);
-        setLayout(null);
-        addWindowListener((WindowListener)this);
-        // makes closing the frame close the program
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        setSize(12*50, 12*50);
+        sendArea = new JTextArea();
+        sendArea.setBounds(50, 9 * 50, 7 * 50, 2 * 50);
+
+        send = new JButton("Send");
+        send.setBounds(9 * 50, 9 * 50, 100, 25);
+
+        exit = new JButton("Exit"); // on clicked closes window add action listener
+        exit.setBounds(9 * 50, 10 * 50, 100, 25);
+
+        setLayout(null);
+        addWindowListener(this); // Add this as a window listener
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(12 * 50, 13 * 50);
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
-    }
 
+        // Adding components to the frame
+        add(msgsArea);
+        add(namesArea);
+        add(sendArea);
+        add(send);
+        add(exit);
+    }
     public void paint(Graphics g)
     {
         // draws the background
