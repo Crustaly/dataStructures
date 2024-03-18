@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="46d9ba88-4264-40ac-97b2-a60cbf3e8307" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/TTTFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ChatRoom/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../ChatRoom/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ChatRoom/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../ChatRoom/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../ChatRoom/src/TTTFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../ChatRoom/src/TTTFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,16 +29,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="TTTFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="TTTFrame" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
       <module name="testletsgoo" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="testletsgoo" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
