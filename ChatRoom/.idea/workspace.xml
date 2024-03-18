@@ -5,40 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="970e7e5b-80fa-4614-8ae4-7d120b421748" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ClientsListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CommandFromClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CommandFromServer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Data.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ServerMain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ServersListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TTTFrame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ConnectFour 2/ConnectFour.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ClientMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/ConnectFour.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/out/production/ConnectFour/ClientMain.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/out/production/ConnectFour/ClientsListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/out/production/ConnectFour/CommandFromClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/out/production/ConnectFour/CommandFromServer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/out/production/ConnectFour/GameData.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/out/production/ConnectFour/ServerMain.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/out/production/ConnectFour/ServersListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/out/production/ConnectFour/TTTFrame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/src/ClientMain.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/src/ClientsListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/src/CommandFromClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/src/CommandFromServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/src/GameData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/src/ServerMain.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/src/ServersListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConnectFour/src/TTTFrame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
