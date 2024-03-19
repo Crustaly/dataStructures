@@ -81,6 +81,14 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     public void addMsg(String msg)
     {
         data.sendMsg(name + ": " + msg);
+        if(!msg.equals("") && msg != null){
+            try {
+                os.writeObject(new CommandFromClient(CommandFromClient.SEND, msg));
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }//command to client
 
     @Override
