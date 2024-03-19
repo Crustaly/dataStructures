@@ -34,7 +34,18 @@ public class ServersListener implements Runnable
                 if(cfc.getCommand()==CommandFromClient.EXIT){
                     //sendCommand(new CommandFromServer(CommandFromServer.CLOSING, null));
                 }
-
+                if(cfc.getCommand()==CommandFromClient.JOIN){
+                    System.out.println(cfc.getData());
+                    if(names.contains(cfc.getData())){
+                        sendCommand(new CommandFromServer(CommandFromServer.INVALID, null));
+                        //System.out.println("invalid");
+                    }
+                    else {
+                        sendCommand(new CommandFromServer(CommandFromServer.VALID, null));
+                        names.add(cfc.getData());
+                        //System.out.println("valid");
+                    }
+                }
             }
         }
         catch(Exception e)

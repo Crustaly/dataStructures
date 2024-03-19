@@ -16,21 +16,29 @@ public class ClientMain
             ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
 
-            CommandFromServer cfs = (CommandFromServer) is.readObject();
             TTTFrame frame = null;
 
             String name = "";
             String ip = "";
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Enter your name: ");
-            name = sc.next();
-            System.out.println("Enter the server ip address: ");
-            ip = sc.next();
 
-            if(cfs.getCommand() == CommandFromServer.CONNECTED){
-                gameData.sendMsg(name + " has connected.");
-                frame = new TTTFrame(gameData, os, name);
-                System.out.println("Connected as " + name);
+            Scanner sc = new Scanner(System.in);
+
+            while(true){
+                CommandFromServer cfs = (CommandFromServer) is.readObject();
+                if(cfs.getCommand() == CommandFromServer.VALID){
+                    System.out.println("JOINED");
+                    gameData.sendMsg(name + " has connected.");
+                    frame = new TTTFrame(gameData, os, name);
+                    System.out.println("Connected as " + name);
+                    break;
+                }
+                else {
+                    System.out.println("Enter your name: ");
+                    name = sc.next();
+//                System.out.println("Enter the server ip address: ");
+//                ip = sc.next();
+                    os.writeObject(new CommandFromClient(CommandFromClient.JOIN, name));
+                }
             }
 
             // Starts a thread that listens for commands from the server
