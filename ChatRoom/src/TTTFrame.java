@@ -116,9 +116,9 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         this.names.clear();
         for(String s: ar){
             this.names.add(s);
-            Collections.sort(this.names);
         }
-
+        Collections.sort(this.names);
+        System.out.println(names);
         repaint();
     }
     @Override
