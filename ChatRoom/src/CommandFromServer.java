@@ -8,9 +8,16 @@ public class CommandFromServer implements Serializable
     private String data ="";
 
     // Command list
-    public static final int CONNECTED = 0;
+    public static final int SEND = 0;
 
     public static final int CLOSING = 1;
+
+    public static final int INVALID = 2;
+    public static final int VALID = 3;
+
+    public static final int CONNECTED = 4;
+
+    public static final int NEWNAMES = 5;
 
     public CommandFromServer(int command, String data) {
         this.command = command;

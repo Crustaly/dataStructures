@@ -31,6 +31,20 @@ public class ClientsListener implements Runnable
                     }
                 }
 
+                if(cfs.getCommand() == CommandFromServer.NEWNAMES){
+                    try{
+                        frame.setNames(cfs.getData());
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if(cfs.getCommand() == CommandFromServer.SEND){
+                    frame.addMsg(cfs.getData());
+                }
+
+
             }
         }
         catch(Exception e)
