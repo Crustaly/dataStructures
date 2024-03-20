@@ -32,9 +32,10 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         this.os = os;
         this.name = name;
         this.data = data;
+        msgsArea = new JTextArea("");
         msgsArea.setEditable(false);
         msgsPane = new JScrollPane(msgsArea);
-        msgsArea.setBounds(80, 80, 7 * 50, 7 * 50);
+        msgsPane.setBounds(50, 50, 7 * 50, 7 * 50);
         namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
         namesArea.setEditable(false);
         // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
@@ -58,7 +59,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         exit.setBounds(9 * 50, 10 * 50, 100, 25);
         exit.addActionListener(e -> this.dispose());
         exit.setVisible(true);
-        add(msgsArea);
+        add(msgsPane);
         add(namesPane);
         add(sendArea);
         add(send);
@@ -93,6 +94,8 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         }
         namesArea = new JTextArea(nam);
 
+        System.out.println(disp);
+        System.out.println(nam);
     }
     public void exitButton(){
 
