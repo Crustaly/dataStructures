@@ -32,10 +32,10 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         this.os = os;
         this.name = name;
         this.data = data;
-        msgsArea = new JTextArea(name + " has connected.\n");
+        msgsArea = new JTextArea("");
         msgsArea.setEditable(false);
         msgsPane = new JScrollPane(msgsArea);
-        msgsArea.setBounds(80, 80, 7 * 50, 7 * 50);
+        msgsArea.setBounds(50, 50, 7 * 50, 7 * 50);
         namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
         namesArea.setEditable(false);
         // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
