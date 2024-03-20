@@ -35,11 +35,10 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         msgsArea = new JTextArea(name + " has connected.\n");
         msgsArea.setEditable(false);
         msgsPane = new JScrollPane(msgsArea);
-        msgsArea.setBounds(50, 50, 7 * 50, 7 * 50);
-
+        msgsArea.setBounds(80, 80, 7 * 50, 7 * 50);
         namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
         namesArea.setEditable(false);
-       // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
+        // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
         namesPane = new JScrollPane(namesArea);
         namesPane.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
         sendArea = new JTextArea();
@@ -54,9 +53,17 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
                 o.printStackTrace();
             }
         });
+
         exit = new JButton("Exit"); // on clicked closes window add action listener
         exit.setBounds(9 * 50, 10 * 50, 100, 25);
         exit.addActionListener(e -> this.dispose());
+        exit.setVisible(true);
+        add(msgsArea);
+        add(namesPane);
+        add(sendArea);
+        add(send);
+        add(exit);
+
         setLayout(null);
         addWindowListener(this); // Add this as a window listener
 
@@ -68,27 +75,23 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
 
         // Adding components to the frame
-        add(msgsArea);
-        add(namesPane);
-        add(sendArea);
-        add(send);
-        add(exit);
+
     }
 
     public void exitButton(){
-        
+
     }
-    public void paint(Graphics g)
+   /* public void paint(Graphics g)
     {
         // draws the background
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(0,0,getWidth(),getHeight());
+       // g.setColor(Color.LIGHT_GRAY);
+       // g.fillRect(0,0,getWidth(),getHeight());
 
         // draws the display text to the screen
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Times New Roman",Font.BOLD,11));
+       // g.setColor(Color.WHITE);
+      //  g.setFont(new Font("Times New Roman",Font.BOLD,11));
     }
-
+*/
     public void addMsg(String msg)
     {
         if(msg!= "")
