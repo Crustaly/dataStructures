@@ -93,9 +93,6 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
             nam+="\n";
         }
         namesArea = new JTextArea(nam);
-
-        System.out.println(disp);
-        System.out.println(nam);
     }
     public void exitButton(){
 
@@ -104,8 +101,12 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
     public void addMsg(String msg)
     {
-        if(msg!= "")
-            data.sendMsg(name + ": " + msg);
+        if(msg!= "") {
+            String s = name + ": " + msg;
+            data.sendMsg(s);
+            System.out.println(data.getMsgs());
+        }
+
 
     }//command to client
 
