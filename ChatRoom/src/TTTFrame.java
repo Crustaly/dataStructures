@@ -91,7 +91,8 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
     public void addMsg(String msg)
     {
-        data.sendMsg(name + ": " + msg);
+        if(msg!= "")
+            data.sendMsg(name + ": " + msg);
 
     }//command to client
 

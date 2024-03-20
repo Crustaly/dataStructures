@@ -31,7 +31,7 @@ public class ClientsListener implements Runnable
                     }
                 }
 
-                if(cfs.getCommand() == CommandFromServer.VALID){
+                if(cfs.getCommand() == CommandFromServer.NEWNAMES){
                     try{
                         frame.setNames(cfs.getData());
                     }

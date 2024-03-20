@@ -17,6 +17,8 @@ public class CommandFromServer implements Serializable
 
     public static final int CONNECTED = 4;
 
+    public static final int NEWNAMES = 5;
+
     public CommandFromServer(int command, String data) {
         this.command = command;
         this.data = data;

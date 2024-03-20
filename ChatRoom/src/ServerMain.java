@@ -12,7 +12,6 @@ public class ServerMain
             // creates a socket that allows connections on port 8001
             ServerSocket serverSocket = new ServerSocket(8001);
 
-
             while(true)
             {
                 // creates a connection to the client
@@ -23,6 +22,7 @@ public class ServerMain
                 // creates a stream for reading objects from the client
                 ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
 
+                os.writeObject(new CommandFromServer(CommandFromServer.CONNECTED,null));
                 ServersListener sl = new ServersListener(is,os);
                 // creates a Thread for echoing to this client
                 Thread t = new Thread(new ServersListener(is,os));
