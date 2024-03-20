@@ -15,6 +15,8 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     ObjectOutputStream os;
 
     private Data data;
+
+    private ArrayList<String> names = new ArrayList<>();
     private JButton send;
     private JButton exit;
     private JTextArea namesArea;
@@ -31,11 +33,12 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         this.name = name;
         this.data = data;
         msgsArea = new JTextArea(name + " has connected.\n");
+        msgsArea.setEditable(false);
         msgsPane = new JScrollPane(msgsArea);
-        msgsArea.setBounds(50, 50, 7 * 50, 7 * 50);
-
+        msgsArea.setBounds(80, 80, 7 * 50, 7 * 50);
         namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
-       // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
+        namesArea.setEditable(false);
+        // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
         namesPane = new JScrollPane(namesArea);
         namesPane.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
         sendArea = new JTextArea();
@@ -43,10 +46,24 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
         send = new JButton("Send");
         send.setBounds(9 * 50, 9 * 50, 100, 25);
-        send.addActionListener(e -> {addMsg(sendArea.getText());});
+        send.addActionListener(e -> {
+            try {
+                os.writeObject(new CommandFromClient(CommandFromClient.SEND, msgsArea.getText()));
+            } catch (Exception o) {
+                o.printStackTrace();
+            }
+        });
+
         exit = new JButton("Exit"); // on clicked closes window add action listener
         exit.setBounds(9 * 50, 10 * 50, 100, 25);
         exit.addActionListener(e -> this.dispose());
+        exit.setVisible(true);
+        add(msgsArea);
+        add(namesPane);
+        add(sendArea);
+        add(send);
+        add(exit);
+
         setLayout(null);
         addWindowListener(this); // Add this as a window listener
 
@@ -56,32 +73,40 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         setAlwaysOnTop(true);
         setVisible(true);
 
+
         // Adding components to the frame
-        add(msgsArea);
-        add(namesPane);
-        add(sendArea);
-        add(send);
-        add(exit);
+
     }
+
     public void exitButton(){
-        
+
     }
-    public void paint(Graphics g)
+   /* public void paint(Graphics g)
     {
         // draws the background
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(0,0,getWidth(),getHeight());
+       // g.setColor(Color.LIGHT_GRAY);
+       // g.fillRect(0,0,getWidth(),getHeight());
 
         // draws the display text to the screen
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Times New Roman",Font.BOLD,11));
+       // g.setColor(Color.WHITE);
+      //  g.setFont(new Font("Times New Roman",Font.BOLD,11));
     }
-
+*/
     public void addMsg(String msg)
     {
-        data.sendMsg(name + ": " + msg);
+        if(msg!= "")
+            data.sendMsg(name + ": " + msg);
+
     }//command to client
 
+    public void setNames(String names){
+        String[] ar = names.substring(1, names.length() - 1).split(",");
+        this.names.clear();
+        for(String s: ar){
+            this.names.add(s);
+            Collections.sort(this.names);
+        }
+    }
     @Override
     public void windowOpened(WindowEvent e) {
 
@@ -91,15 +116,14 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     @Override
     public void windowClosing(WindowEvent e) {
         try {
-            os.writeObject(new CommandFromClient(CommandFromClient.EXIT, ""));
+            os.writeObject(new CommandFromClient(CommandFromClient.EXIT, name));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
     public void closing() throws InterruptedException {
-
-
+        System.exit(0);
     }
 
     @Override
