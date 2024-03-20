@@ -35,8 +35,8 @@ public class ClientMain
                 else {
                     System.out.println("Enter your name: ");
                     name = sc.next();
-//                System.out.println("Enter the server ip address: ");
-//                ip = sc.next();
+                    System.out.println("Enter the server ip address: ");
+                    ip = sc.next();
                     os.writeObject(new CommandFromClient(CommandFromClient.JOIN, name));
                 }
             }

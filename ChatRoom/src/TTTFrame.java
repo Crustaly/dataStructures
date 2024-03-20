@@ -15,6 +15,8 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     ObjectOutputStream os;
 
     private Data data;
+
+    private ArrayList<String> names = new ArrayList<>();
     private JButton send;
     private JButton exit;
     private JTextArea namesArea;
@@ -45,7 +47,13 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
         send = new JButton("Send");
         send.setBounds(9 * 50, 9 * 50, 100, 25);
-        send.addActionListener(e -> {addMsg(sendArea.getText());});
+        send.addActionListener(e -> {
+            try {
+                os.writeObject(new CommandFromClient(CommandFromClient.SEND, msgsArea.getText()));
+            } catch (Exception o) {
+                o.printStackTrace();
+            }
+        });
         exit = new JButton("Exit"); // on clicked closes window add action listener
         exit.setBounds(9 * 50, 10 * 50, 100, 25);
         exit.addActionListener(e -> this.dispose());
@@ -57,6 +65,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         setResizable(false);
         setAlwaysOnTop(true);
         setVisible(true);
+
 
         // Adding components to the frame
         add(msgsArea);
@@ -83,16 +92,17 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     public void addMsg(String msg)
     {
         data.sendMsg(name + ": " + msg);
-        if(!msg.equals("") && msg != null){
-            try {
-                os.writeObject(new CommandFromClient(CommandFromClient.SEND, msg));
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+
     }//command to client
 
+    public void setNames(String names){
+        String[] ar = names.substring(1, names.length() - 1).split(",");
+        this.names.clear();
+        for(String s: ar){
+            this.names.add(s);
+            Collections.sort(this.names);
+        }
+    }
     @Override
     public void windowOpened(WindowEvent e) {
 
@@ -102,15 +112,14 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     @Override
     public void windowClosing(WindowEvent e) {
         try {
-            os.writeObject(new CommandFromClient(CommandFromClient.EXIT, ""));
+            os.writeObject(new CommandFromClient(CommandFromClient.EXIT, name));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
     public void closing() throws InterruptedException {
-
-
+        System.exit(0);
     }
 
     @Override
