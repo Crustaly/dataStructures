@@ -32,10 +32,9 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         this.os = os;
         this.name = name;
         this.data = data;
-        msgsArea = new JTextArea("");
         msgsArea.setEditable(false);
         msgsPane = new JScrollPane(msgsArea);
-        msgsArea.setBounds(50, 50, 7 * 50, 7 * 50);
+        msgsArea.setBounds(80, 80, 7 * 50, 7 * 50);
         namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
         namesArea.setEditable(false);
         // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
@@ -52,6 +51,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
             } catch (Exception o) {
                 o.printStackTrace();
             }
+            paint();
         });
 
         exit = new JButton("Exit"); // on clicked closes window add action listener
@@ -77,21 +77,28 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         // Adding components to the frame
 
     }
+    public void paint(){
+        String disp = "";
+        ArrayList<String>poo = data.getMsgs();
+        for(String s :poo){
+            disp+=s;
+            disp+="\n";
+        }
+        msgsArea = new JTextArea(disp);
 
+        String nam = "";
+        for(String i:names){
+            nam+=i;
+            nam+="\n";
+        }
+        namesArea = new JTextArea(nam);
+
+    }
     public void exitButton(){
 
     }
-   /* public void paint(Graphics g)
-    {
-        // draws the background
-       // g.setColor(Color.LIGHT_GRAY);
-       // g.fillRect(0,0,getWidth(),getHeight());
 
-        // draws the display text to the screen
-       // g.setColor(Color.WHITE);
-      //  g.setFont(new Font("Times New Roman",Font.BOLD,11));
-    }
-*/
+
     public void addMsg(String msg)
     {
         if(msg!= "")
