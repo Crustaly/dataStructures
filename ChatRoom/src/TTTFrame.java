@@ -48,11 +48,11 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         send.setBounds(9 * 50, 9 * 50, 100, 25);
         send.addActionListener(e -> {
             try {
-                os.writeObject(new CommandFromClient(CommandFromClient.SEND, msgsArea.getText()));
+                os.writeObject(new CommandFromClient(CommandFromClient.SEND, sendArea.getText()));
             } catch (Exception o) {
                 o.printStackTrace();
             }
-            paint();
+            repaint();
         });
 
         exit = new JButton("Exit"); // on clicked closes window add action listener
@@ -116,6 +116,8 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
             this.names.add(s);
             Collections.sort(this.names);
         }
+
+        repaint();
     }
     @Override
     public void windowOpened(WindowEvent e) {
