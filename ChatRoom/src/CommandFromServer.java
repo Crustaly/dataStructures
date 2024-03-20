@@ -15,6 +15,8 @@ public class CommandFromServer implements Serializable
     public static final int INVALID = 2;
     public static final int VALID = 3;
 
+    public static final int CONNECTED = 4;
+
     public CommandFromServer(int command, String data) {
         this.command = command;
         this.data = data;

@@ -12,17 +12,23 @@ public class ServerMain
             // creates a socket that allows connections on port 8001
             ServerSocket serverSocket = new ServerSocket(8001);
 
-            // allow X to connect and build streams to / from X
-            Socket xCon = serverSocket.accept();
-            ObjectOutputStream xos = new ObjectOutputStream(xCon.getOutputStream());
-            ObjectInputStream xis = new ObjectInputStream(xCon.getInputStream());
 
-            // Lets the client know they are the X player
-            xos.writeObject(new CommandFromServer(CommandFromServer.CONNECTED,null));
+            while(true)
+            {
+                // creates a connection to the client
+                Socket socket = serverSocket.accept();
 
-            ServersListener sl = new ServersListener(xis,xos);
-            Thread t = new Thread(sl);
-            t.start();
+                // creates a stream for writing objects to the client
+                ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
+                // creates a stream for reading objects from the client
+                ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
+
+                ServersListener sl = new ServersListener(is,os);
+                // creates a Thread for echoing to this client
+                Thread t = new Thread(new ServersListener(is,os));
+                // starts the thread (calls run)
+                t.start();
+            }
         }
         catch (Exception e)
         {
