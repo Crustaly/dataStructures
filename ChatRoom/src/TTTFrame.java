@@ -49,6 +49,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         send.addActionListener(e -> {
             try {
                 os.writeObject(new CommandFromClient(CommandFromClient.SEND, sendArea.getText()));
+                sendArea.setText("");
             } catch (Exception o) {
                 o.printStackTrace();
             }
@@ -85,14 +86,14 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
             disp+=s;
             disp+="\n";
         }
-        msgsArea = new JTextArea(disp);
+        msgsArea.setText(disp);
 
         String nam = "";
         for(String i:names){
             nam+=i;
             nam+="\n";
         }
-        namesArea = new JTextArea(nam);
+        namesArea.setText(nam);
     }
     public void exitButton(){
 
