@@ -26,13 +26,13 @@ public class ClientMain
             while(true){
                 CommandFromServer cfs = (CommandFromServer) is.readObject();
                 if(cfs.getCommand() == CommandFromServer.VALID){
-                    System.out.println("JOINED");
                     gameData.sendMsg(name + " has connected.");
                     frame = new TTTFrame(gameData, os, name);
                     System.out.println("Connected as " + name);
                     break;
                 }
-                else {
+                else{
+                    if(cfs.getCommand() == CommandFromServer.INVALID) System.out.println("Invalid username choose another");
                     System.out.println("Enter your name: ");
                     name = sc.next();
 //                        System.out.println("Enter the server ip address: ");
