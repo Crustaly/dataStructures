@@ -66,7 +66,10 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         send.setBounds(9 * 50, 9 * 50, 100, 25);
         send.addActionListener(e -> {
             try {
-                os.writeObject(new CommandFromClient(CommandFromClient.SEND, this.name+ ": " +sendArea.getText()));
+                if(!sendArea.getText().equals("")) {
+                    os.writeObject(new CommandFromClient(CommandFromClient.SEND, this.name+ ": " +sendArea.getText()));
+
+                }
                 sendArea.setText("");
             } catch (Exception o) {
                 o.printStackTrace();
@@ -115,21 +118,18 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
     public void addMsg(String msg)
     {
-        if(msg!= "") {
-            data.sendMsg(msg);
-            System.out.println(data.getMsgs());
-            mess.clear();
-            int index=0;
-            for(String ss: data.getMsgs()) {
-                if(index%2==0) {
-                    mess.addElement(ss);
-                }
-                index++;
+        data.sendMsg(msg);
 
+        System.out.println(data.getMsgs());
+        mess.clear();
+        int index = 0;
+        for (String ss : data.getMsgs()) {
+            if (index % 2 == 0) {
+                mess.addElement(ss);
             }
-
+            index++;
         }
-
+        msgsPane.setViewportView(msgsList);
 
     }//command to client
 
