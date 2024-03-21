@@ -15,16 +15,15 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     ObjectOutputStream os;
 
     private Data data;
-
+    private DefaultListModel<String> mess;
     private ArrayList<String> names = new ArrayList<>();
+    private DefaultListModel<String> people;
     private JButton send;
     private JButton exit;
     private JList<String> namesList;
     private JList<String> msgsList;
     private JScrollPane namesPane;
     private JTextArea sendArea;
-    private JTextArea msgsArea;
-
     private JScrollPane msgsPane; //for messages to show up, lines separated by names
 
     public TTTFrame(Data data, ObjectOutputStream os, String name) {
@@ -33,11 +32,19 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         this.name = name;
         this.data = data;
 
-        namesList = new JList<String>((String[]) names.toArray());
-        msgsList = new JList<String>((String[]) data.getMsgs().toArray());
+        people = new DefaultListModel<>();
+        for(String s: names){
+            people.addElement(s);
+        }
 
-        msgsArea = new JTextArea("");
-        msgsArea.setEditable(false);
+        mess = new DefaultListModel<>();
+        for(String s: data.getMsgs()){
+            mess.addElement(s);
+        }
+
+        namesList = new JList<String>(people);
+        msgsList = new JList<String>(mess);
+
         msgsPane = new JScrollPane(msgsList);
         msgsPane.setBounds(50, 50, 7 * 50, 7 * 50);
 
@@ -82,22 +89,6 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         // Adding components to the frame
 
     }
-    public void paint(){
-        String disp = "";
-        ArrayList<String>poo = data.getMsgs();
-        for(String s :poo){
-            disp+=s;
-            disp+="\n";
-        }
-        msgsArea.setText(disp);
-
-        String nam = "";
-        for(String i:names){
-            nam+=i;
-            nam+="\n";
-        }
-        namesArea.setText(nam);
-    }
     public void exitButton(){
 
     }
@@ -122,7 +113,6 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         }
         Collections.sort(this.names);
         System.out.println(names);
-        repaint();
     }
     @Override
     public void windowOpened(WindowEvent e) {

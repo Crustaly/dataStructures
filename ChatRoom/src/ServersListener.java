@@ -1,6 +1,6 @@
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import java.util.*;
 
 public class ServersListener implements Runnable
 {
@@ -45,6 +45,7 @@ public class ServersListener implements Runnable
                     else {
                         sendCommand(new CommandFromServer(CommandFromServer.VALID, null));
                         names.add(cfc.getData());
+                        Collections.sort(names);
                         sendCommand(new CommandFromServer(CommandFromServer.NEWNAMES, names.toString()));
 
                         System.out.println("valid");
