@@ -31,7 +31,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         this.os = os;
         this.name = name;
         this.data = data;
-
+        System.out.println(names);
         people = new DefaultListModel<>();
         for(String s: names){
             people.addElement(s);
@@ -44,7 +44,8 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
 
         namesList = new JList<String>(people);
         msgsList = new JList<String>(mess);
-        chatLabel = new JLabel("Chat                                                                                                                     Users");
+
+        chatLabel = new JLabel("Chat                                                                                                                  Users");
         chatLabel.setBounds(50,25,500,35);
         add(chatLabel);
         msgsPane = new JScrollPane(msgsList);
@@ -118,7 +119,11 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
             this.names.add(s);
         }
         Collections.sort(this.names);
-        System.out.println(names);
+        people.clear();
+
+        for(String s: this.names){
+            people.addElement(s);
+        }
     }
     @Override
     public void windowOpened(WindowEvent e) {

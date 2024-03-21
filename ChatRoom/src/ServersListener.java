@@ -47,8 +47,6 @@ public class ServersListener implements Runnable
                         names.add(cfc.getData());
                         Collections.sort(names);
                         sendCommand(new CommandFromServer(CommandFromServer.NEWNAMES, names.toString()));
-
-                        System.out.println("valid");
                     }
                 }
                 if(cfc.getCommand() == CommandFromClient.SEND){
