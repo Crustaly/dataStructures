@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.*;
 
+
 public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     // the letter you are playing as
     private String name;
@@ -103,8 +104,10 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     public void addMsg(String msg)
     {
         if(msg!= "") {
-            String s = name + ": " + msg;
-            data.sendMsg(s);
+            if(msg.contains("@@@")) {
+                data.sendMsg(msg.substring(0, msg.length() -3));
+            }
+            else data.sendMsg(name + ": " + msg);
             mess.clear();
             for(String ss: data.getMsgs()) {
                 mess.addElement(ss);
