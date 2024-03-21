@@ -106,7 +106,11 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         if(msg!= "") {
             String s = name + ": " + msg;
             data.sendMsg(s);
-            System.out.println(data.getMsgs());
+            mess.clear();
+            for(String ss: data.getMsgs()) {
+                mess.addElement(ss);
+            }
+
         }
 
 
@@ -118,7 +122,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         for(String s: ar){
             this.names.add(s);
         }
-        Collections.sort(this.names);
+        Collections.sort(this.names,Collections.reverseOrder());
         people.clear();
 
         for(String s: this.names){
