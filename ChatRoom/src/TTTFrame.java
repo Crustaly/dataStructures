@@ -71,7 +71,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
             } catch (Exception o) {
                 o.printStackTrace();
             }
-            repaint();
+           // repaint();
         });
 
         exit = new JButton("Exit"); // on clicked closes window add action listener
@@ -85,7 +85,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
             } catch (Exception o) {
                 o.printStackTrace();
             }
-            repaint();
+           // repaint();
         });
 
        // exit.addActionListener(e -> this.dispose());
