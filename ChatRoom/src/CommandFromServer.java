@@ -19,6 +19,8 @@ public class CommandFromServer implements Serializable
 
     public static final int NEWNAMES = 5;
 
+    public static final int SENT = 6;
+
 
     public CommandFromServer(int command, String data) {
         this.command = command;

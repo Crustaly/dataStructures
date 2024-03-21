@@ -36,6 +36,7 @@ public class ClientsListener implements Runnable
                 }
 
                 if(cfs.getCommand() == CommandFromServer.SEND){
+                    os.writeObject(new CommandFromClient(CommandFromClient.SENT,null));
                     frame.addMsg(cfs.getData());
                 }
 

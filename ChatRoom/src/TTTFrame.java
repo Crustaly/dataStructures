@@ -86,7 +86,6 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         setLayout(null);
         addWindowListener(this); // Add this as a window listener
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(12 * 50, 13 * 50);
         setResizable(false);
         setAlwaysOnTop(true);
@@ -120,14 +119,14 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         String[] ar = names.substring(1, names.length() - 1).split(",");
         this.names.clear();
         for(String s: ar){
-            this.names.add(s);
+            this.names.add(s.trim());
         }
-        Collections.sort(this.names,Collections.reverseOrder());
         people.clear();
 
         for(String s: this.names){
             people.addElement(s);
         }
+        namesPane.setViewportView(namesList);
     }
     @Override
     public void windowOpened(WindowEvent e) {

@@ -33,8 +33,8 @@ public class ServersListener implements Runnable
                 // handle the received command
                 if(cfc.getCommand()==CommandFromClient.EXIT){
                     names.remove(cfc.getData()); //once a person exits their name is no longer on the list
-
-                    sendCommand(new CommandFromServer(CommandFromServer.CLOSING, null));
+                    Collections.sort(names);
+                    sendCommand(new CommandFromServer(CommandFromServer.NEWNAMES, names.toString()));
                 }
                 if(cfc.getCommand()==CommandFromClient.JOIN){
                     System.out.println(cfc.getData());
@@ -45,11 +45,12 @@ public class ServersListener implements Runnable
                     else {
                         sendCommand(new CommandFromServer(CommandFromServer.VALID, null));
                         names.add(cfc.getData());
-                        Collections.sort(names, Collections.reverseOrder());
+                        Collections.sort(names);
                         sendCommand(new CommandFromServer(CommandFromServer.NEWNAMES, names.toString()));
                     }
                 }
                 if(cfc.getCommand() == CommandFromClient.SEND){
+                    System.out.println("ServersListener");
                     sendCommand(new CommandFromServer(CommandFromServer.SEND, cfc.getData()));
                 }
 

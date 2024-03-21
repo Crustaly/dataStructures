@@ -13,6 +13,8 @@ public class CommandFromClient implements Serializable
 
     public static final int JOIN = 2;
 
+    public static final int SENT = 3;
+
     public CommandFromClient(int command, String data) {
         this.command = command;
         this.data = data;
