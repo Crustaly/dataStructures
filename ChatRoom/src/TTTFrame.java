@@ -48,11 +48,14 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         chatLabel.setBounds(50,25,500,35);
         add(chatLabel);
         msgsPane = new JScrollPane(msgsList);
+        msgsPane.setViewportView(msgsList);
+
         msgsPane.setBounds(50, 50, 7 * 50, 7 * 50);
         msgsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
         namesPane = new JScrollPane(namesList);
+        namesPane.setViewportView(namesList);
         namesPane.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
         sendArea = new JTextArea();
         sendArea.setBounds(50, 9 * 50, 7 * 50, 2 * 50);
