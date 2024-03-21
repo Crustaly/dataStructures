@@ -35,6 +35,8 @@ public class ServersListener implements Runnable
                     names.remove(cfc.getData()); //once a person exits their name is no longer on the list
                     Collections.sort(names);
                     sendCommand(new CommandFromServer(CommandFromServer.NEWNAMES, names.toString()));
+                    sendCommand(new CommandFromServer(CommandFromServer.SEND,cfc.getData()+" has disconnected"));
+                    sendCommand(new CommandFromServer(CommandFromServer.SEND,cfc.getData()+" has disconnected"));
                 }
                 if(cfc.getCommand()==CommandFromClient.JOIN){
                     System.out.println(cfc.getData());
