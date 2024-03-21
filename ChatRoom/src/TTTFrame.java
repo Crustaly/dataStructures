@@ -26,16 +26,23 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     private JTextArea msgsArea;
 
     private JScrollPane msgsPane; //for messages to show up, lines separated by names
-
+    private JLabel chat;
     public TTTFrame(Data data, ObjectOutputStream os, String name) {
         super("Chat Room");
         this.os = os;
         this.name = name;
         this.data = data;
+        chat = new JLabel("Chat                                                                                                                      Users");
+        chat.setBounds(50,25,500,35);
+        add(chat);
+
         msgsArea = new JTextArea("");
         msgsArea.setEditable(false);
         msgsPane = new JScrollPane(msgsArea);
         msgsPane.setBounds(50, 50, 7 * 50, 7 * 50);
+
+        msgsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
         namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
         namesArea.setEditable(false);
         // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
