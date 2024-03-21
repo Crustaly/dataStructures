@@ -71,12 +71,24 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
             } catch (Exception o) {
                 o.printStackTrace();
             }
-            repaint();
+           // repaint();
         });
 
         exit = new JButton("Exit"); // on clicked closes window add action listener
         exit.setBounds(9 * 50, 10 * 50, 100, 25);
-        exit.addActionListener(e -> this.dispose());
+        exit.addActionListener(e -> {
+            try {
+                os.writeObject(new CommandFromClient(CommandFromClient.SEND, this.name+ " has disconnected."));
+                os.writeObject(new CommandFromClient(CommandFromClient.EXIT, this.name));
+                sendArea.setText("");
+                this.dispose();
+            } catch (Exception o) {
+                o.printStackTrace();
+            }
+           // repaint();
+        });
+
+       // exit.addActionListener(e -> this.dispose());
         exit.setVisible(true);
         add(msgsPane);
         add(namesPane);
@@ -107,8 +119,13 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
             data.sendMsg(msg);
             System.out.println(data.getMsgs());
             mess.clear();
+            int index=0;
             for(String ss: data.getMsgs()) {
-                mess.addElement(ss);
+                if(index%2==0) {
+                    mess.addElement(ss);
+                }
+                index++;
+
             }
 
         }
