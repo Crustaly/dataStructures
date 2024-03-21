@@ -15,38 +15,41 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     ObjectOutputStream os;
 
     private Data data;
-
+    private DefaultListModel<String> mess;
     private ArrayList<String> names = new ArrayList<>();
+    private DefaultListModel<String> people;
     private JButton send;
     private JButton exit;
-    private JTextArea namesArea;
-
+    private JList<String> namesList;
+    private JList<String> msgsList;
     private JScrollPane namesPane;
     private JTextArea sendArea;
-    private JTextArea msgsArea;
-
     private JScrollPane msgsPane; //for messages to show up, lines separated by names
-    private JLabel chat;
+
     public TTTFrame(Data data, ObjectOutputStream os, String name) {
         super("Chat Room");
         this.os = os;
         this.name = name;
         this.data = data;
-        chat = new JLabel("Chat                                                                                                                      Users");
-        chat.setBounds(50,25,500,35);
-        add(chat);
 
-        msgsArea = new JTextArea("");
-        msgsArea.setEditable(false);
-        msgsPane = new JScrollPane(msgsArea);
+        people = new DefaultListModel<>();
+        for(String s: names){
+            people.addElement(s);
+        }
+
+        mess = new DefaultListModel<>();
+        for(String s: data.getMsgs()){
+            mess.addElement(s);
+        }
+
+        namesList = new JList<String>(people);
+        msgsList = new JList<String>(mess);
+
+        msgsPane = new JScrollPane(msgsList);
         msgsPane.setBounds(50, 50, 7 * 50, 7 * 50);
 
-        msgsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-        namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
-        namesArea.setEditable(false);
         // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
-        namesPane = new JScrollPane(namesArea);
+        namesPane = new JScrollPane(namesList);
         namesPane.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
         sendArea = new JTextArea();
         sendArea.setBounds(50, 9 * 50, 7 * 50, 2 * 50);
@@ -86,22 +89,6 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         // Adding components to the frame
 
     }
-    public void paint(){
-        String disp = "";
-        ArrayList<String>poo = data.getMsgs();
-        for(String s :poo){
-            disp+=s;
-            disp+="\n";
-        }
-        msgsArea.setText(disp);
-
-        String nam = "";
-        for(String i:names){
-            nam+=i;
-            nam+="\n";
-        }
-        namesArea.setText(nam);
-    }
     public void exitButton(){
 
     }
@@ -126,7 +113,6 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         }
         Collections.sort(this.names);
         System.out.println(names);
-        repaint();
     }
     @Override
     public void windowOpened(WindowEvent e) {
