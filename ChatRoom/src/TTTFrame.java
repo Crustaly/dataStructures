@@ -19,8 +19,8 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     private ArrayList<String> names = new ArrayList<>();
     private JButton send;
     private JButton exit;
-    private JTextArea namesArea;
-
+    private JList<String> namesList;
+    private JList<String> msgsList;
     private JScrollPane namesPane;
     private JTextArea sendArea;
     private JTextArea msgsArea;
@@ -32,14 +32,17 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         this.os = os;
         this.name = name;
         this.data = data;
+
+        namesList = new JList<String>((String[]) names.toArray());
+        msgsList = new JList<String>((String[]) data.getMsgs().toArray());
+
         msgsArea = new JTextArea("");
         msgsArea.setEditable(false);
-        msgsPane = new JScrollPane(msgsArea);
+        msgsPane = new JScrollPane(msgsList);
         msgsPane.setBounds(50, 50, 7 * 50, 7 * 50);
-        namesArea = new JTextArea(); // add names from data.getNames(), new line after every name
-        namesArea.setEditable(false);
+
         // namesArea.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
-        namesPane = new JScrollPane(namesArea);
+        namesPane = new JScrollPane(namesList);
         namesPane.setBounds(50 * 9, 50, 50 * 2, 50 * 7);
         sendArea = new JTextArea();
         sendArea.setBounds(50, 9 * 50, 7 * 50, 2 * 50);
