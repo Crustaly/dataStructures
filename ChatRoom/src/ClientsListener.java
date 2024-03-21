@@ -25,7 +25,7 @@ public class ClientsListener implements Runnable
                 CommandFromServer cfs = (CommandFromServer)is.readObject();
                 if(cfs.getCommand()==CommandFromServer.CLOSING) {
                     try {
-                        frame.addMsg(cfs.getData());
+                       // frame.addMsg(cfs.getData());
                         frame.closing();
                     } catch (InterruptedException e) {
                         System.out.println("Exception exit");
