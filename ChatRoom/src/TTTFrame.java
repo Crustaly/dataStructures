@@ -66,7 +66,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
         send.setBounds(9 * 50, 9 * 50, 100, 25);
         send.addActionListener(e -> {
             try {
-                os.writeObject(new CommandFromClient(CommandFromClient.SEND, sendArea.getText()));
+                os.writeObject(new CommandFromClient(CommandFromClient.SEND, this.name+ ": " +sendArea.getText()));
                 sendArea.setText("");
             } catch (Exception o) {
                 o.printStackTrace();
@@ -104,10 +104,7 @@ public class TTTFrame extends JFrame implements WindowListener, ActionListener {
     public void addMsg(String msg)
     {
         if(msg!= "") {
-            if(msg.contains("@@@")) {
-                data.sendMsg(msg.substring(0, msg.length() -3));
-            }
-            else data.sendMsg(name + ": " + msg);
+            data.sendMsg(msg);
             System.out.println(data.getMsgs());
             mess.clear();
             for(String ss: data.getMsgs()) {
