@@ -44,7 +44,7 @@ public class ServersListener implements Runnable
                         System.out.println("invalid");
                     }
                     else {
-                        sendCommand(new CommandFromServer(CommandFromServer.VALID, null));
+                        os.writeObject(new CommandFromServer(CommandFromServer.VALID, null));
                         names.add(cfc.getData());
                         Collections.sort(names);
                         sendCommand(new CommandFromServer(CommandFromServer.NEWNAMES, names.toString()));
