@@ -27,6 +27,7 @@ public class ClientMain
                 CommandFromServer cfs = (CommandFromServer) is.readObject();
                 if(cfs.getCommand() == CommandFromServer.VALID){
                     frame = new TTTFrame(gameData, os, name);
+                    frame.setNames(cfs.getData());
                     os.writeObject(new CommandFromClient(CommandFromClient.SEND, name + " has connected."));
                     System.out.println("Connected as " + name);
                     break;
