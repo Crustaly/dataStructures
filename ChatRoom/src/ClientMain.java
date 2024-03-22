@@ -25,20 +25,20 @@ public class ClientMain
 
             while(true){
                 CommandFromServer cfs = (CommandFromServer) is.readObject();
+                System.out.println("Enter your name: ");
+                name = sc.next();
+                os.writeObject(new CommandFromClient(CommandFromClient.JOIN, name));
+
                 if(cfs.getCommand() == CommandFromServer.VALID){
                     frame = new TTTFrame(gameData, os, name);
                     os.writeObject(new CommandFromClient(CommandFromClient.SEND, name + " has connected."));
                     System.out.println("Connected as " + name);
                     break;
                 }
-                else{
-                    if(cfs.getCommand() == CommandFromServer.INVALID) System.out.println("Invalid username choose another");
-                    System.out.println("Enter your name: ");
-                    name = sc.next();
-//                        System.out.println("Enter the server ip address: ");
-//                        ip = sc.next();
-                    os.writeObject(new CommandFromClient(CommandFromClient.JOIN, name));
+                else if(cfs.getCommand() == CommandFromServer.INVALID){
+                    System.out.println("Invalid username choose another");
                 }
+
             }
 
             // Starts a thread that listens for commands from the server
