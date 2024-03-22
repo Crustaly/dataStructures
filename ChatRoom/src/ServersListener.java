@@ -37,7 +37,7 @@ public class ServersListener implements Runnable
                     sendCommand(new CommandFromServer(CommandFromServer.NEWNAMES, names.toString()));
                 }
                 if(cfc.getCommand()==CommandFromClient.JOIN){
-                    System.out.println(cfc.getData());
+                   // System.out.println(syst===cfc.getData());
                     if(names.contains(cfc.getData())){
 
                         os.writeObject(new CommandFromServer(CommandFromServer.INVALID, null));
