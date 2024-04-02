@@ -37,6 +37,9 @@ public class frame extends JFrame implements WindowListener{
 
     public frame() throws SQLException, ClassNotFoundException{
         super("School Manager");
+        Class.forName("com.mysql.jbdc.Driver");
+        Connection con = DriverManager.getConnection("jbdc:mysql://localhost:3306/school_manager", "root", "password");
+        sn = con.createStatement();
         setSize(1000,1000);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(null);
@@ -46,7 +49,7 @@ public class frame extends JFrame implements WindowListener{
 
 
         file = new JMenu("File");
-        importData = new JMenuItem("Import"); //add action listener later
+        importData = new JMenuItem("Import");//add action listener later
         // 1) get rid of existing tables
         // 2) Create new tables from data (JFileChooser)
         // 2a) data comma separated
@@ -56,6 +59,18 @@ public class frame extends JFrame implements WindowListener{
         // 2) separate diff view data w/ headers
 
         purge = new JMenuItem("Purge");
+        purge.addActionListener(e -> {
+            try {
+                sn.execute("DROP TABLE IF EXISTS teacher");
+                sn.execute("DROP TABLE IF EXISTS student");
+                sn.execute("DROP TABLE IF EXISTS course");
+                sn.execute("DROP TABLE IF EXISTS section");
+            }
+            catch (Exception o){
+                o.printStackTrace();
+            }
+            System.exit(0);
+        });
         // delete tables & exit
 
         exit = new JMenuItem("Exit");
