@@ -1,14 +1,12 @@
-import javax.swing.*;
+import java.util.*;
 import java.awt.*;
-import java.awt.event.*;
+import javax.swing.*;
 import java.sql.*;
-import java.sql.SQLException;
-
-
+import java.awt.event.*;
 public class Frame extends JFrame implements WindowListener{
     static JMenuBar bar;
     static JMenu file;
-    static JMenuItem exportData;//
+    static JMenuItem exportData;
     static JMenuItem importData;
     static JMenuItem purge;
     static JMenuItem exit;
@@ -47,119 +45,8 @@ public class Frame extends JFrame implements WindowListener{
         // 2a) data comma separated
 
         exportData = new JMenuItem("Export");
-        //done with this part!
-        importData.addActionListener(e ->
-        {
-            System.out.println("export test");
-            try {
-                sn.execute("DROP TABLE IF EXISTS student");
-                sn.execute("DROP TABLE IF EXISTS teacher");
-                sn.execute("DROP TABLE IF EXISTS course");
-                sn.execute("DROP TABLE IF EXISTS section");
-                sn.execute("CREATE TABLE IF NOT EXISTS student(" +
-                        "id INTEGER NOT NULL AUTO_INCREMENT,"+
-                        "first_name TEXT NOT NULL," +
-                        "last_name TEXT NOT NULL," +
-                        "sections TEXT NOT NULL," +
-                        "PRIMARY KEY(id)"+
-                        ");");
-                sn.execute("CREATE TABLE IF NOT EXISTS teacher(" +
-                        "id INTEGER NOT NULL AUTO_INCREMENT,"+
-                        "first_name TEXT NOT NULL," +
-                        "last_name TEXT NOT NULL," +
-                        "PRIMARY KEY(id)"+
-                        ");");
-                sn.execute("CREATE TABLE IF NOT EXISTS section(" +
-                        "id INTEGER NOT NULL AUTO_INCREMENT,"+
-                        "course_id INTEGER NOT NULL," +
-                        "teacher_id INTEGER NOT NULL," +
-                        "PRIMARY KEY(id)"+
-                        ");");
-                sn.execute("CREATE TABLE IF NOT EXISTS course(" +
-                        "id INTEGER NOT NULL AUTO_INCREMENT,"+
-                        "title TEXT NOT NULL," +
-                        "type INTEGER NOT NULL," +
-                        "PRIMARY KEY(id)"+
-                        ");");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-
-            JFileChooser fileChooser = new JFileChooser();
-            int response = fileChooser.showOpenDialog(null);
-            if(response==JFileChooser.APPROVE_OPTION) {
-                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-
-
-
-
-
-                try {
-                    Scanner sc = new Scanner(file);
-                    sc.nextLine();
-                    while(sc.hasNextLine()) {
-                        String str = sc.nextLine();
-                        if(str.contains("Teacher")||str.contains("teacher")) {
-                            break;
-                        }
-                        String[] ar = str.split(", ");
-                        int id = Integer.parseInt(ar[0]);
-                        String firstName = ar[1];
-                        String lastName = ar[2];
-                        String sections = ar[3];
-                        sn.executeUpdate(" insert into student(id, first_name, last_name, sections) values ("+id+",\'"+firstName+"\', \'"+lastName+"\', \'"+sections+"\');");
-                    }
-
-
-
-                    while(sc.hasNextLine()) {
-                        String str = sc.nextLine();
-                        if(str.contains("Courses")||str.contains("courses")) {
-                            break;
-                        }
-                        String[] ar = str.split(", ");
-                        int id = Integer.parseInt(ar[0]);
-                        String firstName = ar[1];
-                        String lastName = ar[2];
-                        sn.executeUpdate(" insert into teacher(id, first_name, last_name) values ("+id+",\'"+firstName+"\', \'"+lastName+"\');");
-
-                        }
-                    //  } catch (FileNotFoundException | SQLException ex) {
-                    //     System.out.println("Couldn't load teacher file");
-                    //  }
-
-                    // try {
-                    //Scanner sc = new Scanner(file);
-                    while(sc.hasNextLine()) {
-                        String str = sc.nextLine();
-                        if(str.contains("Section")||str.contains("section")) {
-                            break;
-                        }
-                        String[] ar = str.split(", ");
-                        int id = Integer.parseInt(ar[0]);
-                        sn.executeUpdate(" insert into course(id, title, type) values ("+id+",\'"+ar[1]+"\', \'"+ar[2]+"\');");
-                    }
-
-                    while(sc.hasNextLine()) {
-                        String str = sc.nextLine();
-                        String[] ar = str.split(", ");
-                        int id = Integer.parseInt(ar[0]);
-                        int course_id = Integer.parseInt(ar[1]);
-                        int teacher_id = Integer.parseInt(ar[2]);
-                        sn.executeUpdate(" insert into section(id, course_id, teacher_id) values ("+id+", "+course_id+", "+teacher_id+");");
-                    }
-                } catch (FileNotFoundException | SQLException ex) {
-                    System.out.println("Couldn't load sectoin file");
-                }
-
-
-
-
-            }
-
-
-
-        });
+        // 1) printwriter
+        // 2) separate diff view data w/ headers
 
         purge = new JMenuItem("Purge");
         purge.addActionListener(e -> {
