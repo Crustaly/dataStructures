@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class Frame extends JFrame implements WindowListener{
     static JMenuBar bar;
     static JMenu file;
-    static JMenuItem exportData;
+    static JMenuItem exportData;//
     static JMenuItem importData;
     static JMenuItem purge;
     static JMenuItem exit;
