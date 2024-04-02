@@ -2,19 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import java.awt.event.KeyListener;
-import java.io.*;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.*;
 
 
-
-public class frame extends JFrame implements WindowListener{
+public class Frame extends JFrame implements WindowListener{
     static JMenuBar bar;
-
     static JMenu file;
     static JMenuItem exportData;
     static JMenuItem importData;
@@ -35,7 +27,7 @@ public class frame extends JFrame implements WindowListener{
     static Panel sectionPanel;
     static Panel coursePanel;
 
-    public frame() throws SQLException, ClassNotFoundException{
+    public Frame() throws SQLException, ClassNotFoundException{
         super("School Manager");
         Class.forName("com.mysql.jbdc.Driver");
         Connection con = DriverManager.getConnection("jbdc:mysql://localhost:3306/school_manager", "root", "password");
@@ -114,11 +106,6 @@ public class frame extends JFrame implements WindowListener{
 
         setJMenuBar(bar);
     }
-    public static void main(String[] args) {
-
-
-    }
-
     @Override
     public void windowOpened(WindowEvent e) {
 
