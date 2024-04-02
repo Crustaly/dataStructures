@@ -2,13 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import java.sql.SQLException;
 
 
 public class Frame extends JFrame implements WindowListener{
     static JMenuBar bar;
     static JMenu file;
-    static JMenuItem exportData;//
+    static JMenuItem exportData;
     static JMenuItem importData;
     static JMenuItem purge;
     static JMenuItem exit;
@@ -29,7 +28,7 @@ public class Frame extends JFrame implements WindowListener{
 
     public Frame() throws SQLException, ClassNotFoundException{
         super("School Manager");
-        Class.forName("com.mysql.jbdc.Driver");
+        Class.forName("com.mysql.cj.jbdc.Driver");
         Connection con = DriverManager.getConnection("jbdc:mysql://localhost:3306/school_manager", "root", "password");
         sn = con.createStatement();
         setSize(1000,1000);
