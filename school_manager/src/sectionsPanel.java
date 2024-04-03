@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Collections;
-
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 /*Sections
 Allows you to add / remove sections and edit their data.
 Display
@@ -68,4 +70,56 @@ public class sectionsPanel extends JPanel{
     JLabel sectionLabel = new JLabel("Sections");
     JLabel courseLabel = new JLabel("Courses");
     JLabel studentLabel = new JLabel("Students");
+    public sectionsPanel(int w, int h, Statement statementName) throws SQLException {
+        sectionLabel.setBounds(250, 20, 100, 40);
+        add(sectionLabel);
+        courseLabel.setBounds(50, 20, 100, 40);
+        add(courseLabel);
+        studentLabel.setBounds(450, 20, 100, 40);
+        add(studentLabel);
+
+        scrolling = new JScrollPane(myCourses);
+        scrolling.setBounds(50, 50, 180, 350);
+        add(scrolling);
+
+        scrollingTwo = new JScrollPane(mySections);
+        scrollingTwo.setBounds(250, 50, 180, 350);
+        add(scrollingTwo);
+
+        scrollingThree = new JScrollPane(myStudents);
+        scrollingThree.setBounds(450, 50, 180, 350);
+        add(scrollingThree);
+
+        ID.setBounds(250, 420, 70, 30);
+        add(ID);
+
+        IDText.setEditable(false);
+        IDText.setBounds(330, 420, 70, 30);
+        add(IDText);
+
+        course.setBounds(250, 460, 70, 30);
+        add(course);
+
+        courseText.setBounds(330, 460, 70, 30);
+        add(courseText);
+
+        teacher.setBounds(250, 500, 70, 30);
+        add(teacher);
+
+        teacherText.setBounds(330, 500, 70, 30);
+        add(teacherText);
+
+        studentIDLabel.setBounds(450, 420, 70, 30);
+        add(studentIDLabel);
+
+        //studentID.setEditable(false);
+        studentID.setBounds(530, 420, 70, 30);
+        add(studentID);
+
+
+        saveStudent.setBounds(450, 540, 140, 30);
+        add(saveStudent);
+    }
+
+
 }
