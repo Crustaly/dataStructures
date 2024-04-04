@@ -43,5 +43,44 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
     JList<coursesData> myContacts = new JList<>();
 
     JScrollPane scrolling = new JScrollPane();
+    public coursePanel(int width, int height, Statement sn) throws SQLException{
+        setSize(width, height);
+        setLayout(null);
+        ID.setBounds(280,100,100,50);
+        add(ID);
+        ids.setText("");
+        ids.setBounds(390,120,100,20);
+        ids.setEditable(false);
+        add(ids);
 
+        setVisible(true);
+
+        courseName.setBounds(280, 150, 100, 20);
+        add(courseName);
+        course.setText("");
+        course.setBounds(390, 150, 100, 20);
+        add(course);
+
+
+        bg.add(academic);
+        bg.add(kap);
+        bg.add(ap);
+        academic.setBounds(280,250,100,20);
+        kap.setBounds(280,290,100,20);
+        ap.setBounds(280,330,100,20);
+        academic.setSelected(false);
+        kap.setSelected(false);
+        ap.setSelected(false);
+        add(academic);
+        add(kap);
+        add(ap);
+
+
+        saveChanges.setBounds(280, 380, 100, 20);
+        saveChanges.setText("Save Changes");
+        saveChanges.setVisible(true);
+        add(saveChanges);
+        setVisible(true);
+
+    }
 }
