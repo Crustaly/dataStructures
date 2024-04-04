@@ -84,6 +84,23 @@ public class StudentPanel extends JPanel{
         saveChanges.setVisible(true);
         add(saveChanges);
         setVisible(true);
+        //save changes here add
+
+        deleteContact.setBounds(390, 310, 100, 20);
+        add(deleteContact);
+
+        save.setBounds(280, 280, 100, 20);
+        add(save);
+
+        clear.setBounds(390, 280, 100, 20);
+        add(clear);
+
+        scrolling = new JScrollPane(myContacts);
+        scrolling.setBounds(50, 50, 180, 350);
+        add(scrolling);
+
+
+
 
     }
 
