@@ -26,26 +26,20 @@ Deleting a course will delete all corresponding sections of the course and updat
 Deleting a section will update the teachers / students in those section to no longer have those sections.*/
 
 public class sectionsPanel extends JPanel{
-    ArrayList<coursesData> allMyCourses = new ArrayList<>();
-    JList<coursesData> myCourses = new JList<>();
-    JScrollPane scrolling = new JScrollPane();
-
+    ArrayList<coursesData> allCourses = new ArrayList<>();
+    JList<coursesData> coursesList = new JList<>();
+    JScrollPane scroll = new JScrollPane();
     JButton save = new JButton("Save");
     JButton clear = new JButton("Clear");
     JButton saveSectionChanges = new JButton("Save Changes");
     JButton deleteSection = new JButton("Delete Section");
-
-
     JButton saveStudent = new JButton("Save Student");
     JButton deleteStudent = new JButton("Delete Student");
-
     JButton saveChanges = new JButton("Save changes");
     JButton deleteContact = new JButton("Delete contact");
-
-    ArrayList<sectionData> allMySections = new ArrayList<>();
-    JList<sectionData> mySections = new JList<>();
-    JScrollPane scrollingTwo = new JScrollPane();
-
+    ArrayList<sectionData> allSections = new ArrayList<>();
+    JList<sectionData> sectionsList = new JList<>();
+    JScrollPane scroll2 = new JScrollPane();
     ArrayList<Data> allMyStudents = new ArrayList<>();
     JList<Data> myStudents = new JList<>();
     JScrollPane scrollingThree = new JScrollPane();
@@ -78,13 +72,13 @@ public class sectionsPanel extends JPanel{
         studentLabel.setBounds(450, 20, 100, 40);
         add(studentLabel);
 
-        scrolling = new JScrollPane(myCourses);
-        scrolling.setBounds(50, 50, 180, 350);
-        add(scrolling);
+        scroll= new JScrollPane(coursesList);
+        scroll.setBounds(50, 50, 180, 350);
+        add(scroll);
 
-        scrollingTwo = new JScrollPane(mySections);
-        scrollingTwo.setBounds(250, 50, 180, 350);
-        add(scrollingTwo);
+        scroll2 = new JScrollPane(sectionsList);
+        scroll2.setBounds(250, 50, 180, 350);
+        add(scroll2);
 
         scrollingThree = new JScrollPane(myStudents);
         scrollingThree.setBounds(450, 50, 180, 350);
