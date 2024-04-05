@@ -150,7 +150,7 @@ public class StudentPanel extends JPanel{
             last.setText("");
             IDs.setText("");
             storage.remove(s);
-            storage = sort(storage);
+            storage = Collections.sort(storage, );
             myContacts.setListData(storage.toArray(new Data[0]));
             saveChanges.setVisible(false);
             deleteContact.setVisible(false);
@@ -179,7 +179,7 @@ public class StudentPanel extends JPanel{
             } else {
                 Data temp = new Data(first.getText(), last.getText(), IDs.getText());
                 storage.add(temp);
-                storage = sort(storage);
+                storage = Collections.sort(storage);
                 myContacts.setListData(storage.toArray(new Data[0]));
                 first.setText("");
                 last.setText("");
@@ -214,24 +214,6 @@ public class StudentPanel extends JPanel{
 
 
     }
-    public ArrayList<Data> sort (ArrayList < Data > a)
-    {
-        ArrayList<String> temp = new ArrayList<>();
-        ArrayList<Data> output = new ArrayList<>();
-        for (int i = 0; i < a.size(); i++) {
-            temp.add(a.get(i).toString());
-        }
-        Collections.sort(temp, String.CASE_INSENSITIVE_ORDER);
-        for (int i = 0; i < temp.size(); i++) {
-            // place the data in the now sorted order
-            String name = temp.get(i);
-            for (int in = 0; in < a.size(); in++) {
-                if (a.get(in).toString().compareTo(name) == 0) {
-                    output.add(a.get(in));
-                }
-            }
-        }
-        return output;
-    }
+
 
 }
