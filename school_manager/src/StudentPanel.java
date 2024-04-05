@@ -81,13 +81,13 @@ public class StudentPanel extends JPanel{
 
         lastName.setBounds(280, 150, 100, 20);
         add(lastName);
-        last.setText("last");//get from sql
+        last.setText("last");
         last.setBounds(390, 150, 100, 20);
         add(last);
 
         ID.setBounds(280, 200, 100, 20);
         add(ID);
-        IDs.setText("ID");//get from sql
+        IDs.setText("ID");
         IDs.setBounds(390, 200, 100, 20);
         IDs.setEditable(false);
         add(IDs);
@@ -120,7 +120,7 @@ public class StudentPanel extends JPanel{
 
             try
             {
-                //UPDATE student SET first_name=’Matt’ WHERE student_id=3;
+                //hello i am crysatl yang please do the sql stuff and set up
                 System.out.println(first.getText());
                 String firstName = temporary.getFirst();
                 String lastName = temporary.getLast();
@@ -128,8 +128,7 @@ public class StudentPanel extends JPanel{
                 statementName.executeUpdate("UPDATE student SET first_name='" + firstName +"' WHERE id=" + ID + ";");
                 statementName.executeUpdate("UPDATE student SET last_name='" + lastName   +"' WHERE id=" +  ID + ";");
 
-//                statementName.executeUpdate("UPDATE teacher SET first_name='" + firstName + "' AND SET last_name='" + lastName + "' WHERE id=" + ID + "");
-                //how to execute in SQL?
+//               update student and first nae and id
             }
             catch(Exception a)
             {
@@ -142,8 +141,67 @@ public class StudentPanel extends JPanel{
         deleteContact.setBounds(390, 310, 100, 20);
         add(deleteContact);
 
+        deleteContact.addActionListener(e ->
+        {
+            System.out.println("Tried to delete");
+            Data s = myContacts.getSelectedValue();
+            int ids = Integer.parseInt(s.getID());
+            first.setText("");
+            last.setText("");
+            IDs.setText("");
+            storage.remove(s);
+            storage = sort(storage);
+            myContacts.setListData(storage.toArray(new Data[0]));
+            saveChanges.setVisible(false);
+            deleteContact.setVisible(false);
+            save.setVisible(true);
+            clear.setVisible(true);
+            System.out.println("Got here");
+
+            try {
+                statementName.executeUpdate("DELETE FROM student WHERE id =" + ids + ";");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                System.out.println("Not good in delete contact");
+            }
+        });
+
         save.setBounds(280, 280, 100, 20);
         add(save);
+
+        save.addActionListener(e ->
+        {
+            System.out.println("Tried to save");
+
+            if (first.getText().equals("") || last.getText().equals("")) {
+                System.out.println("bad input");
+                message("put in input please bruh", "Message");
+            } else {
+                Data temp = new Data(first.getText(), last.getText(), IDs.getText());
+                storage.add(temp);
+                storage = sort(storage);
+                myContacts.setListData(storage.toArray(new Data[0]));
+                first.setText("");
+                last.setText("");
+                IDs.setText("");
+
+                try {
+                    String blank = "";
+                    statementName.executeUpdate("INSERT INTO student (first_name, last_name, sections) VALUES ('" + temp.getFirst() + "', '" + temp.getLastName() + "', '" + blank+ "');");
+                    //do first name last, and sections
+                    ResultSet update = statementName.executeQuery("SELECT id FROM student WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLastName() + "';");
+                    int maxID = -1;
+                    while(update!=null&&update.next()) {
+                        maxID = Math.max(maxID, update.getInt("id"));
+                    }
+                    temp.setID(maxID + "");
+                    myContacts.setListData(storage.toArray(new Data[0]));
+                } catch (SQLException ex) {
+                    System.out.println("Exception is save method");
+                    ex.printStackTrace();
+                }
+            }
+        });
 
         clear.setBounds(390, 280, 100, 20);
         add(clear);
@@ -165,7 +223,7 @@ public class StudentPanel extends JPanel{
         }
         Collections.sort(temp, String.CASE_INSENSITIVE_ORDER);
         for (int i = 0; i < temp.size(); i++) {
-            //want to place the items in the now sorted order
+            // place the data in the now sorted order
             String name = temp.get(i);
             for (int in = 0; in < a.size(); in++) {
                 if (a.get(in).toString().compareTo(name) == 0) {

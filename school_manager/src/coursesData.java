@@ -43,6 +43,8 @@ public class coursesData
         return false;
     }
 
-
+    public int compareTo(coursesData o) {
+        return getCourseName().compareTo(o.getCourseName());
+    }
 
 }

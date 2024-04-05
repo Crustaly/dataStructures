@@ -34,4 +34,7 @@ public class sectionData {
     public int getTeacherId() {
         return teacherId;
     }
+    public int compareTo(sectionData o) {
+        return Integer.compare(getId(),o.getId());
+    }
 }
