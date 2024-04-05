@@ -18,8 +18,7 @@ public class TeacherPanel extends JPanel{
     JList<Data> dataList = new JList<>();
     JScrollPane scroll1 = new JScrollPane();
     ArrayList<sectionData> sections = new ArrayList<>();
-    JList<sectionData> secList = new JList<>();
-    JScrollPane scroll2 = new JScrollPane();
+    JTable sectionsTable;
 
     public TeacherPanel(int width, int height, Statement sn) throws SQLException{
         setSize(width, height);
@@ -52,6 +51,53 @@ public class TeacherPanel extends JPanel{
         saveChanges.setVisible(true);
         add(saveChanges);
         saveChanges.addActionListener(e -> {
+
+        });
+
+        deleteContact.setBounds(390, 310, 100, 20);
+        add(deleteContact);
+        deleteContact.addActionListener(e -> {
+            Data s = dataList.getSelectedValue();
+            int ids = Integer.parseInt(s.getID());
+            first.setText("");
+            last.setText("");
+            data.remove(s);
+            Collections.sort(data);
+            dataList.setListData(data.toArray(new Data[0]));
+            saveChanges.setVisible(false);
+            deleteContact.setVisible(false);
+            save.setVisible(true);
+            clear.setVisible(true);
+            ArrayList<Integer> sectionIDList = new ArrayList<>();
+            try {
+                ResultSet rs = sn.executeQuery("SELECT * FROM section where teacher_id="+Integer.parseInt(IDs.getText())+";"); //removes teacher from sections
+                while(rs!=null&&rs.next()) {
+                    int sectionId = rs.getInt("id");
+                    sectionIDList.add(sectionId);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            for(int sectionID : sectionIDList) {
+                try {
+                    sn.executeUpdate("UPDATE section set teacher_id=-1 where id="+sectionID+";");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            IDs.setText("");
+
+            try {
+                sn.executeUpdate("DELETE FROM teacher WHERE id =" + ids + ";");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        save.setBounds(280, 280, 100, 20);
+        add(save);
+        save.addActionListener(e ->{
             if (first.getText().equals("") || last.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Not valid", "Message", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -74,20 +120,7 @@ public class TeacherPanel extends JPanel{
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-
             }
-        });
-
-        deleteContact.setBounds(390, 310, 100, 20);
-        add(deleteContact);
-        deleteContact.addActionListener(e -> {
-            //implement later
-        });
-
-        save.setBounds(280, 280, 100, 20);
-        add(save);
-        save.addActionListener(e ->{
-
         });
 
         clear.setBounds(390, 280, 100, 20);
@@ -108,9 +141,11 @@ public class TeacherPanel extends JPanel{
         scroll1.setBounds(50, 50, 180, 350);
         add(scroll1);
 
-        scroll2 = new JScrollPane(secList);
-        scroll2.setBounds(50,420,180,200);
-        add(scroll2);
+        //sections updates based on teacher clicked
+        String[] colNames = {"Section ID","Course"};
+        String ss[][] = new String[sections.size()][2];
+
+        sectionsTable = new JTable(ss, colNames);
 
         setVisible(true);
     }
