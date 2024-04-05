@@ -14,7 +14,7 @@ public class TeacherPanel extends JPanel{
     JButton clear = new JButton("Clear");
     JButton saveChanges = new JButton("Save changes");
     JButton deleteContact = new JButton("Delete contact");
-    ArrayList<Data> teachers = new ArrayList<>();
+    ArrayList<Data> data = new ArrayList<>();
     JList<Data> dataList = new JList<>();
     JScrollPane scroll1 = new JScrollPane();
     ArrayList<sectionData> sections = new ArrayList<>();
@@ -52,7 +52,30 @@ public class TeacherPanel extends JPanel{
         saveChanges.setVisible(true);
         add(saveChanges);
         saveChanges.addActionListener(e -> {
-            //implement later
+            if (first.getText().equals("") || last.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Not valid", "Message", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                Data temp = new Data(first.getText(), last.getText(), IDs.getText());
+                data.add(temp);
+                Collections.sort(data);
+                dataList.setListData(data.toArray(new Data[0]));
+                first.setText("");
+                last.setText("");
+                IDs.setText("");
+                try {
+                    sn.executeUpdate("INSERT INTO teacher (first_name, last_name) VALUES ('" + temp.getFirst() + "', '" + temp.getLast() + "');");
+                    ResultSet update = sn.executeQuery("SELECT id FROM teacher WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
+                    int maxID = -1;
+                    while(update!=null&&update.next()) {
+                        maxID = Math.max(maxID, update.getInt("id"));
+                    }
+                    temp.setID(maxID + "");
+                    dataList.setListData(data.toArray(new Data[0]));
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
         });
 
         deleteContact.setBounds(390, 310, 100, 20);
@@ -75,8 +98,8 @@ public class TeacherPanel extends JPanel{
             IDs.setText("");
         });
 
-        Collections.sort(teachers);
-        dataList.setListData(teachers.toArray(new Data[0]));
+        Collections.sort(data);
+        dataList.setListData(data.toArray(new Data[0]));
         dataList.addListSelectionListener(e ->{
 
         });

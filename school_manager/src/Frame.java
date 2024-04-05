@@ -92,7 +92,7 @@ public class Frame extends JFrame implements WindowListener{
         help = new JMenu("Help");
         about = new JMenuItem("About");
         about.addActionListener (e -> {
-            JOptionPane.showMessageDialog(null, "Crystal & Kailin r the best!", "About", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Crystal & Kailin r the best! \n Version 1", "About", JOptionPane.INFORMATION_MESSAGE);
         });
 
         help.add(about);
