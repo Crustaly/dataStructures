@@ -53,7 +53,20 @@ public class StudentPanel extends JPanel{
         schedule.setBounds(50,420,100,10);
         add(schedule);
 
-        //missing the try part add files in!
+        try
+        {
+            ResultSet rs = statementName.executeQuery("SELECT id, first_name, last_name FROM student;");
+            while(rs!=null&&rs.next())
+            {
+                Data temp = new Data(rs.getString("first_name"), rs.getString("last_name"),  rs.getInt("id") + "");
+                storage.add(temp);
+            }
+            myContacts.setListData(storage.toArray(new Data[0]));
+        }
+        catch(Exception e) {
+            System.out.println("exception in loading student info");
+        }
+
 
 
         firstName.setText("first");
@@ -84,7 +97,47 @@ public class StudentPanel extends JPanel{
         saveChanges.setVisible(true);
         add(saveChanges);
         setVisible(true);
-        //save changes here add
+        saveChanges.addActionListener(e ->
+        {
+            Data s = myContacts.getSelectedValue();
+            int index = storage.indexOf(s);
+            Data temporary = new Data(first.getText(), last.getText(), IDs.getText());
+            storage.set(index, temporary);
+            first.setText("");
+            last.setText("");
+            IDs.setText("");
+
+            storage = sort(storage);
+            System.out.println(Arrays.toString(storage.toArray(new Data[0])));
+            myContacts.setListData(storage.toArray(new Data[0]));
+
+            saveChanges.setVisible(false);
+            deleteContact.setVisible(false);
+
+            save.setVisible(true);
+            clear.setVisible(true);
+            System.out.println("Got here");
+
+            try
+            {
+                //UPDATE student SET first_name=’Matt’ WHERE student_id=3;
+                System.out.println(first.getText());
+                String firstName = temporary.getFirst();
+                String lastName = temporary.getLast();
+                int ID = Integer.parseInt(temporary.getID());
+                statementName.executeUpdate("UPDATE student SET first_name='" + firstName +"' WHERE id=" + ID + ";");
+                statementName.executeUpdate("UPDATE student SET last_name='" + lastName   +"' WHERE id=" +  ID + ";");
+
+//                statementName.executeUpdate("UPDATE teacher SET first_name='" + firstName + "' AND SET last_name='" + lastName + "' WHERE id=" + ID + "");
+                //how to execute in SQL?
+            }
+            catch(Exception a)
+            {
+                System.out.println("problem within Save changes");
+            }
+
+        });
+
 
         deleteContact.setBounds(390, 310, 100, 20);
         add(deleteContact);
@@ -103,6 +156,24 @@ public class StudentPanel extends JPanel{
 
 
     }
-
+    public ArrayList<Data> sort (ArrayList < Data > a)
+    {
+        ArrayList<String> temp = new ArrayList<>();
+        ArrayList<Data> output = new ArrayList<>();
+        for (int i = 0; i < a.size(); i++) {
+            temp.add(a.get(i).toString());
+        }
+        Collections.sort(temp, String.CASE_INSENSITIVE_ORDER);
+        for (int i = 0; i < temp.size(); i++) {
+            //want to place the items in the now sorted order
+            String name = temp.get(i);
+            for (int in = 0; in < a.size(); in++) {
+                if (a.get(in).toString().compareTo(name) == 0) {
+                    output.add(a.get(in));
+                }
+            }
+        }
+        return output;
+    }
 
 }
