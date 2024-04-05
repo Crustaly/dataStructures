@@ -51,7 +51,37 @@ public class TeacherPanel extends JPanel{
         saveChanges.setVisible(true);
         add(saveChanges);
         saveChanges.addActionListener(e -> {
+            //edit teachers
+            Data s = dataList.getSelectedValue();
+            int index = data.indexOf(s);
+            Data temp = new Data(first.getText(), last.getText(), IDs.getText());
+            data.set(index, temp);
 
+            first.setText("");
+            last.setText("");
+            IDs.setText("");
+
+            Collections.sort(data);
+            dataList.setListData(data.toArray(new Data[0]));
+
+            saveChanges.setVisible(false);
+            deleteContact.setVisible(false);
+
+            save.setVisible(true);
+            clear.setVisible(true);
+
+            try
+            {
+                String firstName = temp.getFirst();
+                String lastName = temp.getLast();
+                int ID = Integer.parseInt(temp.getID());
+                sn.executeUpdate("UPDATE teacher SET first_name='" + firstName +"' WHERE id=" + ID + ";");
+                sn.executeUpdate("UPDATE teacher SET last_name='" + lastName   +"' WHERE id=" +  ID + ";");
+            }
+            catch(Exception a)
+            {
+                System.out.println("Exception in Save changes");
+            }
         });
 
         deleteContact.setBounds(390, 310, 100, 20);
