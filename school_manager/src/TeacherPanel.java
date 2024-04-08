@@ -187,7 +187,6 @@ public class TeacherPanel extends JPanel{
                 //show teacher sections
                 sections.clear();
                 DefaultTableModel mod = new DefaultTableModel();
-                sectionsTable.setModel(mod);
 
                 if(dataList.getSelectedValue()==null) {
                     return;
@@ -210,11 +209,12 @@ public class TeacherPanel extends JPanel{
                     //add sections to tableModel
                     for(sectionData sd: sections){
                         int tempCourseID = sd.getCourseId();
-                        int tempSectionID = sd.getId();
+                        String tempSectionID = sd.getId()+"";
                         rs = sn.executeQuery("SELECT * FROM course where id="+tempCourseID+";");
-                        String[] = new String[]{rs.getString("name")};
+                        String[] ss = new String[]{rs.getString("name"),tempSectionID};
+                        mod.addRow(ss);
                     }
-
+                    sectionsTable.setModel(mod);
 
                 } catch (SQLException ex) {
                     ex.printStackTrace();
