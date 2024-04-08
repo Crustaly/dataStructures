@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -39,23 +40,22 @@ public class StudentPanel extends JPanel{
 
     JLabel schedule = new JLabel("schedule");
 
+    JTable scheduleTable;
 
-    ArrayList<Component> allComponents = new ArrayList<>();
-    JScrollPane bar;
-
-    public StudentPanel(int width, int height, Statement statementName) throws SQLException {
+    public StudentPanel(int width, int height, Statement sn) throws SQLException {
         setSize(width, height);
         setLayout(null);
         //setBounds(0,0,w,h);
         sections = new ArrayList<>();
         jSections = new JList<>();
         sectionScrolling = new JScrollPane();
+
         schedule.setBounds(50,420,100,10);
         add(schedule);
 
         try
         {
-            ResultSet rs = statementName.executeQuery("SELECT id, first_name, last_name FROM student;");
+            ResultSet rs = sn.executeQuery("SELECT id, first_name, last_name FROM student;");
             while(rs!=null&&rs.next())
             {
                 Data temp = new Data(rs.getString("first_name"), rs.getString("last_name"),  rs.getInt("id") + "");
@@ -67,13 +67,10 @@ public class StudentPanel extends JPanel{
             System.out.println("exception in loading student info");
         }
 
-
-
-        firstName.setText("first");
         firstName.setBounds(280, 100, 100, 50);
         add(firstName);
 
-        first.setText("first");
+        first.setText("");
         first.setBounds(390,120,100,20);
         add(first);
 
@@ -81,19 +78,18 @@ public class StudentPanel extends JPanel{
 
         lastName.setBounds(280, 150, 100, 20);
         add(lastName);
-        last.setText("last");
+        last.setText("");
         last.setBounds(390, 150, 100, 20);
         add(last);
 
         ID.setBounds(280, 200, 100, 20);
         add(ID);
-        IDs.setText("ID");
+        IDs.setText("");
         IDs.setBounds(390, 200, 100, 20);
         IDs.setEditable(false);
         add(IDs);
 
         saveChanges.setBounds(280, 310, 100, 20);
-        saveChanges.setText("Save Changes");
         saveChanges.setVisible(true);
         add(saveChanges);
         setVisible(true);
@@ -107,7 +103,7 @@ public class StudentPanel extends JPanel{
             last.setText("");
             IDs.setText("");
 
-            storage = sort(storage);
+            Collections.sort(storage);
             System.out.println(Arrays.toString(storage.toArray(new Data[0])));
             myContacts.setListData(storage.toArray(new Data[0]));
 
@@ -116,7 +112,6 @@ public class StudentPanel extends JPanel{
 
             save.setVisible(true);
             clear.setVisible(true);
-            System.out.println("Got here");
 
             try
             {
@@ -125,8 +120,8 @@ public class StudentPanel extends JPanel{
                 String firstName = temporary.getFirst();
                 String lastName = temporary.getLast();
                 int ID = Integer.parseInt(temporary.getID());
-                statementName.executeUpdate("UPDATE student SET first_name='" + firstName +"' WHERE id=" + ID + ";");
-                statementName.executeUpdate("UPDATE student SET last_name='" + lastName   +"' WHERE id=" +  ID + ";");
+                sn.executeUpdate("UPDATE student SET first_name='" + firstName +"' WHERE id=" + ID + ";");
+                sn.executeUpdate("UPDATE student SET last_name='" + lastName   +"' WHERE id=" +  ID + ";");
 
 //               update student and first nae and id
             }
@@ -150,7 +145,7 @@ public class StudentPanel extends JPanel{
             last.setText("");
             IDs.setText("");
             storage.remove(s);
-            storage = Collections.sort(storage, );
+            Collections.sort(storage);
             myContacts.setListData(storage.toArray(new Data[0]));
             saveChanges.setVisible(false);
             deleteContact.setVisible(false);
@@ -159,7 +154,7 @@ public class StudentPanel extends JPanel{
             System.out.println("Got here");
 
             try {
-                statementName.executeUpdate("DELETE FROM student WHERE id =" + ids + ";");
+                sn.executeUpdate("DELETE FROM student WHERE id =" + ids + ";");
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 System.out.println("Not good in delete contact");
@@ -175,11 +170,11 @@ public class StudentPanel extends JPanel{
 
             if (first.getText().equals("") || last.getText().equals("")) {
                 System.out.println("bad input");
-                message("put in input please bruh", "Message");
+                JOptionPane.showMessageDialog(null, "Not valid", "Message", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 Data temp = new Data(first.getText(), last.getText(), IDs.getText());
                 storage.add(temp);
-                storage = Collections.sort(storage);
+                Collections.sort(storage);
                 myContacts.setListData(storage.toArray(new Data[0]));
                 first.setText("");
                 last.setText("");
@@ -187,9 +182,9 @@ public class StudentPanel extends JPanel{
 
                 try {
                     String blank = "";
-                    statementName.executeUpdate("INSERT INTO student (first_name, last_name, sections) VALUES ('" + temp.getFirst() + "', '" + temp.getLastName() + "', '" + blank+ "');");
+                    sn.executeUpdate("INSERT INTO student (first_name, last_name, sections) VALUES ('" + temp.getFirst() + "', '" + temp.getLast() + "', '" + blank+ "');");
                     //do first name last, and sections
-                    ResultSet update = statementName.executeQuery("SELECT id FROM student WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLastName() + "';");
+                    ResultSet update = sn.executeQuery("SELECT id FROM student WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
                     int maxID = -1;
                     while(update!=null&&update.next()) {
                         maxID = Math.max(maxID, update.getInt("id"));
@@ -203,15 +198,54 @@ public class StudentPanel extends JPanel{
             }
         });
 
+        Collections.sort(storage);
+        myContacts.setListData(storage.toArray(new Data[0]));
+        myContacts.addListSelectionListener(e ->{
+            //click on student to show info
+
+            if (!storage.isEmpty()) {
+                save.setVisible(false);
+                clear.setVisible(false);
+
+                saveChanges.setVisible(true);
+                deleteContact.setVisible(true);
+
+                if (myContacts.getSelectedValue() != null) {
+                    if (myContacts.getSelectedValue().getFirst() != "")
+                        first.setText(myContacts.getSelectedValue().getFirst());
+                    if (myContacts.getSelectedValue().getFirst() != "")
+                        last.setText(myContacts.getSelectedValue().getLast());
+                    if (myContacts.getSelectedValue().getFirst() != "")
+                        IDs.setText(myContacts.getSelectedValue().getID());
+
+                }
+
+                sections.clear();
+                DefaultTableModel mod = new DefaultTableModel();
+
+                if(myContacts.getSelectedValue()==null) {
+                    return;
+                }
+                int tempID = myContacts.getSelectedValue()==null? 0:
+                        Integer.parseInt(myContacts.getSelectedValue().getID());
+
+                try {
+                    //show schedule table
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+
+            }
+        });
+
         clear.setBounds(390, 280, 100, 20);
         add(clear);
 
         scrolling = new JScrollPane(myContacts);
         scrolling.setBounds(50, 50, 180, 350);
         add(scrolling);
-
-
-
 
     }
 
