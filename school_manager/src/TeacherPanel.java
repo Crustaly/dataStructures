@@ -18,12 +18,19 @@ public class TeacherPanel extends JPanel{
     ArrayList<Data> data = new ArrayList<>();
     JList<Data> dataList = new JList<>();
     JScrollPane scroll1 = new JScrollPane();
+    JScrollPane scrollSections;
     ArrayList<sectionData> sections = new ArrayList<>();
     JTable sectionsTable;
 
     public TeacherPanel(int width, int height, Statement sn) throws SQLException{
         setSize(width, height);
         setLayout(null);
+
+        //sections updates based on teacher clicked
+        String[] colNames = {"Section ID","Course"};
+        String ss[][] = new String[sections.size()][2];
+
+        sectionsTable = new JTable(ss, colNames);
 
         firstName.setBounds(280, 100, 100, 50);
         add(firstName);
@@ -207,12 +214,12 @@ public class TeacherPanel extends JPanel{
 
                     Collections.sort(sections);
                     //add sections to tableModel
-                    for(sectionData sd: sections){
+                    for(sectionData sd: sections) {
                         int tempCourseID = sd.getCourseId();
-                        String tempSectionID = sd.getId()+"";
-                        rs = sn.executeQuery("SELECT * FROM course where id="+tempCourseID+";");
-                        String[] ss = new String[]{rs.getString("name"),tempSectionID};
-                        mod.addRow(ss);
+                        String tempSectionID = sd.getId() + "";
+                        rs = sn.executeQuery("SELECT * FROM course where id=" + tempCourseID + ";");
+                        String[] sss = new String[]{tempSectionID, rs.getString("name")};
+                        mod.addRow(sss);
                     }
                     sectionsTable.setModel(mod);
 
@@ -228,11 +235,9 @@ public class TeacherPanel extends JPanel{
         scroll1.setBounds(50, 50, 180, 350);
         add(scroll1);
 
-        //sections updates based on teacher clicked
-        String[] colNames = {"Section ID","Course"};
-        String ss[][] = new String[sections.size()][2];
-
-        sectionsTable = new JTable(ss, colNames);
+        scrollSections = new JScrollPane(sectionsTable);
+        scrollSections.setBounds(100, 100, 280, 350);
+        add(scrollSections);
 
         setVisible(true);
     }
