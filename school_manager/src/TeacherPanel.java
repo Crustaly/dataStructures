@@ -1,6 +1,7 @@
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.awt.event.*;
 public class TeacherPanel extends JPanel{
@@ -164,7 +165,63 @@ public class TeacherPanel extends JPanel{
         Collections.sort(data);
         dataList.setListData(data.toArray(new Data[0]));
         dataList.addListSelectionListener(e ->{
+            //click on teacher to show info
 
+            if (!data.isEmpty()) {
+                save.setVisible(false);
+                clear.setVisible(false);
+
+                saveChanges.setVisible(true);
+                deleteContact.setVisible(true);
+
+                if (dataList.getSelectedValue() != null) {
+                    if (dataList.getSelectedValue().getFirst() != "")
+                        first.setText(dataList.getSelectedValue().getFirst());
+                    if (dataList.getSelectedValue().getFirst() != "")
+                        last.setText(dataList.getSelectedValue().getLast());
+                    if (dataList.getSelectedValue().getFirst() != "")
+                        IDs.setText(dataList.getSelectedValue().getID());
+
+                }
+
+                //show teacher sections
+                sections.clear();
+                DefaultTableModel mod = new DefaultTableModel();
+                sectionsTable.setModel(mod);
+
+                if(dataList.getSelectedValue()==null) {
+                    return;
+                }
+                int tempID = dataList.getSelectedValue()==null? 0:
+                        Integer.parseInt(dataList.getSelectedValue().getID());
+
+                try {
+
+                    ResultSet rs = sn.executeQuery("SELECT id, course_id, teacher_id FROM section");
+                    while(rs!=null&&rs.next()) {
+                        if(rs.getInt("teacher_id")==tempID) {
+                            sectionData section = new sectionData(rs.getInt("id"), rs.getInt("course_id"), rs.getInt("teacher_id"), sn);
+                            //System.out.println(section.getTeacherId() + " is the teacher id");
+                            sections.add(section);
+                        }
+                    }
+
+                    Collections.sort(sections);
+                    //add sections to tableModel
+                    for(sectionData sd: sections){
+                        int tempCourseID = sd.getCourseId();
+                        int tempSectionID = sd.getId();
+                        rs = sn.executeQuery("SELECT * FROM course where id="+tempCourseID+";");
+                        String[] = new String[]{rs.getString("name")};
+                    }
+
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
+
+            }
         });
 
         scroll1 = new JScrollPane(dataList);
