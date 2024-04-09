@@ -31,6 +31,7 @@ public class TeacherPanel extends JPanel{
         String ss[][] = new String[sections.size()][2];
 
         sectionsTable = new JTable(ss, colNames);
+        sectionsTable.setDefaultEditor(Object.class, null);
 
         firstName.setBounds(280, 100, 100, 50);
         add(firstName);

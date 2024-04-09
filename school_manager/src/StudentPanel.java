@@ -218,23 +218,43 @@ public class StudentPanel extends JPanel{
                     if (myContacts.getSelectedValue().getFirst() != "")
                         IDs.setText(myContacts.getSelectedValue().getID());
 
+                    sections.clear();
+                    DefaultTableModel mod = new DefaultTableModel();
+
+                    int tempID = myContacts.getSelectedValue()==null? 0:
+                            Integer.parseInt(myContacts.getSelectedValue().getID());
+
+                    try {
+                        ResultSet rs = sn.executeQuery("SELECT sections FROM student WHERE id=" + myContacts.getSelectedValue().getID());
+                        ArrayList<String> splitSections = new ArrayList<>();
+                        while (rs != null && rs.next()) {
+                            splitSections.add(rs.getString("sections"));
+                        }
+
+                        for (String str : splitSections) {
+                            if (str.length() < 1) {
+                                continue;
+                            }
+                            if (str.equals("test")) {
+                                continue;
+                            }
+                            System.out.println("|" + str + "|");
+                            ResultSet rs2 = statementName.executeQuery("SELECT * FROM section WHERE id=" + Integer.parseInt(str));
+                            while (rs2 != null && rs2.next()) {
+                                System.out.println("inside loop");
+                                SectionInfo curSection = new SectionInfo(rs2.getInt("id"), rs2.getInt("course_id"), rs2.getInt("teacher_id"), statementName);
+                                sections.add(curSection);
+                            }
+                        }
+
+
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+
                 }
 
-                sections.clear();
-                DefaultTableModel mod = new DefaultTableModel();
 
-                if(myContacts.getSelectedValue()==null) {
-                    return;
-                }
-                int tempID = myContacts.getSelectedValue()==null? 0:
-                        Integer.parseInt(myContacts.getSelectedValue().getID());
-
-                try {
-                    //show schedule table
-
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
 
 
             }
