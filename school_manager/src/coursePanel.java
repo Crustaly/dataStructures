@@ -82,5 +82,55 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
         add(saveChanges);
         setVisible(true);
 
+        saveChanges.addActionListener(e ->
+        {
+            coursesData s = myContacts.getSelectedValue();
+            int index = storage.indexOf(s);
+            int type = -1;
+            if(academic.isSelected())
+            {
+                type = 0;
+                academic.setSelected(false);
+            }
+            if(kap.isSelected())
+            {
+                type = 1;
+                kap.setSelected(false);
+            }
+            if(ap.isSelected())
+            {
+                type = 2;
+                ap.setSelected(false);
+            }
+            coursesData temporary = new coursesData(ids.getText(), course.getText(), type);
+            storage.set(index, temporary);
+            course.setText("");
+
+            myContacts.setListData(storage.toArray(new coursesData[0]));
+
+            try
+            {
+                sn.executeUpdate("UPDATE course SET title='" + temporary.getCourseName() + "' WHERE id = " + temporary.getID() + ";");
+                sn.executeUpdate("UPDATE course SET type = " + temporary.getType() + " WHERE id = " + temporary.getID() + ";");
+                //save course
+            }
+            catch(Exception a)
+            {
+                a.printStackTrace();
+            }
+            saveChanges.setVisible(false);
+            deleteContact.setVisible(false);
+
+            save.setVisible(true);
+            clear.setVisible(true);
+            ids.setText(" ");
+            ap.setSelected(false);
+            System.out.print(ap.isSelected());
+            kap.setSelected(false);
+            System.out.print(kap.isSelected());
+            academic.setSelected(false);
+            System.out.print(academic.isSelected());
+            repaint();
+        });
     }
 }
