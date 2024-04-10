@@ -239,10 +239,10 @@ public class StudentPanel extends JPanel{
                                 continue;
                             }
                             System.out.println("|" + str + "|");
-                            ResultSet rs2 = statementName.executeQuery("SELECT * FROM section WHERE id=" + Integer.parseInt(str));
+                            ResultSet rs2 = sn.executeQuery("SELECT * FROM section WHERE id=" + Integer.parseInt(str));
                             while (rs2 != null && rs2.next()) {
                                 System.out.println("inside loop");
-                                SectionInfo curSection = new SectionInfo(rs2.getInt("id"), rs2.getInt("course_id"), rs2.getInt("teacher_id"), statementName);
+                                sectionData curSection = new sectionData(rs2.getInt("id"), rs2.getInt("course_id"), rs2.getInt("teacher_id"), statementName);
                                 sections.add(curSection);
                             }
                         }
