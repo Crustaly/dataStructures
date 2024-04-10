@@ -27,9 +27,17 @@ public class Frame extends JFrame implements WindowListener{
 
     public Frame() throws SQLException, ClassNotFoundException{
         super("School Manager");
-        Class.forName("com.mysql.jbdc.Driver");
-        Connection con = DriverManager.getConnection("jbdc:mysql://localhost:3306/school_manager", "root", "password");
+       //    Class.forName("com.mysql.jbdc.Driver");
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        //might need to create the database
+        Connection con =
+                DriverManager.getConnection("jdbc:mysql://localhost:3306/school_manager","root","password");
         sn = con.createStatement();
+        sn.execute("USE school_manager");
+
+
         setSize(1000,1000);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(null);
