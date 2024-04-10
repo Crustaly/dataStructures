@@ -268,6 +268,56 @@ public class StudentPanel extends JPanel{
         add(scrolling);
 
     }
+           myContacts.addListSelectionListener(e ->
+    {
+        if (storage.isEmpty() == false) {
+            save.setVisible(false);
+            clear.setVisible(false);
+
+            saveChanges.setVisible(true);
+            deleteContact.setVisible(true);
+            sections.clear();
+//
+            if (myContacts.getSelectedValue() != null) {
+                if (myContacts.getSelectedValue().getFirstName() != "")
+                    first.setText(myContacts.getSelectedValue().getFirstName());
+                if (myContacts.getSelectedValue().getFirstName() != "")
+                    last.setText(myContacts.getSelectedValue().getLastName());
+                if (myContacts.getSelectedValue().getFirstName() != "")
+                    IDs.setText(myContacts.getSelectedValue().getID());
+
+                try {
+                    ResultSet rs = statementName.executeQuery("SELECT sections FROM student WHERE id="+myContacts.getSelectedValue().getID());
+                    String sectionStr = "";
+                    while(rs!=null&&rs.next()) {
+                        sectionStr=rs.getString("sections");
+                    }
+                    String[] splitSections = sectionStr.split(" ");
+                    for(String str : splitSections) {
+                        if(str.length()<1) {continue;}
+                        if(str.equals("test")) {continue;}
+                        System.out.println("|" + str+"|");
+                        ResultSet rs2 = statementName.executeQuery("SELECT * FROM section WHERE id="+ Integer.parseInt(str));
+                        while(rs2!=null&&rs2.next()) {
+                            System.out.println("inside loop");
+                            SectionInfo curSection = new SectionInfo(rs2.getInt("id"), rs2.getInt("course_id"), rs2.getInt("teacher_id"), statementName);
+                            sections.add(curSection);
+                        }
+                    }
+
+
+                } catch (SQLException ex) {
+                    System.out.println("Exception retrieving schedule");
+                }
+
+
+            }
+
+            System.out.println(sections);
+            jSections.setListData(sections.toArray(new SectionInfo[0]));
+
+        }
+        repaint();
 
 
 }
