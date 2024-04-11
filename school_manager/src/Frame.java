@@ -111,6 +111,8 @@ public class Frame extends JFrame implements WindowListener{
         bar.add(help);
 
         setJMenuBar(bar);
+
+        setVisible(true);
     }
     @Override
     public void windowOpened(WindowEvent e) {
