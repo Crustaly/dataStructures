@@ -53,6 +53,12 @@ public class StudentPanel extends JPanel{
         schedule.setBounds(50,420,100,10);
         add(schedule);
 
+        String[] tableCols = {"Section ID","Course","Teacher"};
+        String ss[][] = new String[sections.size()][3];
+
+        scheduleTable = new JTable(ss, tableCols);
+        scheduleTable.setDefaultEditor(Object.class, null);
+
         try
         {
             ResultSet rs = sn.executeQuery("SELECT id, first_name, last_name FROM student;");
@@ -127,7 +133,7 @@ public class StudentPanel extends JPanel{
             }
             catch(Exception a)
             {
-                System.out.println("problem within Save changes");
+                a.printStackTrace();
             }
 
         });
@@ -218,17 +224,17 @@ public class StudentPanel extends JPanel{
                     if (myContacts.getSelectedValue().getFirst() != "")
                         IDs.setText(myContacts.getSelectedValue().getID());
 
-                    sections.clear();
-                    DefaultTableModel mod = new DefaultTableModel();
-
                     int tempID = myContacts.getSelectedValue()==null? 0:
                             Integer.parseInt(myContacts.getSelectedValue().getID());
+
+                    sections.clear();
+                    DefaultTableModel mod = new DefaultTableModel();
 
                     try {
                         ResultSet rs = sn.executeQuery("SELECT sections FROM student WHERE id=" + myContacts.getSelectedValue().getID());
                         ArrayList<String> splitSections = new ArrayList<>();
                         while (rs != null && rs.next()) {
-                            splitSections.add(rs.getString("sections"));
+                            splitSections.add(rs.getString("section_id"));
                         }
 
                         for (String str : splitSections) {
@@ -238,27 +244,36 @@ public class StudentPanel extends JPanel{
                             if (str.equals("test")) {
                                 continue;
                             }
-                            System.out.println("|" + str + "|");
                             ResultSet rs2 = sn.executeQuery("SELECT * FROM section WHERE id=" + Integer.parseInt(str));
                             while (rs2 != null && rs2.next()) {
-                                System.out.println("inside loop");
                                 sectionData curSection = new sectionData(rs2.getInt("id"), rs2.getInt("course_id"), rs2.getInt("teacher_id"), sn);
                                 sections.add(curSection);
                             }
                         }
 
+                        //show schedule table
+                        Collections.sort(sections);
+                        //add sections to tableModel
+                        for(sectionData sd: sections) {
+                            int tempCourseID = sd.getCourseId();
+                            String tempSectionID = sd.getId() + "";
+                            int tempTeacherID = sd.getTeacherId();
+                            rs = sn.executeQuery("SELECT * FROM course where id=" + tempCourseID + ";");
+                            String course = rs.getString("title");
+                            rs = sn.executeQuery("SELECT * FROM teacher where id=" + tempTeacherID + ";");
+                            String teachLast = rs.getString("last_name");
+                            String[] sss = new String[]{tempSectionID, course, teachLast};
+                            mod.addRow(sss);
+                        }
+                        scheduleTable.setModel(mod);
 
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
-
                 }
-
-
-
-
             }
         });
+
         repaint();
         clear.setBounds(390, 280, 100, 20);
         add(clear);
@@ -266,6 +281,8 @@ public class StudentPanel extends JPanel{
         scrolling = new JScrollPane(myContacts);
         scrolling.setBounds(50, 50, 180, 350);
         add(scrolling);
+
+        
 
     }
 

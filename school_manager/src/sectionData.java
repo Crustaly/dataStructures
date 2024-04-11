@@ -34,6 +34,7 @@ public class sectionData implements Comparable<sectionData>{
     public int getTeacherId() {
         return teacherId;
     }
+
     @Override
     public int compareTo(sectionData o) {
         return Integer.compare(getId(),o.getId());

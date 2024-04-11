@@ -219,7 +219,7 @@ public class TeacherPanel extends JPanel{
                         int tempCourseID = sd.getCourseId();
                         String tempSectionID = sd.getId() + "";
                         rs = sn.executeQuery("SELECT * FROM course where id=" + tempCourseID + ";");
-                        String[] sss = new String[]{tempSectionID, rs.getString("name")};
+                        String[] sss = new String[]{tempSectionID, rs.getString("title")};
                         mod.addRow(sss);
                     }
                     sectionsTable.setModel(mod);
