@@ -91,6 +91,171 @@ public class Frame extends JFrame implements WindowListener{
         course = new JMenuItem("Course");
         section = new JMenuItem("Section");
 
+        teacher.addActionListener(e->
+        {
+            if(studentPanel!=null) {
+                remove(studentPanel);
+                studentPanel=null;
+                repaint();
+            }
+            if(sectionPanel!=null) {
+                remove(sectionPanel);
+                sectionPanel=null;
+                repaint();
+            }
+            if(coursePanel!=null) {
+                remove(coursePanel);
+                coursePanel=null;
+                repaint();
+            }
+            System.out.println("added teacher");
+
+            try {
+                teacherPanel=new TeacherPanel(700,700, sn);
+            } catch (SQLException ex) {
+                System.out.println("Exception creating teacher");
+                ex.printStackTrace();
+            }
+            teacherPanel.setLocation(50,50);
+            add(teacherPanel);
+            System.out.println("creating teacher");
+            repaint();
+            if(teacherPanel!=null) {
+                ResultSet rs = null;
+                try {
+                    rs = sn.executeQuery("SELECT id, first_name, last_name FROM teacher;");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                try {
+                    teacherPanel.printTeachers(rs);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            //repaint();
+        });
+        course.addActionListener(e->
+        {
+            if(studentPanel!=null) {
+                System.out.println("insisde if statemnt");
+                remove(studentPanel);
+                studentPanel=null;
+                repaint();
+            }
+            if(teacherPanel!=null) {
+                remove(teacherPanel);
+                teacherPanel=null;
+                repaint();
+            }
+            if(sectionPanel!=null) {
+                remove(sectionPanel);
+                sectionPanel=null;
+                repaint();
+            }
+            try {
+                coursePanel =new coursePanel(700,700, sn);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            coursePanel.setLocation(50,50);
+            add(coursePanel);
+            System.out.println("course clicked");
+            repaint();
+        });
+        section.addActionListener(e->
+        {
+            if(teacherPanel!=null) {
+                remove(teacherPanel);
+                teacherPanel=null;
+                repaint();
+            }
+            if(sectionPanel!=null) {
+                remove(sectionPanel);
+                sectionPanel=null;
+                repaint();
+            }
+            if(coursePanel!=null) {
+                remove(coursePanel);
+                coursePanel=null;
+                repaint();
+            }
+            System.out.println("student clicked");
+            try {
+                studentPanel = new StudentPanel(700,700, sn);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            studentPanel.setLocation(50,50);
+            add(studentPanel);
+           
+            repaint();
+            if(studentPanel!=null) {
+                ResultSet rs = null;
+                try {
+                    rs = sn.executeQuery("SELECT id, first_name, last_name FROM student;");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                try {
+                    studentPanel.printStudents(rs);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            //re
+
+        });
+        student.addActionListener(e->
+        {
+            if(teacherPanel!=null) {
+                remove(teacherPanel);
+                teacherPanel=null;
+                repaint();
+            }
+            if(studentPanel!=null) {
+                remove(studentPanel);
+                studentPanel=null;
+                repaint();
+            }
+            if(coursePanel!=null) {
+                remove(coursePanel);
+                coursePanel=null;
+                repaint();
+            }
+            System.out.println("student clicked");
+            try {
+                sectionPanel = new SectionsPanel(700,700,sn);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            sectionPanel.setLocation(50,50);
+            add(sectionPanel);
+            System.out.println("creating section");
+            repaint();
+            if(sectionPanel!=null) {
+                /*ResultSet rs = null;
+                try {
+                    rs = sn.executeQuery("SELECT id, first_name, last_name FROM student;");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                try {
+                    studentPanel.printStudents(rs);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }*/
+            }
+
+        });
+        v.add(teacher);
+        v.add(course);
+        v.add(section);
+        v.add(student);
+        view.add(v);
+        view.setBounds(50,0,45,20);
+        add(view);
+
         view.add(teacher);
         view.add(student);
         view.add(course);
@@ -111,7 +276,10 @@ public class Frame extends JFrame implements WindowListener{
         bar.add(help);
 
         setJMenuBar(bar);
-
+        teacherPanel.setVisible(true);
+        studentPanel.setVisible(true);
+        coursePanel.setVisible(true);
+        sectionPanel.setVisible(true);
         setVisible(true);
     }
     @Override
