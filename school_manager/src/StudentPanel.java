@@ -281,6 +281,7 @@ public class StudentPanel extends JPanel{
         scrolling = new JScrollPane(myContacts);
         scrolling.setBounds(50, 50, 180, 350);
         add(scrolling);
+        setVisible(true);
 
         
 
