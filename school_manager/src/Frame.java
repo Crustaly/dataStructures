@@ -193,11 +193,6 @@ public class Frame extends JFrame implements WindowListener{
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                try {
-                    studentPanel.printStudents(rs);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
             }
             //re
 
@@ -244,11 +239,6 @@ public class Frame extends JFrame implements WindowListener{
             }
 
         });
-        v.add(teacher);
-        v.add(course);
-        v.add(section);
-        v.add(student);
-        view.add(v);
         view.setBounds(50,0,45,20);
         add(view);
 
