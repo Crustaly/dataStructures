@@ -3,6 +3,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.sql.*;
 import java.awt.event.*;
+import java.awt.Panel;
 public class Frame extends JFrame implements WindowListener{
     static JMenuBar bar;
     static JMenu file;
@@ -20,10 +21,10 @@ public class Frame extends JFrame implements WindowListener{
 
     Statement sn;
 
-    static Panel teacherPanel;
-    static Panel studentPanel;
-    static Panel sectionPanel;
-    static Panel coursePanel;
+    static JPanel teacherPanel;
+    static JPanel studentPanel;
+    static JPanel sectionPanel;
+    static JPanel coursePanel;
 
     public Frame() throws SQLException, ClassNotFoundException{
         super("School Manager");
@@ -127,11 +128,6 @@ public class Frame extends JFrame implements WindowListener{
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                try {
-                    teacherPanel.printTeachers(rs);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
             }
             //repaint();
         });
@@ -225,7 +221,7 @@ public class Frame extends JFrame implements WindowListener{
             }
             System.out.println("student clicked");
             try {
-                sectionPanel = new SectionsPanel(700,700,sn);
+                sectionPanel = new sectionsPanel(700,700,sn);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

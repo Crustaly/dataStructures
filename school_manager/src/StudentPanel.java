@@ -58,6 +58,8 @@ public class StudentPanel extends JPanel{
 
         scheduleTable = new JTable(ss, tableCols);
         scheduleTable.setDefaultEditor(Object.class, null);
+        add(scheduleTable);
+        scheduleTable.setBounds(0,0,0,0); //figure out later
 
         try
         {
