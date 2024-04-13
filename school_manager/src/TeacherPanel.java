@@ -32,8 +32,6 @@ public class TeacherPanel extends JPanel{
 
         sectionsTable = new JTable(ss, colNames);
         sectionsTable.setDefaultEditor(Object.class, null);
-        add(sectionsTable);
-        sectionsTable.setBounds(0,0,0,0); //fill in later
 
         firstName.setBounds(280, 100, 100, 50);
         add(firstName);
@@ -239,7 +237,7 @@ public class TeacherPanel extends JPanel{
         add(scroll1);
 
         scrollSections = new JScrollPane(sectionsTable);
-        scrollSections.setBounds(100, 100, 280, 350);
+        scrollSections.setBounds(50, 450, 400, 350);
         add(scrollSections);
 
         setVisible(true);
