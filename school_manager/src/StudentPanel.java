@@ -36,9 +36,9 @@ public class StudentPanel extends JPanel{
 
     ArrayList<sectionData> sections;
     JList<sectionData> jSections;
-    JScrollPane sectionScrolling;
+    JScrollPane scheduleScrolling;
 
-    JLabel schedule = new JLabel("schedule");
+    JLabel schedule = new JLabel("Schedule");
 
     JTable scheduleTable;
 
@@ -48,7 +48,6 @@ public class StudentPanel extends JPanel{
         //setBounds(0,0,w,h);
         sections = new ArrayList<>();
         jSections = new JList<>();
-        sectionScrolling = new JScrollPane();
 
         schedule.setBounds(50,420,100,10);
         add(schedule);
@@ -58,8 +57,9 @@ public class StudentPanel extends JPanel{
 
         scheduleTable = new JTable(ss, tableCols);
         scheduleTable.setDefaultEditor(Object.class, null);
-        add(scheduleTable);
-        scheduleTable.setBounds(0,0,0,0); //figure out later
+        scheduleScrolling = new JScrollPane(scheduleTable);
+        scheduleScrolling.setBounds(50, 450, 450, 350);
+        add(scheduleScrolling);
 
         try
         {

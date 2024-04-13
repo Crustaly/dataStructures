@@ -58,8 +58,8 @@ public class sectionsPanel extends JPanel{
             ResultSet rs = statementName.executeQuery("Select id, title, type FROM course;");
             while(rs!=null&&rs.next())
             {
-                Data temp = new Data(rs.getString("id"), rs.getString("title"),  rs.getInt("type"));
-                allCourses.add(temp);
+                /*Data temp = new Data(rs.getString("id"), rs.getString("title"),  rs.getInt("type"));
+                allCourses.add(temp);*/
             }
 
             coursesList.setListData(allCourses.toArray(new Data[0]));

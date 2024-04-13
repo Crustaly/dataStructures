@@ -15,6 +15,7 @@ public class TeacherPanel extends JPanel{
     JButton clear = new JButton("Clear");
     JButton saveChanges = new JButton("Save changes");
     JButton deleteContact = new JButton("Delete contact");
+    JLabel sectionsLabel = new JLabel("Sections");
     ArrayList<Data> data = new ArrayList<>();
     JList<Data> dataList = new JList<>();
     JScrollPane scroll1 = new JScrollPane();
@@ -32,6 +33,9 @@ public class TeacherPanel extends JPanel{
 
         sectionsTable = new JTable(ss, colNames);
         sectionsTable.setDefaultEditor(Object.class, null);
+
+        sectionsLabel.setBounds(50,420,100,10);
+        add(sectionsLabel);
 
         firstName.setBounds(280, 100, 100, 50);
         add(firstName);
