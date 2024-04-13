@@ -61,7 +61,6 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
         course.setBounds(390, 150, 100, 20);
         add(course);
 
-
         bg.add(academic);
         bg.add(kap);
         bg.add(ap);
@@ -75,6 +74,58 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
         add(kap);
         add(ap);
 
+        save.setBounds(280,350,100,20);
+        add(save);
+        save.addActionListener(e ->
+        {
+            if(courseName.getText()==""||(academic.isSelected()==false&&kap.isSelected()==false&&ap.isSelected()==false))
+            {
+                System.out.println("not full");
+            }
+            else
+            {
+                int type = -1;//0 aca, 1 kap, 2 ap
+                if(academic.isSelected())
+                {
+                    type = 0;
+                }
+                if(kap.isSelected())
+                {
+                    type = 1;
+                }
+                if(ap.isSelected())
+                {
+                    type = 2;
+                }
+                academic.setSelected(false);
+                kap.setSelected(false);
+                ap.setSelected(false);
+                coursesData temp = new coursesData(ids.getText(), course.getText(), type);
+                storage.add(temp);
+                myContacts.setListData(storage.toArray(new coursesData[0]));
+                course.setText("");
+
+                try
+                {
+                    sn.executeUpdate("INSERT INTO course (title, type) VALUES ('" + temp.getCourseName() + "', " + temp.getType() + ");");
+                    ResultSet results = sn.executeQuery("SELECT id FROM course");
+                    int maxID = -1;
+                    while(results!=null&&results.next()) {
+                        maxID = Math.max(maxID, results.getInt("id"));
+                    }
+                    temp.setID(maxID + "");
+                    //myContacts.setListData(storage.toArray(new courses[0]));
+                    System.out.println("maxID: " + maxID);
+                }
+                catch(Exception b)
+                {
+                    b.printStackTrace();
+                }
+            }
+        });
+
+        save.setVisible(true);
+        clear.setVisible(true);
 
         saveChanges.setBounds(280, 380, 100, 20);
         saveChanges.setText("Save Changes");
@@ -217,5 +268,9 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             repaint();
         });
 
+        scrolling = new JScrollPane(myContacts);
+        scrolling.setBounds(50, 50, 180, 350);
+        add(scrolling);
+        repaint();
     }
 }
