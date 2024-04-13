@@ -11,8 +11,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class sectionsPanel extends JPanel{
-    ArrayList<Data> allCourses = new ArrayList<>();
-    JList<Data> coursesList = new JList<>();
+    ArrayList<coursesData> allCourses = new ArrayList<>();
+    JList<coursesData> coursesList = new JList<>();
     JScrollPane scroll = new JScrollPane();
     JButton save = new JButton("Save");
     JButton clear = new JButton("Clear");
@@ -23,7 +23,7 @@ public class sectionsPanel extends JPanel{
     JButton saveChanges = new JButton("Save changes");
     JButton deleteContact = new JButton("Delete contact");
     ArrayList<sectionData> allSections = new ArrayList<>();
-    JList<sectionData> sectionsList = new JList<>();
+    JList<sectionData> mySections = new JList<>();
     JScrollPane scroll2 = new JScrollPane();
     ArrayList<Data> allMyStudents = new ArrayList<>();
     JList<Data> myStudents = new JList<>();
@@ -58,11 +58,11 @@ public class sectionsPanel extends JPanel{
             ResultSet rs = statementName.executeQuery("Select id, title, type FROM course;");
             while(rs!=null&&rs.next())
             {
-                Data temp = new Data(rs.getString("id"), rs.getString("title"),  rs.getInt("type"));
+                coursesData temp = new coursesData(rs.getString("id"), rs.getString("title"),  rs.getInt("type"));
                 allCourses.add(temp);
             }
 
-            coursesList.setListData(allCourses.toArray(new Data[0]));
+            coursesList.setListData(allCourses.toArray(new coursesData[0]));
         }
         catch(Exception e)
         {
@@ -117,6 +117,54 @@ public class sectionsPanel extends JPanel{
 
         saveStudent.setBounds(450, 540, 140, 30);
         add(saveStudent);
+        saveStudent.addActionListener(e->{
+            //add student into roster just based on id input
+            //ResultSet update = null;
+            if(mySections.getSelectedValue()!=null) {
+                try {
+                    ResultSet rs = statementName.executeQuery("SELECT * FROM student WHERE id=" + studentID.getText() + ";");
+                    String sectionStr="";
+                    boolean alreadyContained=false;
+                    while (rs != null && rs.next()) {
+                        sectionStr = rs.getString("sections");
+                        if(sectionStr.contains(" "+mySections.getSelectedValue().getId())||sectionStr.contains(""+mySections.getSelectedValue().getId()+" ")) {
+                            alreadyContained=true;
+                            System.out.println("-----ALREADY CONTAINED----");
+                            break;
+                        }
+                        sectionStr+=" " + mySections.getSelectedValue().getId();
+                        contactInfos student = new contactInfos(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("id"));
+                        allMyStudents.add(student);
+                        System.out.println(studentID.getText()+" yes");
+                        //statementName.executeUpdate("UPDATE student SET first_name= \'test\' WHERE id=" + studentID.getText() + ";");
+                        //statementName.executeUpdate("UPDATE student SET sections=\'" + sectionStr +"\' WHERE id=" + studentID.getText() + ";");
+
+                        //statementName.executeUpdate("UPDATE student SET sections='"+sectionStr+"' WHERE id="+studentID.getText()+";");
+                        //adds section into the student's list of sections
+                    }
+                    if(!alreadyContained) {
+                        statementName.executeUpdate("UPDATE student SET sections=\'" + sectionStr +"\' WHERE id=" + studentID.getText() + ";");
+                        //allMyStudents.add(student);
+                    }
+                    //statementName.executeUpdate("UPDATE student SET first_name=\'Matt\' WHERE id=4;");
+
+                } catch (SQLException ex) {
+                    System.out.println("Exception in saving Student");
+                }
+                //put update code here
+                Collections.sort(allMyStudents);
+                myStudents.setListData(allMyStudents.toArray(new Data[0]));
+
+
+
+            }
+            repaint();
+
+
+
+
+        });
+
 
         setVisible(true);
     }
