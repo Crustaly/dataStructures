@@ -237,7 +237,7 @@ public class TeacherPanel extends JPanel{
         add(scroll1);
 
         scrollSections = new JScrollPane(sectionsTable);
-        scrollSections.setBounds(100, 100, 280, 350);
+        scrollSections.setBounds(50, 450, 400, 350);
         add(scrollSections);
 
         setVisible(true);

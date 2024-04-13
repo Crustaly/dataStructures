@@ -164,43 +164,6 @@ public class Frame extends JFrame implements WindowListener{
                 teacherPanel=null;
                 repaint();
             }
-            if(sectionPanel!=null) {
-                remove(sectionPanel);
-                sectionPanel=null;
-                repaint();
-            }
-            if(coursePanel!=null) {
-                remove(coursePanel);
-                coursePanel=null;
-                repaint();
-            }
-            try {
-                studentPanel = new StudentPanel(700,700, sn);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            studentPanel.setLocation(50,50);
-            add(studentPanel);
-           
-            repaint();
-            if(studentPanel!=null) {
-                ResultSet rs = null;
-                try {
-                    rs = sn.executeQuery("SELECT id, first_name, last_name FROM student;");
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            //re
-
-        });
-        student.addActionListener(e->
-        {
-            if(teacherPanel!=null) {
-                remove(teacherPanel);
-                teacherPanel=null;
-                repaint();
-            }
             if(studentPanel!=null) {
                 remove(studentPanel);
                 studentPanel=null;
@@ -221,20 +184,42 @@ public class Frame extends JFrame implements WindowListener{
             add(sectionPanel);
             System.out.println("creating section");
             repaint();
+        });
+
+        student.addActionListener(e->
+        {
+            if(teacherPanel!=null) {
+                remove(teacherPanel);
+                teacherPanel=null;
+                repaint();
+            }
             if(sectionPanel!=null) {
-                /*ResultSet rs = null;
+                remove(sectionPanel);
+                sectionPanel=null;
+                repaint();
+            }
+            if(coursePanel!=null) {
+                remove(coursePanel);
+                coursePanel=null;
+                repaint();
+            }
+            try {
+                studentPanel = new StudentPanel(700,700, sn);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            studentPanel.setLocation(50,50);
+            add(studentPanel);
+
+            repaint();
+            if(studentPanel!=null) {
+                ResultSet rs = null;
                 try {
                     rs = sn.executeQuery("SELECT id, first_name, last_name FROM student;");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                try {
-                    studentPanel.printStudents(rs);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }*/
             }
-
         });
 
         view.add(teacher);
