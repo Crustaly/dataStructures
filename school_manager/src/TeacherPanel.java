@@ -37,6 +37,9 @@ public class TeacherPanel extends JPanel{
         sectionsLabel.setBounds(50,420,100,10);
         add(sectionsLabel);
 
+        saveChanges.setVisible(false);
+        deleteContact.setVisible(false);
+
         firstName.setBounds(280, 100, 100, 50);
         add(firstName);
         first.setText(""); //sql
@@ -61,7 +64,6 @@ public class TeacherPanel extends JPanel{
 
         saveChanges.setBounds(280, 310, 100, 20);
         saveChanges.setText("Save Changes");
-        saveChanges.setVisible(true);
         add(saveChanges);
         saveChanges.addActionListener(e -> {
             //edit teachers
@@ -100,8 +102,11 @@ public class TeacherPanel extends JPanel{
         deleteContact.setBounds(390, 310, 100, 20);
         add(deleteContact);
         deleteContact.addActionListener(e -> {
+            System.out.println("delete clicked");
             Data s = dataList.getSelectedValue();
+            System.out.println(s.getLast());
             int ids = Integer.parseInt(s.getID());
+
             first.setText("");
             last.setText("");
             data.remove(s);
