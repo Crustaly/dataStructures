@@ -134,7 +134,6 @@ public class Frame extends JFrame implements WindowListener{
         course.addActionListener(e->
         {
             if(studentPanel!=null) {
-                System.out.println("insisde if statemnt");
                 remove(studentPanel);
                 studentPanel=null;
                 repaint();
@@ -156,7 +155,6 @@ public class Frame extends JFrame implements WindowListener{
             }
             coursePanel.setLocation(50,50);
             add(coursePanel);
-            System.out.println("course clicked");
             repaint();
         });
         section.addActionListener(e->
@@ -176,7 +174,6 @@ public class Frame extends JFrame implements WindowListener{
                 coursePanel=null;
                 repaint();
             }
-            System.out.println("student clicked");
             try {
                 studentPanel = new StudentPanel(700,700, sn);
             } catch (SQLException ex) {
@@ -239,14 +236,11 @@ public class Frame extends JFrame implements WindowListener{
             }
 
         });
-        view.setBounds(50,0,45,20);
-        add(view);
 
         view.add(teacher);
         view.add(student);
         view.add(course);
         view.add(section);
-
 
         help = new JMenu("Help");
         about = new JMenuItem("About");
@@ -256,16 +250,11 @@ public class Frame extends JFrame implements WindowListener{
 
         help.add(about);
 
-
         bar.add(file);
         bar.add(view);
         bar.add(help);
 
         setJMenuBar(bar);
-        teacherPanel.setVisible(true);
-        studentPanel.setVisible(true);
-        coursePanel.setVisible(true);
-        sectionPanel.setVisible(true);
         setVisible(true);
     }
     @Override

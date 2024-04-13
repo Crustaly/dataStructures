@@ -113,6 +113,8 @@ public class sectionsPanel extends JPanel{
 
         saveStudent.setBounds(450, 540, 140, 30);
         add(saveStudent);
+
+        setVisible(true);
     }
 
 
