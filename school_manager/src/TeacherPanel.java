@@ -120,7 +120,7 @@ public class TeacherPanel extends JPanel{
             try {
                 ResultSet rs = sn.executeQuery("SELECT * FROM section where teacher_id="+Integer.parseInt(IDs.getText())+";"); //removes teacher from sections
                 while(rs!=null&&rs.next()) {
-                    int sectionId = rs.getInt("id");
+                    int sectionId = rs.getInt("section_id");
                     sectionIDList.add(sectionId);
                 }
             } catch (SQLException ex) {
@@ -128,7 +128,7 @@ public class TeacherPanel extends JPanel{
             }
             for(int sectionID : sectionIDList) {
                 try {
-                    sn.executeUpdate("UPDATE section set teacher_id=-1 where id="+sectionID+";");
+                    sn.executeUpdate("UPDATE section set teacher_id=-1 where teacher_id="+sectionID+";");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -137,7 +137,7 @@ public class TeacherPanel extends JPanel{
             IDs.setText("");
 
             try {
-                sn.executeUpdate("DELETE FROM teacher WHERE id =" + ids + ";");
+                sn.executeUpdate("DELETE FROM teacher WHERE teacher_id =" + ids + ";");
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -158,10 +158,10 @@ public class TeacherPanel extends JPanel{
                 IDs.setText("");
                 try {
                     sn.executeUpdate("INSERT INTO teacher (first_name, last_name) VALUES ('" + temp.getFirst() + "', '" + temp.getLast() + "');");
-                    ResultSet update = sn.executeQuery("SELECT id FROM teacher WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
+                    ResultSet update = sn.executeQuery("SELECT teacher_id FROM teacher WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
                     int maxID = -1;
                     while(update!=null&&update.next()) {
-                        maxID = Math.max(maxID, update.getInt("id"));
+                        maxID = Math.max(maxID, update.getInt("teacher_id"));
                     }
                     temp.setID(maxID + "");
                     dataList.setListData(data.toArray(new Data[0]));
@@ -213,10 +213,10 @@ public class TeacherPanel extends JPanel{
 
                 try {
 
-                    ResultSet rs = sn.executeQuery("SELECT id, course_id, teacher_id FROM section");
+                    ResultSet rs = sn.executeQuery("SELECT section_id, course_id, teacher_id FROM section");
                     while(rs!=null&&rs.next()) {
                         if(rs.getInt("teacher_id")==tempID) {
-                            sectionData section = new sectionData(rs.getInt("id"), rs.getInt("course_id"), rs.getInt("teacher_id"), sn);
+                            sectionData section = new sectionData(rs.getInt("section_id"), rs.getInt("course_id"), rs.getInt("teacher_id"), sn);
                             //System.out.println(section.getTeacherId() + " is the teacher id");
                             sections.add(section);
                         }
@@ -227,7 +227,7 @@ public class TeacherPanel extends JPanel{
                     for(sectionData sd: sections) {
                         int tempCourseID = sd.getCourseId();
                         String tempSectionID = sd.getId() + "";
-                        rs = sn.executeQuery("SELECT * FROM course where id=" + tempCourseID + ";");
+                        rs = sn.executeQuery("SELECT * FROM course where course_id=" + tempCourseID + ";");
                         String[] sss = new String[]{tempSectionID, rs.getString("title")};
                         mod.addRow(sss);
                     }

@@ -64,10 +64,10 @@ public class sectionsPanel extends JPanel {
         try
         {
 
-            ResultSet rs = statementName.executeQuery("Select id, title, type FROM course;");
+            ResultSet rs = statementName.executeQuery("Select course_id, title, type FROM course;");
             while(rs!=null&&rs.next())
             {
-                coursesData temp = new coursesData(rs.getString("id"), rs.getString("title"),  rs.getInt("type"));
+                coursesData temp = new coursesData(rs.getString("course_id"), rs.getString("title"),  rs.getInt("type"));
                 allMyCourses.add(temp);
             }
 
@@ -128,7 +128,7 @@ public class sectionsPanel extends JPanel {
         saveStudent.addActionListener(e->{
             if(mySections.getSelectedValue()!=null) {
                 try {
-                    ResultSet rs = statementName.executeQuery("SELECT * FROM student WHERE id=" + studentID.getText() + ";");
+                    ResultSet rs = statementName.executeQuery("SELECT * FROM student WHERE student_id=" + studentID.getText() + ";");
                     String sectionStr="";
                     boolean alreadyContained=false;
                     while (rs != null && rs.next()) {
@@ -139,13 +139,13 @@ public class sectionsPanel extends JPanel {
                             break;
                         }
                         sectionStr+=" " + mySections.getSelectedValue().getId();
-                        Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("id"));
+                        Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("student_id"));
                         allMyStudents.add(student);
                         System.out.println(studentID.getText()+" yes");
 
                     }
                     if(!alreadyContained) {
-                        statementName.executeUpdate("UPDATE student SET sections=\'" + sectionStr +"\' WHERE id=" + studentID.getText() + ";");
+                        statementName.executeUpdate("UPDATE student SET sections=\'" + sectionStr +"\' WHERE section_id=" + studentID.getText() + ";");
 
                     }
 
@@ -172,11 +172,11 @@ public class sectionsPanel extends JPanel {
             if(mySections.getSelectedValue()!=null) {
                 try {
                     //ResultSet rs = statementName.executeQuery("SELECT * FROM student WHERE id=4;");
-                    ResultSet rs = statementName.executeQuery("SELECT * FROM student WHERE id=" + Integer.parseInt(studentID.getText()) + ";");
+                    ResultSet rs = statementName.executeQuery("SELECT * FROM student WHERE student_id=" + Integer.parseInt(studentID.getText()) + ";");
                     String sectionStr="";
                     String newSectionStr = "";
                     while (rs != null && rs.next()) {
-                        System.out.println("student: " + rs.getInt("id"));
+                        System.out.println("student: " + rs.getInt("student_id"));
                         sectionStr = rs.getString("sections");
                         String[] tempAr = sectionStr.split(" ");
 
@@ -192,7 +192,7 @@ public class sectionsPanel extends JPanel {
 
 
                     }
-                    statementName.executeUpdate("UPDATE student SET sections=\'"+newSectionStr+"\' WHERE id="+studentID.getText()+";");
+                    statementName.executeUpdate("UPDATE student SET sections=\'"+newSectionStr+"\' WHERE student_id="+studentID.getText()+";");
 
                 } catch (SQLException ex) {
                     System.out.println("Exception delete Student");
@@ -207,12 +207,8 @@ public class sectionsPanel extends JPanel {
                     try {
                         ResultSet rs = statementName.executeQuery("SELECT * FROM student");
                         while(rs!=null&&rs.next()) {
-                            System.out.println("Student: " + rs.getString("id") + " sections: " + rs.getString("sections"));
-                            // if(rs.getString("sections").contains(""+mySections.getSelectedValue().id)) {
                             if(rs.getString("sections").contains(""+mySections.getSelectedValue().id+" ")||rs.getString("sections").contains(" "+mySections.getSelectedValue().id)) {
-
-                                System.out.println("inside");
-                                Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("id"));
+                                Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("student_id"));
                                 allMyStudents.add(student);
                             }
 
@@ -276,9 +272,8 @@ public class sectionsPanel extends JPanel {
                     int courseID = temporary.getCourseId();
                     int teacherID = temporary.getTeacherId();
                     int ID = temporary.getId();
-                    statementName.executeUpdate("UPDATE section SET course_id='" + courseID +"' WHERE id=" + ID + ";");
-                    statementName.executeUpdate("UPDATE section SET teacher_id='" + teacherID   +"' WHERE id=" +  ID + ";");
-                    System.out.println("At least I got here");
+                    statementName.executeUpdate("UPDATE section SET course_id='" + courseID +"' WHERE section_id=" + ID + ";");
+                    statementName.executeUpdate("UPDATE section SET teacher_id='" + teacherID   +"' WHERE section_id=" +  ID + ";");
 
                 }
                 catch(Exception a)
@@ -299,11 +294,11 @@ public class sectionsPanel extends JPanel {
                 allMySections.clear();
                 ResultSet ab = null;
                 try {
-                    ab = statementName.executeQuery("SELECT id, teacher_id, course_id FROM section;");
+                    ab = statementName.executeQuery("SELECT section_id, teacher_id, course_id FROM section;");
 
                     while(ab!=null&&ab.next()) {
                         sectionData temp2 = null;
-                        temp2 = new sectionData(ab.getInt("id"), ab.getInt("course_id"), ab.getInt("teacher_id"), statementName);
+                        temp2 = new sectionData(ab.getInt("section_id"), ab.getInt("course_id"), ab.getInt("teacher_id"), statementName);
 
 
                         if(tempId==temp2.getCourseId()) {
@@ -314,7 +309,7 @@ public class sectionsPanel extends JPanel {
                 }
                 catch(Exception r)
                 {
-                    System.out.println("savesectionchanges error");
+                    r.printStackTrace();
                 }
                 myStudents.setListData(allMyStudents.toArray(new Data[0]));
                 mySections.setListData(allMySections.toArray(new sectionData[0]));
@@ -332,11 +327,11 @@ public class sectionsPanel extends JPanel {
 
             try {
                 statementName.executeUpdate("INSERT INTO section (course_id, teacher_id) VALUES ('" + courseText.getText()+"', '" + teacherText.getText()+"');");
-                ResultSet ab = statementName.executeQuery("SELECT id FROM section WHERE course_id = '" + courseText.getText() + "' AND teacher_id = '" + teacherText.getText()+"';");
+                ResultSet ab = statementName.executeQuery("SELECT section_id FROM section WHERE course_id = '" + courseText.getText() + "' AND teacher_id = '" + teacherText.getText()+"';");
                 int tempID = -1;
                 while(ab!=null&&ab.next())
                 {
-                    tempID = ab.getInt("id");
+                    tempID = ab.getInt("section_id");
 
                 }
                 mySections.setListData(allMySections.toArray(new sectionData[0]));
@@ -355,9 +350,9 @@ public class sectionsPanel extends JPanel {
             int tempId = Integer.parseInt(temp.getID());
             allMySections.clear();
             try {
-                ResultSet ab = statementName.executeQuery("SELECT id, teacher_id, course_id FROM section;");
+                ResultSet ab = statementName.executeQuery("SELECT section_id, teacher_id, course_id FROM section;");
                 while(ab!=null&&ab.next()) {
-                    sectionData temp2 = new sectionData(ab.getInt("id"), ab.getInt("course_id"), ab.getInt("teacher_id"), statementName);
+                    sectionData temp2 = new sectionData(ab.getInt("section_id"), ab.getInt("course_id"), ab.getInt("teacher_id"), statementName);
                     if(tempId==temp2.getCourseId()) {
                         allMySections.add(temp2);
                     }
@@ -396,7 +391,7 @@ public class sectionsPanel extends JPanel {
                                 newSections+=str+" ";
                             }
                         }
-                        studentIDs.add(rs.getInt("id"));
+                        studentIDs.add(rs.getInt("student_id"));
                         studentSections.add(newSections);
                         }
                 } catch (SQLException ex) {
@@ -407,7 +402,7 @@ public class sectionsPanel extends JPanel {
                     String newSections = studentSections.get(i);
                     int curId = studentIDs.get(i);
                     try {
-                        statementName.executeUpdate("UPDATE student set sections=\'" + newSections+"\' where id="+curId+";");
+                        statementName.executeUpdate("UPDATE student set sections=\'" + newSections+"\' where student_id="+curId+";");
                     } catch (SQLException ex) {
                         System.out.println("Exception updating student section");
                     }
@@ -418,7 +413,7 @@ public class sectionsPanel extends JPanel {
                 if(temp!=null) {
 
                     try {
-                        statementName.executeUpdate("DELETE FROM section WHERE id =" + temp.getId() + ";");
+                        statementName.executeUpdate("DELETE FROM section WHERE section_id =" + temp.getId() + ";");
                     } catch (SQLException ex) {
                         System.out.println("Exception deleting section");
                     }
@@ -443,9 +438,9 @@ public class sectionsPanel extends JPanel {
                 int tempId = Integer.parseInt(temp.getID());
                 allMySections.clear();
                 try {
-                    ResultSet ab = statementName.executeQuery("SELECT id, teacher_id, course_id FROM section;");
+                    ResultSet ab = statementName.executeQuery("SELECT section_id, teacher_id, course_id FROM section;");
                     while(ab!=null&&ab.next()) {
-                        sectionData temp2 = new sectionData(ab.getInt("id"), ab.getInt("course_id"), ab.getInt("teacher_id"), statementName);
+                        sectionData temp2 = new sectionData(ab.getInt("section_id"), ab.getInt("course_id"), ab.getInt("teacher_id"), statementName);
                         if(tempId==temp2.getCourseId()) {
                             allMySections.add(temp2);
                         }
@@ -473,10 +468,8 @@ public class sectionsPanel extends JPanel {
                     try {
                         ResultSet rs = statementName.executeQuery("SELECT * FROM student");
                         while(rs!=null&&rs.next()) {
-                            System.out.println("Student: " + rs.getString("id") + " sections: " + rs.getString("sections"));
                             if(rs.getString("sections").contains(""+mySections.getSelectedValue().id+" ")||rs.getString("sections").contains(" "+mySections.getSelectedValue().id)) {
-                                System.out.println("inside");
-                                Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("id"));
+                                Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("student_id"));
                                 allMyStudents.add(student);
                             }
 
@@ -514,9 +507,9 @@ public class sectionsPanel extends JPanel {
                 int tempId = Integer.parseInt(temp.getID());
                 allMySections.clear();
                 try {
-                    ResultSet ab = statementName.executeQuery("SELECT id, teacher_id, course_id FROM section;");
+                    ResultSet ab = statementName.executeQuery("SELECT section_id, teacher_id, course_id FROM section;");
                     while(ab!=null&&ab.next()) {
-                        sectionData temp2 = new sectionData(ab.getInt("id"), ab.getInt("course_id"), ab.getInt("teacher_id"), statementName);
+                        sectionData temp2 = new sectionData(ab.getInt("section_id"), ab.getInt("course_id"), ab.getInt("teacher_id"), statementName);
                         if(tempId==temp2.getCourseId()) {
                             allMySections.add(temp2);
                         }

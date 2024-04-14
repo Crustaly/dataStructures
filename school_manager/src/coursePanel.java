@@ -74,7 +74,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
         add(kap);
         add(ap);
 
-        save.setBounds(280,350,100,20);
+        save.setBounds(280,200,100,20);
         add(save);
         save.addActionListener(e ->
         {
@@ -108,10 +108,10 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
                 try
                 {
                     sn.executeUpdate("INSERT INTO course (title, type) VALUES ('" + temp.getCourseName() + "', " + temp.getType() + ");");
-                    ResultSet results = sn.executeQuery("SELECT id FROM course");
+                    ResultSet results = sn.executeQuery("SELECT course_id FROM course");
                     int maxID = -1;
                     while(results!=null&&results.next()) {
-                        maxID = Math.max(maxID, results.getInt("id"));
+                        maxID = Math.max(maxID, results.getInt("course_id"));
                     }
                     temp.setID(maxID + "");
                     //myContacts.setListData(storage.toArray(new courses[0]));
@@ -124,16 +124,16 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             }
         });
 
+
         save.setVisible(true);
         clear.setVisible(true);
 
-        saveChanges.setBounds(280, 380, 100, 20);
+        saveChanges.setBounds(280, 200, 100, 20);
         saveChanges.setText("Save Changes");
-        saveChanges.setVisible(true);
         add(saveChanges);
         setVisible(true);
 
-        deleteContact.setBounds(390, 380, 100, 20);
+        deleteContact.setBounds(390, 200, 100, 20);
         add(deleteContact);
 
         saveChanges.addActionListener(e ->
@@ -164,8 +164,8 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
 
             try
             {
-                sn.executeUpdate("UPDATE course SET title='" + temporary.getCourseName() + "' WHERE id = " + temporary.getID() + ";");
-                sn.executeUpdate("UPDATE course SET type = " + temporary.getType() + " WHERE id = " + temporary.getID() + ";");
+                sn.executeUpdate("UPDATE course SET title='" + temporary.getCourseName() + "' WHERE course_id = " + temporary.getID() + ";");
+                sn.executeUpdate("UPDATE course SET type = " + temporary.getType() + " WHERE course_id = " + temporary.getID() + ";");
                 //save course
             }
             catch(Exception a)
@@ -187,6 +187,16 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             repaint();
         });
 
+        clear.setBounds(390,200,100,20);
+        add(clear);
+        clear.addActionListener(e ->
+        {
+            academic.setSelected(false);
+            kap.setSelected(false);
+            ap.setSelected(false);
+            course.setText("");
+        });
+
         deleteContact.addActionListener(e ->
         {
             //for each section that has the course
@@ -199,7 +209,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
                     sectionIDs.add(rs.getInt("id"));
                 }
             } catch (SQLException ex) {
-                System.out.println("Exception creating sectionid list");
+                System.out.println("Exception creating section_id list");
             }
             for(int id : sectionIDs) {
                 ArrayList<Integer> studentIDS = new ArrayList<>();
@@ -209,7 +219,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
                     ResultSet rs = sn.executeQuery("SELECT * from student");
 
                     while (rs != null && rs.next()) {
-                        studentIDS.add(rs.getInt("id"));
+                        studentIDS.add(rs.getInt("student_id"));
                         String[] ar = rs.getString("sections").split(" ");
                         String newStr = "";
                         for (String str : ar) {
@@ -225,7 +235,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
 
                 try {
                     for (int i = 0; i < studentIDS.size(); i++) {
-                        sn.executeUpdate("UPDATE student set sections=\'" + studentSections.get(i) + "\' where ID=" + studentIDS.get(i) + ";");
+                        sn.executeUpdate("UPDATE student set sections=\'" + studentSections.get(i) + "\' where student_id=" + studentIDS.get(i) + ";");
                     }
                 } catch (SQLException ex) {
                     System.out.println("Exception changing student sections");
@@ -260,7 +270,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             academic.setSelected(false);
 
             try {
-                sn.executeUpdate("DELETE FROM course WHERE id =" + s.getID() + ";");
+                sn.executeUpdate("DELETE FROM course WHERE course_id =" + s.getID() + ";");
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 System.out.println("Not good in delete course");

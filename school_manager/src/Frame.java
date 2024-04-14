@@ -124,7 +124,7 @@ public class Frame extends JFrame implements WindowListener{
             if(teacherPanel!=null) {
                 ResultSet rs = null;
                 try {
-                    rs = sn.executeQuery("SELECT id, first_name, last_name FROM teacher;");
+                    rs = sn.executeQuery("SELECT teacher_id, first_name, last_name FROM teacher;");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -215,7 +215,7 @@ public class Frame extends JFrame implements WindowListener{
             if(studentPanel!=null) {
                 ResultSet rs = null;
                 try {
-                    rs = sn.executeQuery("SELECT id, first_name, last_name FROM student;");
+                    rs = sn.executeQuery("SELECT student_id, first_name, last_name FROM student;");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }

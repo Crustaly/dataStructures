@@ -63,10 +63,10 @@ public class StudentPanel extends JPanel{
 
         try
         {
-            ResultSet rs = sn.executeQuery("SELECT id, first_name, last_name FROM student;");
+            ResultSet rs = sn.executeQuery("SELECT student_id, first_name, last_name FROM student;");
             while(rs!=null&&rs.next())
             {
-                Data temp = new Data(rs.getString("first_name"), rs.getString("last_name"),  rs.getInt("id") + "");
+                Data temp = new Data(rs.getString("first_name"), rs.getString("last_name"),  rs.getInt("student_id") + "");
                 storage.add(temp);
             }
             myContacts.setListData(storage.toArray(new Data[0]));
@@ -128,8 +128,8 @@ public class StudentPanel extends JPanel{
                 String firstName = temporary.getFirst();
                 String lastName = temporary.getLast();
                 int ID = Integer.parseInt(temporary.getID());
-                sn.executeUpdate("UPDATE student SET first_name='" + firstName +"' WHERE id=" + ID + ";");
-                sn.executeUpdate("UPDATE student SET last_name='" + lastName   +"' WHERE id=" +  ID + ";");
+                sn.executeUpdate("UPDATE student SET first_name='" + firstName +"' WHERE student_id=" + ID + ";");
+                sn.executeUpdate("UPDATE student SET last_name='" + lastName   +"' WHERE student_id=" +  ID + ";");
 
 //               update student and first nae and id
             }
@@ -162,7 +162,7 @@ public class StudentPanel extends JPanel{
             System.out.println("Got here");
 
             try {
-                sn.executeUpdate("DELETE FROM student WHERE id =" + ids + ";");
+                sn.executeUpdate("DELETE FROM student WHERE student_id =" + ids + ";");
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 System.out.println("Not good in delete contact");
@@ -192,10 +192,10 @@ public class StudentPanel extends JPanel{
                     String blank = "";
                     sn.executeUpdate("INSERT INTO student (first_name, last_name, sections) VALUES ('" + temp.getFirst() + "', '" + temp.getLast() + "', '" + blank+ "');");
                     //do first name last, and sections
-                    ResultSet update = sn.executeQuery("SELECT id FROM student WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
+                    ResultSet update = sn.executeQuery("SELECT student_id FROM student WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
                     int maxID = -1;
                     while(update!=null&&update.next()) {
-                        maxID = Math.max(maxID, update.getInt("id"));
+                        maxID = Math.max(maxID, update.getInt("student_id"));
                     }
                     temp.setID(maxID + "");
                     myContacts.setListData(storage.toArray(new Data[0]));
@@ -233,7 +233,7 @@ public class StudentPanel extends JPanel{
                     DefaultTableModel mod = new DefaultTableModel();
 
                     try {
-                        ResultSet rs = sn.executeQuery("SELECT sections FROM student WHERE id=" + myContacts.getSelectedValue().getID());
+                        ResultSet rs = sn.executeQuery("SELECT sections FROM student WHERE section_id=" + myContacts.getSelectedValue().getID());
                         ArrayList<String> splitSections = new ArrayList<>();
                         while (rs != null && rs.next()) {
                             splitSections.add(rs.getString("section_id"));
@@ -246,9 +246,9 @@ public class StudentPanel extends JPanel{
                             if (str.equals("test")) {
                                 continue;
                             }
-                            ResultSet rs2 = sn.executeQuery("SELECT * FROM section WHERE id=" + Integer.parseInt(str));
+                            ResultSet rs2 = sn.executeQuery("SELECT * FROM section WHERE section_id=" + Integer.parseInt(str));
                             while (rs2 != null && rs2.next()) {
-                                sectionData curSection = new sectionData(rs2.getInt("id"), rs2.getInt("course_id"), rs2.getInt("teacher_id"), sn);
+                                sectionData curSection = new sectionData(rs2.getInt("section_id"), rs2.getInt("course_id"), rs2.getInt("teacher_id"), sn);
                                 sections.add(curSection);
                             }
                         }
@@ -260,9 +260,9 @@ public class StudentPanel extends JPanel{
                             int tempCourseID = sd.getCourseId();
                             String tempSectionID = sd.getId() + "";
                             int tempTeacherID = sd.getTeacherId();
-                            rs = sn.executeQuery("SELECT * FROM course where id=" + tempCourseID + ";");
+                            rs = sn.executeQuery("SELECT * FROM course where course_id=" + tempCourseID + ";");
                             String course = rs.getString("title");
-                            rs = sn.executeQuery("SELECT * FROM teacher where id=" + tempTeacherID + ";");
+                            rs = sn.executeQuery("SELECT * FROM teacher where teacher_id=" + tempTeacherID + ";");
                             String teachLast = rs.getString("last_name");
                             String[] sss = new String[]{tempSectionID, course, teachLast};
                             mod.addRow(sss);
