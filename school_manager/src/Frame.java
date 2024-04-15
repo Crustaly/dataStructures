@@ -4,6 +4,13 @@ import javax.swing.*;
 import java.sql.*;
 import java.awt.event.*;
 import java.awt.Panel;
+
+/*
+to-do:
+
+- when clicking back and forth between views, data does not save from previous inserts somehow
+- figure out where to put enrollment table stuff
+ */
 public class Frame extends JFrame implements WindowListener{
     static JMenuBar bar;
     static JMenu file;
@@ -38,6 +45,41 @@ public class Frame extends JFrame implements WindowListener{
         sn = con.createStatement();
         sn.execute("USE school_manager");
 
+        sn.execute("CREATE TABLE IF NOT EXISTS teacher(" +
+                "teacher_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "first_name TEXT NOT NULL," +
+                "last_name TEXT NOT NULL," +
+                "PRIMARY KEY(teacher_id)"+
+                ");");
+
+        sn.execute("CREATE TABLE IF NOT EXISTS student(" +
+                "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "first_name TEXT NOT NULL," +
+                "last_name TEXT NOT NULL," +
+                "PRIMARY KEY(student_id)"+
+                ");");
+
+        sn.execute("CREATE TABLE IF NOT EXISTS section(" +
+                "section_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "course_id INTEGER NOT NULL," +
+                "teacher_id INTEGER NOT NULL," +
+                "PRIMARY KEY(section_id)"+
+                ");");
+
+        sn.execute("CREATE TABLE IF NOT EXISTS course(" +
+                "course_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "title TEXT NOT NULL," +
+                "type INTEGER NOT NULL," +
+                "PRIMARY KEY(course_id)"+
+                ");");
+
+        sn.execute("CREATE TABLE IF NOT EXISTS enrollment(" +
+               "section_id INTEGER NOT NULL," +
+                "student_id INTEGER NOT NULL" +
+                ");");
+
+        sn.executeUpdate("DELETE FROM teacher WHERE teacher_id =" + "-1" + ";");
+        sn.execute("INSERT INTO teacher(teacher_id, first_name, last_name) VALUES (-1,\"Teacher\", \"No\");");
 
         setSize(1000,1000);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

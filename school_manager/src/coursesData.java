@@ -1,4 +1,4 @@
-public class coursesData
+public class coursesData implements Comparable<coursesData>
 {
     String ID;
     String courseName;
@@ -43,6 +43,7 @@ public class coursesData
         return false;
     }
 
+@Override
     public int compareTo(coursesData o) {
         return getCourseName().compareTo(o.getCourseName());
     }

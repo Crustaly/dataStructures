@@ -15,6 +15,13 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.Random;
 import java.sql.*;
+
+/*
+to-do:
+
+- figure out why all student ids are -1
+
+ */
 public class StudentPanel extends JPanel{
     JLabel firstName = new JLabel("First Name:");
     JLabel lastName = new JLabel("Last Name:");
@@ -174,7 +181,6 @@ public class StudentPanel extends JPanel{
 
         save.addActionListener(e ->
         {
-            System.out.println("Tried to save");
 
             if (first.getText().equals("") || last.getText().equals("")) {
                 System.out.println("bad input");
@@ -189,9 +195,6 @@ public class StudentPanel extends JPanel{
                 IDs.setText("");
 
                 try {
-                    String blank = "";
-                    sn.executeUpdate("INSERT INTO student (first_name, last_name, sections) VALUES ('" + temp.getFirst() + "', '" + temp.getLast() + "', '" + blank+ "');");
-                    //do first name last, and sections
                     ResultSet update = sn.executeQuery("SELECT student_id FROM student WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
                     int maxID = -1;
                     while(update!=null&&update.next()) {
@@ -233,7 +236,7 @@ public class StudentPanel extends JPanel{
                     DefaultTableModel mod = new DefaultTableModel();
 
                     try {
-                        ResultSet rs = sn.executeQuery("SELECT sections FROM student WHERE section_id=" + myContacts.getSelectedValue().getID());
+                        ResultSet rs = sn.executeQuery("SELECT section_id FROM enrollment WHERE student_id=" + myContacts.getSelectedValue().getID());
                         ArrayList<String> splitSections = new ArrayList<>();
                         while (rs != null && rs.next()) {
                             splitSections.add(rs.getString("section_id"));

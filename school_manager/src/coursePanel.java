@@ -15,6 +15,13 @@ import java.util.Scanner;
 import java.util.Random;
 import java.sql.*;
 
+/*
+to-do:
+
+- pop up message "Invalid entry" when try to add a course without selecting a type
+- also display type on MyContacts list
+ */
+
 public class coursePanel extends JPanel{
     JLabel ID = new JLabel("ID:");
     JLabel courseName = new JLabel("Course Name:");
@@ -102,6 +109,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
                 ap.setSelected(false);
                 coursesData temp = new coursesData(ids.getText(), course.getText(), type);
                 storage.add(temp);
+                Collections.sort(storage);
                 myContacts.setListData(storage.toArray(new coursesData[0]));
                 course.setText("");
 
@@ -138,6 +146,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
 
         saveChanges.addActionListener(e ->
         {
+
             coursesData s = myContacts.getSelectedValue();
             int index = storage.indexOf(s);
             int type = -1;
@@ -159,7 +168,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             coursesData temporary = new coursesData(ids.getText(), course.getText(), type);
             storage.set(index, temporary);
             course.setText("");
-
+            Collections.sort(storage);
             myContacts.setListData(storage.toArray(new coursesData[0]));
 
             try
@@ -185,6 +194,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             academic.setSelected(false);
             System.out.print(academic.isSelected());
             repaint();
+
         });
 
         clear.setBounds(390,200,100,20);
@@ -196,6 +206,45 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             ap.setSelected(false);
             course.setText("");
         });
+        Collections.sort(storage);
+        myContacts.setListData(storage.toArray(new coursesData[0]));
+
+        myContacts.addListSelectionListener(e ->
+        {
+            Collections.sort(storage);
+            academic.setSelected(false);
+            kap.setSelected(false);
+            ap.setSelected(false);
+
+            if (storage.isEmpty() == false) {
+                save.setVisible(false);
+                clear.setVisible(false);
+
+                saveChanges.setVisible(true);
+                deleteContact.setVisible(true);
+                if (myContacts.getSelectedValue() != null) {
+                    ids.setText(myContacts.getSelectedValue().getID());
+                    course.setText(myContacts.getSelectedValue().getCourseName());
+                    if(myContacts.getSelectedValue().getType()==0)
+                    {
+
+                        academic.setSelected(true);
+                    }
+                    if(myContacts.getSelectedValue().getType()==1)
+                    {
+
+                        kap.setSelected(true);
+                    }
+                    if(myContacts.getSelectedValue().getType()==2)
+                    {
+
+                        ap.setSelected(true);
+                    }
+
+                }
+            }
+        });
+
 
         deleteContact.addActionListener(e ->
         {
@@ -204,9 +253,9 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             //remove section
             ArrayList<Integer> sectionIDs = new ArrayList<>();
             try {
-                ResultSet rs = sn.executeQuery("SELECT * from section where course_id="+Integer.parseInt(ids.getText())+";");
+                ResultSet rs = sn.executeQuery("SELECT * from section where course_id="+ids.getText()+";");
                 while(rs!=null&&rs.next()) {
-                    sectionIDs.add(rs.getInt("id"));
+                    sectionIDs.add(rs.getInt("section_id"));
                 }
             } catch (SQLException ex) {
                 System.out.println("Exception creating section_id list");
@@ -245,7 +294,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             }
 
             try {
-                sn.executeUpdate("DELETE from section where course_id="+Integer.parseInt(ids.getText())+";");
+                sn.executeUpdate("DELETE from section where course_id="+ids.getText()+";");
             } catch (SQLException ex) {
                 System.out.println("Exception deleting section");
             }
@@ -259,6 +308,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             ap.setSelected(false);
             storage.remove(s);
             course.setText("");
+            Collections.sort(storage);
             myContacts.setListData(storage.toArray(new coursesData[0]));
             saveChanges.setVisible(false);
             deleteContact.setVisible(false);

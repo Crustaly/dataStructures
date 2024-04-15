@@ -7,6 +7,9 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.Collections;
 
+/*
+this is completely broken somehow
+ */
 public class sectionsPanel extends JPanel {
 
 
