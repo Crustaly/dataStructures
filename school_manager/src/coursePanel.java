@@ -17,8 +17,6 @@ import java.sql.*;
 
 /*
 to-do:
-
-- pop up message "Invalid entry" when try to add a course without selecting a type
 - also display type on MyContacts list
  */
 
@@ -88,6 +86,8 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             if(courseName.getText()==""||(academic.isSelected()==false&&kap.isSelected()==false&&ap.isSelected()==false))
             {
                 System.out.println("not full");
+                JOptionPane.showMessageDialog(null, "Not valid", "Message", JOptionPane.INFORMATION_MESSAGE);
+
             }
             else
             {

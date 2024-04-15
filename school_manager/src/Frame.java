@@ -78,8 +78,8 @@ public class Frame extends JFrame implements WindowListener{
                 "student_id INTEGER NOT NULL" +
                 ");");
 
-        sn.executeUpdate("DELETE FROM teacher WHERE teacher_id =" + "-1" + ";");
-        sn.execute("INSERT INTO teacher(teacher_id, first_name, last_name) VALUES (-1,\"Teacher\", \"No\");");
+      //  sn.executeUpdate("DELETE FROM teacher WHERE teacher_id =" + "-1" + ";");
+        //  sn.execute("INSERT INTO teacher(teacher_id, first_name, last_name) VALUES (-1,\"Teacher\", \"No\");");
 
         setSize(1000,1000);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

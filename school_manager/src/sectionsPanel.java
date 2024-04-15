@@ -9,6 +9,7 @@ import java.util.Collections;
 
 /*
 this is completely broken somehow
+fix gui
  */
 public class sectionsPanel extends JPanel {
 
@@ -17,8 +18,8 @@ public class sectionsPanel extends JPanel {
     JList<coursesData> myCourses = new JList<>();
     JScrollPane scrolling = new JScrollPane();
 
-    JButton save = new JButton("Save");
-    JButton clear = new JButton("Clear");
+   JButton save = new JButton("Save");
+   JButton clear = new JButton("Clear");
     JButton saveSectionChanges = new JButton("Save Changes");
     JButton deleteSection = new JButton("Delete Section");
 
@@ -26,8 +27,8 @@ public class sectionsPanel extends JPanel {
     JButton saveStudent = new JButton("Save Student");
     JButton deleteStudent = new JButton("Delete Student");
 
-    JButton saveChanges = new JButton("Save changes");
-    JButton deleteContact = new JButton("Delete contact");
+    //JButton saveChanges = new JButton("Save changes");
+   // JButton deleteContact = new JButton("Delete contact");
 
     ArrayList<sectionData> allMySections = new ArrayList<>();
     JList<sectionData> mySections = new JList<>();
@@ -46,12 +47,12 @@ public class sectionsPanel extends JPanel {
     JLabel teacher = new JLabel("Teacher ID:");
     JTextField teacherText = new JTextField("");
 
-    JLabel fnLabel = new JLabel("First Name");
-    JLabel lnLabel = new JLabel("Last Name");
-    JLabel studentIDLabel = new JLabel("ID");
+   // JLabel fnLabel = new JLabel("First Name");
+    //JLabel lnLabel = new JLabel("Last Name");
+ //   JLabel studentIDLabel = new JLabel("ID");
 
-    JTextField fn = new JTextField("");
-    JTextField ln = new JTextField("");
+   // JTextField fn = new JTextField("");
+  //  JTextField ln = new JTextField("");
     JTextField studentID = new JTextField("");
 
     JLabel sectionLabel = new JLabel("Sections");
@@ -119,8 +120,8 @@ public class sectionsPanel extends JPanel {
         teacherText.setBounds(330, 500, 70, 30);
         add(teacherText);
 
-        studentIDLabel.setBounds(450,420,70,30);
-        add(studentIDLabel);
+       // studentIDLabel.setBounds(450,420,70,30);
+      //  add(studentIDLabel);
 
         studentID.setBounds(530,420,70,30);
         add(studentID);
