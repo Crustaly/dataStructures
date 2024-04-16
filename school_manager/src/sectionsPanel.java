@@ -33,6 +33,8 @@ public class sectionsPanel extends JPanel {
     ArrayList<sectionData> allMySections = new ArrayList<>();
     JList<sectionData> mySections = new JList<>();
     JScrollPane scrollingTwo = new JScrollPane();
+    JComboBox<String> teachersDrop=new JComboBox<>();
+    JComboBox<String> courseDrop=new JComboBox<>();
 
     ArrayList<Data> allMyStudents = new ArrayList<>();
     JList<Data> myStudents = new JList<>();
@@ -58,16 +60,16 @@ public class sectionsPanel extends JPanel {
     JLabel sectionLabel = new JLabel("Sections");
     JLabel courseLabel = new JLabel("Courses");
     JLabel studentLabel = new JLabel("Students");
-
+    JLabel teacherLabel = new JLabel("Teachers");
 
 
 
     public sectionsPanel(int w, int h, Statement statementName) throws SQLException {
         setSize(w, h);
         setLayout(null);
-        try
-        {
+        try {
 
+         /*
             ResultSet rs = statementName.executeQuery("Select course_id, title, type FROM course;");
             while(rs!=null&&rs.next())
             {
@@ -76,6 +78,18 @@ public class sectionsPanel extends JPanel {
             }
 
             myCourses.setListData(allMyCourses.toArray(new coursesData[0]));
+        }
+
+          */
+            ResultSet rs = statementName.executeQuery("Select course_id, title, type FROM course;");
+            while (rs != null && rs.next()) {
+                courseDrop.addItem(rs.getString("CourseName"));
+            }
+
+            rs=statementName.executeQuery("SELECT * FROM teacher");
+            while(rs!=null&&rs.next()){
+                teachersDrop.addItem(rs.getString("FirstName")+" "+rs.getString("LastName"));
+            }
         }
         catch(Exception e)
         {
@@ -86,13 +100,20 @@ public class sectionsPanel extends JPanel {
         add(sectionLabel);
         courseLabel.setBounds(50,20,100,40);
         add(courseLabel);
+        courseDrop.setBounds(50,70,180,40);
+        add(courseDrop);
+        teacherLabel.setBounds(50,200,100,40);
+        add(teacherLabel);
+        teachersDrop.setBounds(50,250,180,40);
+        add(teachersDrop);
         studentLabel.setBounds(450,20,100,40);
         add(studentLabel);
 
+        /*
         scrolling = new JScrollPane(myCourses);
         scrolling.setBounds(50, 50, 180, 350);
         add(scrolling);
-
+*/
         scrollingTwo = new JScrollPane(mySections);
         scrollingTwo.setBounds(250,50,180,350);
         add(scrollingTwo);
@@ -129,6 +150,8 @@ public class sectionsPanel extends JPanel {
 
         saveStudent.setBounds(450,540,140,30);
         add(saveStudent);
+        courseDrop.setActionCommand("course");
+        teachersDrop.setActionCommand("teacher");
         saveStudent.addActionListener(e->{
             if(mySections.getSelectedValue()!=null) {
                 try {
@@ -248,6 +271,8 @@ public class sectionsPanel extends JPanel {
             IDText.setText("");
             courseText.setText("");
             teacherText.setText("");
+            courseDrop.setSelectedItem(-1);
+            teachersDrop.setSelectedItem(-1);
         });
 
         saveSectionChanges.setBounds(250, 580, 150, 20);
@@ -331,8 +356,17 @@ public class sectionsPanel extends JPanel {
         save.addActionListener(e-> {
 
             try {
+                /*
                 statementName.executeUpdate("INSERT INTO section (course_id, teacher_id) VALUES ('" + courseText.getText()+"', '" + teacherText.getText()+"');");
                 ResultSet ab = statementName.executeQuery("SELECT section_id FROM section WHERE course_id = '" + courseText.getText() + "' AND teacher_id = '" + teacherText.getText()+"';");
+               */
+                /*
+
+                we might need to add student into the sql too in this part but i dont understand rubric sorry - crystal
+                */
+                statementName.execute("INSERT INTO section (Course, Teacher) VALUES (\""+courseDrop.getSelectedItem()+"\", \""+teachersDrop.getSelectedItem()+"\", \");");
+                ResultSet ab=statementName.executeQuery("SELECT * FROM teacher WHERE FirstName='"+courseDrop.getSelectedItem()+"' AND LastName='"+teachersDrop.getSelectedItem()+"'");
+
                 int tempID = -1;
                 while(ab!=null&&ab.next())
                 {
@@ -341,6 +375,9 @@ public class sectionsPanel extends JPanel {
                 }
                 mySections.setListData(allMySections.toArray(new sectionData[0]));
                 System.out.print(allMySections);
+                /*
+                we might need to sort the list and update the frame as well - crystal
+                * */
 
 
             } catch (SQLException ex) {
