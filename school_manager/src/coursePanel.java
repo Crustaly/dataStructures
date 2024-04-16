@@ -83,9 +83,10 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
         add(save);
         save.addActionListener(e ->
         {
-            if(courseName.getText()==""||(academic.isSelected()==false&&kap.isSelected()==false&&ap.isSelected()==false))
+            System.out.println("not full "+courseName.getText());
+            if(courseName.getText().equals("")||(academic.isSelected()==false&&kap.isSelected()==false&&ap.isSelected()==false))
             {
-                System.out.println("not full");
+                System.out.println("not full "+courseName.getText());
                 JOptionPane.showMessageDialog(null, "Not valid", "Message", JOptionPane.INFORMATION_MESSAGE);
 
             }
@@ -170,6 +171,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             course.setText("");
             Collections.sort(storage);
             myContacts.setListData(storage.toArray(new coursesData[0]));
+
 
             try
             {

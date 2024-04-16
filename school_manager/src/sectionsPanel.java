@@ -163,6 +163,7 @@ public class sectionsPanel extends JPanel {
 
 
             }
+
             repaint();
 
 
