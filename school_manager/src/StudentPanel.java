@@ -67,13 +67,33 @@ public class StudentPanel extends JPanel{
         scheduleScrolling = new JScrollPane(scheduleTable);
         scheduleScrolling.setBounds(50, 450, 450, 350);
         add(scheduleScrolling);
-
+        System.out.println("POOP");
         try
         {
+            System.out.println("MEOW");
+            ResultSet r = sn.executeQuery("SELECT * FROM student");
+            while(r!=null&&r.next()){
+                System.out.println("HI");
+            }
             ResultSet rs = sn.executeQuery("SELECT student_id, first_name, last_name FROM student;");
+         //   ResultSet resultSet = statement.executeQuery("SELECT * from foo");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (rs.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = rs.getString(i);
+                    System.out.print(columnValue + " " + rsmd.getColumnName(i));
+                }
+                System.out.println("");
+            }
+
+
             while(rs!=null&&rs.next())
             {
+
                 Data temp = new Data(rs.getString("first_name"), rs.getString("last_name"),  rs.getInt("student_id") + "");
+                System.out.println(temp);
                 storage.add(temp);
             }
             myContacts.setListData(storage.toArray(new Data[0]));
