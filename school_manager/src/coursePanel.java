@@ -262,37 +262,14 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             } catch (SQLException ex) {
                 System.out.println("Exception creating section_id list");
             }
+            //remove sections from students thru enrollment
             for(int id : sectionIDs) {
-                ArrayList<Integer> studentIDS = new ArrayList<>();
-                ArrayList<String> studentSections = new ArrayList<>();
-
-                try {
-                    ResultSet rs = sn.executeQuery("SELECT * from student");
-
-                    while (rs != null && rs.next()) {
-                        studentIDS.add(rs.getInt("student_id"));
-                        String[] ar = rs.getString("sections").split(" ");
-                        String newStr = "";
-                        for (String str : ar) {
-                            if (!str.equals("" + id)) {
-                                newStr += str + " ";
-                            }
-                        }
-                        studentSections.add(newStr);
-                    }
-                } catch (SQLException ex) {
-                    System.out.println("Exception creating new schedule");
+                try{
+                    sn.executeUpdate("DELETE FROM enrollment where section_id=" +id+";");
                 }
-
-                try {
-                    for (int i = 0; i < studentIDS.size(); i++) {
-                        sn.executeUpdate("UPDATE student set sections=\'" + studentSections.get(i) + "\' where student_id=" + studentIDS.get(i) + ";");
-                    }
-                } catch (SQLException ex) {
-                    System.out.println("Exception changing student sections");
+                catch(Exception ee){
+                    ee.printStackTrace();
                 }
-
-
             }
 
             try {
@@ -303,7 +280,6 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
 
             //removes course
             ids.setText("");
-            System.out.println("Tried to delete");
             coursesData s = myContacts.getSelectedValue();
             academic.setSelected(false);
             kap.setSelected(false);
@@ -316,7 +292,6 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             deleteContact.setVisible(false);
             save.setVisible(true);
             clear.setVisible(true);
-            System.out.println("Got here");
             ap.setSelected(false);
             kap.setSelected(false);
             academic.setSelected(false);
@@ -325,7 +300,6 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
                 sn.executeUpdate("DELETE FROM course WHERE course_id =" + s.getID() + ";");
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                System.out.println("Not good in delete course");
             }
             repaint();
         });
