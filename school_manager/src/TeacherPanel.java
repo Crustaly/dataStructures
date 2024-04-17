@@ -27,6 +27,7 @@ public class TeacherPanel extends JPanel{
         setSize(width, height);
         setLayout(null);
 
+
         //sections updates based on teacher clicked
         String[] colNames = {"Section ID","Course"};
         String ss[][] = new String[sections.size()][2];
@@ -62,6 +63,21 @@ public class TeacherPanel extends JPanel{
         IDs.setEditable(false);
         add(IDs);
 
+
+/*
+        ResultSet rrrs = sn.executeQuery("SELECT * FROM school_manager.teacher;");
+
+
+        while(rrrs!=null&&rrrs.next())
+        {
+
+            Data temp = new Data(rrrs.getString("first_name"), rrrs.getString("last_name"),  rrrs.getInt("student_id") + "");
+            System.out.println(temp);
+            storage.add(temp);
+        }
+        Collections.sort(storage);
+        dataList.setListData(storage.toArray(new Data[0]));
+*/
         saveChanges.setBounds(280, 310, 100, 20);
         saveChanges.setText("Save Changes");
         add(saveChanges);
@@ -118,6 +134,7 @@ public class TeacherPanel extends JPanel{
             clear.setVisible(true);
             ArrayList<Integer> sectionIDList = new ArrayList<>();
             try {
+
                 ResultSet rs = sn.executeQuery("SELECT * FROM section where teacher_id="+Integer.parseInt(IDs.getText())+";"); //removes teacher from sections
                 while(rs!=null&&rs.next()) {
                     int sectionId = rs.getInt("section_id");

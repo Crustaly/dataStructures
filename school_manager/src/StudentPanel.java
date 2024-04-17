@@ -67,13 +67,18 @@ public class StudentPanel extends JPanel{
         scheduleScrolling = new JScrollPane(scheduleTable);
         scheduleScrolling.setBounds(50, 450, 450, 350);
         add(scheduleScrolling);
-
+        System.out.println("POOP");
         try
         {
+
             ResultSet rs = sn.executeQuery("SELECT student_id, first_name, last_name FROM student;");
+
+
             while(rs!=null&&rs.next())
             {
+
                 Data temp = new Data(rs.getString("first_name"), rs.getString("last_name"),  rs.getInt("student_id") + "");
+                System.out.println(temp);
                 storage.add(temp);
             }
             Collections.sort(storage);
