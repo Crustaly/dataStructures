@@ -163,15 +163,6 @@ public class Frame extends JFrame implements WindowListener{
             add(teacherPanel);
             System.out.println("creating teacher");
             repaint();
-            if(teacherPanel!=null) {
-                ResultSet rs = null;
-                try {
-                    rs = sn.executeQuery("SELECT teacher_id, first_name, last_name FROM teacher;");
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            //repaint();
         });
         course.addActionListener(e->
         {

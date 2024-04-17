@@ -96,6 +96,7 @@ public class StudentPanel extends JPanel{
                 System.out.println(temp);
                 storage.add(temp);
             }
+            Collections.sort(storage);
             myContacts.setListData(storage.toArray(new Data[0]));
         }
         catch(Exception e) {
