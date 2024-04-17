@@ -76,6 +76,7 @@ public class StudentPanel extends JPanel{
                 Data temp = new Data(rs.getString("first_name"), rs.getString("last_name"),  rs.getInt("student_id") + "");
                 storage.add(temp);
             }
+            Collections.sort(storage);
             myContacts.setListData(storage.toArray(new Data[0]));
         }
         catch(Exception e) {
