@@ -62,33 +62,25 @@ public class sectionsPanel extends JPanel {
     JLabel studentLabel = new JLabel("Students");
     JLabel teacherLabel = new JLabel("Teachers");
 
-
-
     public sectionsPanel(int w, int h, Statement statementName) throws SQLException {
         setSize(w, h);
         setLayout(null);
         try {
-
-         /*
             ResultSet rs = statementName.executeQuery("Select course_id, title, type FROM course;");
             while(rs!=null&&rs.next())
             {
                 coursesData temp = new coursesData(rs.getString("course_id"), rs.getString("title"),  rs.getInt("type"));
                 allMyCourses.add(temp);
             }
+            Collections.sort(allMyCourses);
 
-            myCourses.setListData(allMyCourses.toArray(new coursesData[0]));
-        }
-
-          */
-            ResultSet rs = statementName.executeQuery("Select course_id, title, type FROM course;");
-            while (rs != null && rs.next()) {
-                courseDrop.addItem(rs.getString("CourseName"));
+            for(coursesData c: allMyCourses){
+                courseDrop.addItem(c.getCourseName());
             }
 
             rs=statementName.executeQuery("SELECT * FROM teacher");
             while(rs!=null&&rs.next()){
-                teachersDrop.addItem(rs.getString("FirstName")+" "+rs.getString("LastName"));
+                teachersDrop.addItem(rs.getString("last_name")+" "+rs.getString("first_name"));
             }
         }
         catch(Exception e)
@@ -109,11 +101,6 @@ public class sectionsPanel extends JPanel {
         studentLabel.setBounds(450,20,100,40);
         add(studentLabel);
 
-        /*
-        scrolling = new JScrollPane(myCourses);
-        scrolling.setBounds(50, 50, 180, 350);
-        add(scrolling);
-*/
         scrollingTwo = new JScrollPane(mySections);
         scrollingTwo.setBounds(250,50,180,350);
         add(scrollingTwo);
@@ -141,12 +128,8 @@ public class sectionsPanel extends JPanel {
         teacherText.setBounds(330, 500, 70, 30);
         add(teacherText);
 
-       // studentIDLabel.setBounds(450,420,70,30);
-      //  add(studentIDLabel);
-
         studentID.setBounds(530,420,70,30);
         add(studentID);
-
 
         saveStudent.setBounds(450,540,140,30);
         add(saveStudent);

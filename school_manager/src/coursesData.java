@@ -34,13 +34,7 @@ public class coursesData implements Comparable<coursesData>
     @Override
     public String toString() {
         //return courseName;
-        return "ID: " + ID + " " + courseName;
-    }
-    public boolean compareCourses(coursesData course) {
-        if(course.getType()==getType()&&course.getID()==getID()&&course.getCourseName()==getCourseName()) {
-            return true;
-        }
-        return false;
+        return courseName + " ID: " + ID;
     }
 
 @Override
