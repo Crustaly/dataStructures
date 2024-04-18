@@ -26,6 +26,7 @@ public class TeacherPanel extends JPanel{
     public TeacherPanel(int width, int height, Statement sn) throws SQLException{
         setSize(width, height);
         setLayout(null);
+        System.out.println("HEREEEE");
 
 
         //sections updates based on teacher clicked
@@ -64,20 +65,21 @@ public class TeacherPanel extends JPanel{
         add(IDs);
 
 
-/*
-        ResultSet rrrs = sn.executeQuery("SELECT * FROM school_manager.teacher;");
 
+        ResultSet rrrs = sn.executeQuery("SELECT * FROM school_manager.teacher;");
+        System.out.println("HEREEEE");
 
         while(rrrs!=null&&rrrs.next())
         {
 
-            Data temp = new Data(rrrs.getString("first_name"), rrrs.getString("last_name"),  rrrs.getInt("student_id") + "");
+            Data temp = new Data(rrrs.getString("first_name"), rrrs.getString("last_name"),  rrrs.getInt("teacher_id") + "");
             System.out.println(temp);
-            storage.add(temp);
+            data.add(temp);
         }
-        Collections.sort(storage);
-        dataList.setListData(storage.toArray(new Data[0]));
-*/
+        Collections.sort(data);
+        dataList.setListData(data.toArray(new Data[0]));
+        repaint();
+
         saveChanges.setBounds(280, 310, 100, 20);
         saveChanges.setText("Save Changes");
         add(saveChanges);
