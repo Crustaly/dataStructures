@@ -242,27 +242,27 @@ public class TeacherPanel extends JPanel{
                 }
                 int tempID = dataList.getSelectedValue()==null? 0:
                         Integer.parseInt(dataList.getSelectedValue().getID());
-
+                System.out.println(tempID);
                 try {
-
-                    ResultSet rs = sn.executeQuery("SELECT section_id, course_id, teacher_id FROM section");
+                    ResultSet rs = sn.executeQuery("SELECT * FROM section WHERE teacher_id = " + tempID + ";");
                     while(rs!=null&&rs.next()) {
-                        if(rs.getInt("teacher_id")==tempID) {
-                            sectionData section = new sectionData(rs.getInt("section_id"), rs.getInt("course_id"), rs.getInt("teacher_id"), sn);
-                            //System.out.println(section.getTeacherId() + " is the teacher id");
-                            sections.add(section);
+
+                        sectionData section = new sectionData(rs.getInt("section_id"), rs.getInt("course_id"), rs.getInt("teacher_id"), sn);
+                        //System.out.println(section.getTeacherId() + " is the teacher id");
+                        sections.add(section);
+
+                        ResultSet rrs = sn.executeQuery("SELECT * FROM course WHERE course_id=" + section.getCourseId() + ";");
+                        while(rrs != null && rrs.next()) {
+                            System.out.println(section.getCourseId());
+                            String[] sss = new String[]{section.getId()+"", rrs.getString("title")};
+                            mod.addRow(sss);
                         }
+
+
                     }
 
                     Collections.sort(sections);
-                    //add sections to tableModel
-                    for(sectionData sd: sections) {
-                        int tempCourseID = sd.getCourseId();
-                        String tempSectionID = sd.getId() + "";
-                        rs = sn.executeQuery("SELECT * FROM course where course_id=" + tempCourseID + ";");
-                        String[] sss = new String[]{tempSectionID, rs.getString("title")};
-                        mod.addRow(sss);
-                    }
+
                     sectionsTable.setModel(mod);
                     sectionsTable.repaint();
                     repaint();

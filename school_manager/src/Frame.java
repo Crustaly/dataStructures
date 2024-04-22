@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
@@ -58,10 +61,165 @@ public class Frame extends JFrame implements WindowListener{
         // 1) get rid of existing tables
         // 2) Create new tables from data (JFileChooser)
         // 2a) data comma separated
+        importData.addActionListener(e -> {
+            try {
+                sn.execute("DROP TABLE IF EXISTS student");
+                sn.execute("DROP TABLE IF EXISTS teacher");
+                sn.execute("DROP TABLE IF EXISTS course");
+                sn.execute("DROP TABLE IF EXISTS section");
+
+                sn.execute("CREATE TABLE IF NOT EXISTS student(" +
+                        "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                        "first_name TEXT NOT NULL," +
+                        "last_name TEXT NOT NULL," +
+                        "PRIMARY KEY(id)"+
+                        ");");
+
+                sn.execute("CREATE TABLE IF NOT EXISTS teacher(" +
+                        "teacher_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                        "first_name TEXT NOT NULL," +
+                        "last_name TEXT NOT NULL," +
+                        "PRIMARY KEY(id)"+
+                        ");");
+
+                sn.execute("CREATE TABLE IF NOT EXISTS section(" +
+                        "section_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                        "course_id INTEGER NOT NULL," +
+                        "teacher_id INTEGER NOT NULL," +
+                        "PRIMARY KEY(id)"+
+                        ");");
+
+                sn.execute("CREATE TABLE IF NOT EXISTS course(" +
+                        "course_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                        "title TEXT NOT NULL," +
+                        "type INTEGER NOT NULL," +
+                        "PRIMARY KEY(id)"+
+                        ");");
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+            //put a file browser here
+            JFileChooser fileChooser = new JFileChooser();
+            int response = fileChooser.showOpenDialog(null);
+            if(response==JFileChooser.APPROVE_OPTION) {
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+
+                try {
+                    Scanner sc = new Scanner(file);
+                    sc.nextLine();
+                    while(sc.hasNextLine()) {
+                        String str = sc.nextLine();
+                        if(str.contains("Teacher")) {
+                            break;
+                        }
+                        String[] ar = str.split(", ");
+                        sn.executeUpdate("INSERT into student(student_id, first_name, last_name) values ("+ar[0]+",\'"+ar[1]+"\', \'"+ar[2]+"\');");
+                    }
+
+                    while(sc.hasNextLine()) {
+                        String str = sc.nextLine();
+                        if(str.contains("Courses")) {
+                            break;
+                        }
+                        String[] ar = str.split(", ");
+                        sn.executeUpdate("INSERT into teacher(teacher_id, first_name, last_name) values ("+ar[0]+",\'"+ar[1]+"\', \'"+ar[2]+"\');");
+                    }
+
+                    while(sc.hasNextLine()) {
+                        String str = sc.nextLine();
+                        if(str.contains("Section")) {
+                            break;
+                        }
+                        String[] ar = str.split(", ");
+                        sn.executeUpdate("INSERT into course(course_id, title, type) values ("+ar[0]+",\'"+ar[1]+"\', \'"+ar[2]+"\');");
+                    }
+
+                    while(sc.hasNextLine()) {
+                        String str = sc.nextLine();
+                        if(str.contains("Enrollment")) {
+                            break;
+                        }
+                        String[] ar = str.split(", ");
+                        sn.executeUpdate("INSERT into section(section_id, course_id, teacher_id) values ("+ar[0]+", "+ar[1]+", "+ar[2]+");");
+                    }
+
+                    while(sc.hasNextLine()){
+                        String str = sc.nextLine();
+                        String[] ar = str.split(", ");
+                        sn.executeUpdate("INSERT into enrollment(section_id, student_id) values ("+ar[0]+", "+ar[1]+ ");");
+                    }
+
+                } catch (FileNotFoundException | SQLException ex) {
+                    System.out.println("Couldn't load section file");
+                }
+            }
+        });
 
         exportData = new JMenuItem("Export");
         // 1) printwriter
         // 2) separate diff view data w/ headers
+        exportData.addActionListener(e ->{
+                PrintWriter out = null;
+                try {
+                    out = new PrintWriter("output.txt");
+                } catch (FileNotFoundException ex) {
+                    System.out.println("Couldn't create output file");
+                }
+
+                try {
+                    ResultSet students = sn.executeQuery("SELECT * FROM student;");
+                    out.println("Student");
+                    while (students != null && students.next()) {
+                        out.println(students.getInt("student_id") + ", " + students.getString("first_name") + ", " + students.getString("last_name"));
+                    }
+                } catch (SQLException ioException) {
+                    System.out.println("Error adding student data to file");
+                }
+
+                try {
+                    ResultSet teachers = sn.executeQuery("SELECT * FROM teacher;");
+                    out.println("Teacher");
+                    while (teachers != null && teachers.next()) {
+                        out.println(teachers.getInt("teacher_id") + ", " + teachers.getString("first_name") + ", " + teachers.getString("last_name"));
+                    }
+                } catch (SQLException ioException) {
+                    System.out.println("Error adding teacher data to file");
+                }
+
+                try {
+                    ResultSet courses = sn.executeQuery("SELECT * FROM course;");
+                    out.println("Courses");
+                    while (courses != null && courses.next()) {
+                        out.println(courses.getInt("course_id") + ", " + courses.getString("title") + ", " + courses.getInt("type"));
+                    }
+                } catch (SQLException ioException) {
+                    System.out.println("Error adding course data to file");
+                }
+
+                try {
+                    ResultSet section = sn.executeQuery("SELECT * FROM section;");
+                    out.println("Section");
+                    while (section != null && section.next()) {
+                        out.println(section.getInt("section_id") + ", " + section.getInt("course_id") + ", " + section.getInt("teacher_id"));
+                    }
+                } catch (SQLException ioException) {
+                    System.out.println("Error adding section data to file");
+                }
+
+                try{
+                    ResultSet enrollment = sn.executeQuery("SELECT * FROM enrollment;");
+                    out.println("Enrollment");
+                    while(enrollment!=null && enrollment.next()){
+                        out.println(enrollment.getInt("section_id") +", "+enrollment.getInt("student_id"));
+                    }
+                }
+                catch(SQLException ioException){
+                    System.out.println("Error adding enrollment data to file");
+                }
+                out.close();
+        });
 
         purge = new JMenuItem("Purge");
         purge.addActionListener(e -> {
