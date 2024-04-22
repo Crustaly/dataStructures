@@ -40,4 +40,8 @@ public class sectionData implements Comparable<sectionData>{
         return Integer.compare(getId(),o.getId());
     }
 
+    @Override
+    public String toString(){
+        return id +"";
+    }
 }

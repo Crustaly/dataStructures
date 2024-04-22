@@ -35,7 +35,21 @@ public class coursesData implements Comparable<coursesData>
     @Override
     public String toString() {
         //return courseName;
-        return courseName + " ID: " + ID;
+        String s = "";
+        switch(type){
+            case 0:
+                s += "Aca ";
+                break;
+            case 1:
+                s += "KAP ";
+                break;
+            case 2:
+                s += "AP ";
+                break;
+            default:
+                s += "";
+        }
+        return s+courseName + " ID: " + ID;
     }
 
 @Override

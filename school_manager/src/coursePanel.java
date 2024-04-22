@@ -79,6 +79,24 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
         add(kap);
         add(ap);
         repaint();
+
+        try{
+            ResultSet rs = sn.executeQuery("SELECT * FROM course;");
+            while(rs!=null&&rs.next())
+            {
+                coursesData temp = new coursesData(rs.getInt("course_id") +"",rs.getString("title"), rs.getInt("type"));
+                if(rs.getInt("course_id") != -1)
+                    storage.add(temp);
+            }
+        }
+        catch(Exception ee){
+            ee.printStackTrace();
+        }
+
+        Collections.sort(storage);
+        myContacts.setListData(storage.toArray(new coursesData[0]));
+        myContacts.repaint();
+
         save.setBounds(280,200,100,20);
         add(save);
         save.addActionListener(e ->

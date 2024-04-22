@@ -70,21 +70,28 @@ public class TeacherPanel extends JPanel{
         IDs.setEditable(false);
         add(IDs);
 
+        scroll1 = new JScrollPane(dataList);
+        scroll1.setBounds(50, 50, 180, 350);
+        add(scroll1);
 
-
-        ResultSet rrrs = sn.executeQuery("SELECT * FROM school_manager.teacher;");
-        System.out.println("HEREEEE");
-
-        while(rrrs!=null&&rrrs.next())
-        {
-
-            Data temp = new Data(rrrs.getString("first_name"), rrrs.getString("last_name"),  rrrs.getInt("teacher_id") + "");
-            System.out.println(temp);
-            data.add(temp);
+        try{
+            ResultSet rs = sn.executeQuery("SELECT * FROM teacher;");
+            while(rs!=null&&rs.next())
+            {
+                Data temp = new Data(rs.getString("first_name"), rs.getString("last_name"),  rs.getInt("teacher_id") + "");
+                if(rs.getInt("teacher_id") != -1)
+                    data.add(temp);
+            }
         }
+        catch(Exception ee){
+            ee.printStackTrace();
+        }
+
         Collections.sort(data);
         dataList.setListData(data.toArray(new Data[0]));
-        repaint();
+        dataList.repaint();
+        //ask tully why it isnt showing up when we first make the panel
+
 
         saveChanges.setBounds(280, 310, 100, 20);
         saveChanges.setText("Save Changes");
@@ -229,7 +236,7 @@ public class TeacherPanel extends JPanel{
                 //show teacher sections
                 sections.clear();
                 DefaultTableModel mod = new DefaultTableModel();
-
+                mod.addRow(colNames);
                 if(dataList.getSelectedValue()==null) {
                     return;
                 }
@@ -257,6 +264,9 @@ public class TeacherPanel extends JPanel{
                         mod.addRow(sss);
                     }
                     sectionsTable.setModel(mod);
+                    sectionsTable.repaint();
+                    repaint();
+                    //why do the column labels disappear after setting model?
 
                 } catch (SQLException ex) {
                     ex.printStackTrace();
@@ -266,9 +276,6 @@ public class TeacherPanel extends JPanel{
             }
         });
 
-        scroll1 = new JScrollPane(dataList);
-        scroll1.setBounds(50, 50, 180, 350);
-        add(scroll1);
 
         scrollSections = new JScrollPane(sectionsTable);
         scrollSections.setBounds(50, 450, 400, 350);

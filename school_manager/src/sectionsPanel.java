@@ -49,48 +49,86 @@ public class sectionsPanel extends JPanel {
 
     JLabel teacher = new JLabel("Teacher ID:");
     JTextField teacherText = new JTextField("");
-
-   // JLabel fnLabel = new JLabel("First Name");
-    //JLabel lnLabel = new JLabel("Last Name");
- //   JLabel studentIDLabel = new JLabel("ID");
-
-   // JTextField fn = new JTextField("");
-  //  JTextField ln = new JTextField("");
     JTextField studentID = new JTextField("");
 
+    int selectedTeacher = -1;
+    int selectedCourse = -1;
     JLabel sectionLabel = new JLabel("Sections");
     JLabel courseLabel = new JLabel("Courses");
     JLabel studentLabel = new JLabel("Students");
     JLabel teacherLabel = new JLabel("Teachers");
 
+    public void populateSections(int selectedTeacher, int selectedCourse, Statement statementName){
+        try{
+            ResultSet rs = statementName.executeQuery("SELECT * from section WHERE teacher_id = " + selectedTeacher + ";");
+            boolean valid = false;
+            while(rs != null && rs.next()){
+                if(rs.getInt("course_id") == selectedCourse){
+                    valid = true;
+                    break;
+                }
+            }
+            if(!valid){
+                JOptionPane.showMessageDialog(null, "Not a valid selection", "Message", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                allMySections.clear();
+                rs = statementName.executeQuery("SELECT * from section WHERE teacher_id = " + selectedTeacher + " AND course_id = " + selectedCourse + ";");
+                while(rs != null && rs.next()){
+                    allMySections.add(new sectionData(rs.getInt("section_id"), selectedCourse, selectedTeacher, statementName));
+                }
+                mySections.setListData(allMySections.toArray(new sectionData[0]));
+            }
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
     public sectionsPanel(int w, int h, Statement statementName) throws SQLException {
         setSize(w, h);
         setLayout(null);
         try {
-            ResultSet rs = statementName.executeQuery("Select course_id, title, type FROM course;");
+            ResultSet rs = statementName.executeQuery("SELECT course_id, title, type FROM course;");
             while(rs!=null&&rs.next())
             {
-                coursesData temp = new coursesData(rs.getString("course_id"), rs.getString("title"),  rs.getInt("type"));
+                coursesData temp = new coursesData(rs.getInt("course_id")+"", rs.getString("title"),  rs.getInt("type"));
                 allMyCourses.add(temp);
 
             }
             Collections.sort(allMyCourses);
 
             for(coursesData c: allMyCourses){
-                courseDrop.addItem(c.getCourseName());
+                courseDrop.addItem(c.getCourseName() + " " + c.getID());
                 courseMap.put(c.getCourseName(), Integer.parseInt(c.getID()));
             }
 
             rs=statementName.executeQuery("SELECT * FROM teacher");
             while(rs!=null&&rs.next()){
-                teachersDrop.addItem(rs.getString("last_name")+" "+rs.getString("first_name"));
-
+                teachersDrop.addItem(rs.getString("last_name")+" "+rs.getString("first_name") +" "+rs.getInt("teacher_id"));
             }
         }
         catch(Exception e)
         {
             System.out.println("Exception in loading sections");
         }
+
+        teachersDrop.addActionListener(e ->{
+            String s[] = e.getActionCommand().split(" ");
+            selectedTeacher = Integer.parseInt(s[2]);
+            if(selectedCourse > 0){
+                populateSections(selectedTeacher, selectedCourse,statementName);
+                allMyStudents.clear();
+            }
+        });
+
+        courseDrop.addActionListener(e ->{
+            String s[] = e.getActionCommand().split(" ");
+            selectedCourse = Integer.parseInt(s[1]);
+            if(selectedTeacher > 0){
+                populateSections(selectedTeacher, selectedCourse,statementName);
+                allMyStudents.clear();
+            }
+        });
 
         sectionLabel.setBounds(250,20,100,40);
         add(sectionLabel);
@@ -202,10 +240,6 @@ public class sectionsPanel extends JPanel {
             repaint();
         });
 
-
-
-
-
         clear.setBounds(250, 550, 150, 20);
         add(clear);
         clear.addActionListener(e ->
@@ -215,6 +249,8 @@ public class sectionsPanel extends JPanel {
             teacherText.setText("");
             courseDrop.setSelectedItem(-1);
             teachersDrop.setSelectedItem(-1);
+            selectedCourse = -1;
+            selectedTeacher = -1;
         });
 
         saveSectionChanges.setBounds(250, 580, 150, 20);
@@ -302,7 +338,7 @@ public class sectionsPanel extends JPanel {
                 }
                 Collections.sort(allMySections);
                 mySections.setListData(allMySections.toArray(new sectionData[0]));
-                System.out.print(allMySections);
+                repaint();
                 /*
                 we might need to sort the list and update the frame as well - crystal
                 * */
@@ -398,14 +434,13 @@ public class sectionsPanel extends JPanel {
 
                 repaint();
                 if(temp!=null) {
-
                     allMyStudents.clear();
                     try {
                         ResultSet rs = statementName.executeQuery("SELECT student_id FROM enrollment WHERE section_id = " + temp.getId() + ";");
                         while(rs!=null&&rs.next()) {
                             ResultSet rs2 = statementName.executeQuery("SELECT * FROM student WHERE student_id = " + rs.getInt("student_id") + ";");
                             while(rs2!=null&rs2.next()){
-                                Data student = new Data(rs2.getString("first_name"), rs2.getString("last_name"), ""+rs2.getInt("student_id"));
+                                Data student = new Data(rs2.getString("last_name"), rs2.getString("first_name"), ""+rs2.getInt("student_id"));
                                 allMyStudents.add(student);
                             }
                         }

@@ -288,6 +288,7 @@ public class StudentPanel extends JPanel{
                             mod.addRow(sss);
                         }
                         scheduleTable.setModel(mod);
+                        //again, the column labels disappear T-T
 
                     } catch (SQLException ex) {
                         ex.printStackTrace();
