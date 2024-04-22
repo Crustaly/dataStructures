@@ -456,12 +456,8 @@ public class sectionsPanel extends JPanel {
                 Collections.sort(allMyStudents);
 
                 myStudents.setListData(allMyStudents.toArray(new Data[0]));
-
                 repaint();
-
             }
-
-
         });
 
         myCourses.addListSelectionListener(e ->
