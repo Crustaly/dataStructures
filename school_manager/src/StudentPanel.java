@@ -83,6 +83,7 @@ public class StudentPanel extends JPanel{
             }
             Collections.sort(storage);
             myContacts.setListData(storage.toArray(new Data[0]));
+            repaint();
         }
         catch(Exception e) {
             System.out.println("exception in loading student info");
@@ -201,6 +202,16 @@ public class StudentPanel extends JPanel{
                 IDs.setText("");
 
                 try {
+                    /*
+                    ResultSet update = sn.executeQuery("SELECT student_id FROM student WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
+                    int maxID = -1;
+                    while(update!=null&&update.next()) {
+                        maxID = Math.max(maxID, update.getInt("student_id"));
+                    }
+                    temp.setID(maxID + "");
+                    myContacts.setListData(storage.toArray(new Data[0]));
+*/
+                    sn.executeUpdate("INSERT INTO student (first_name, last_name) VALUES ('" + temp.getFirst() + "', '" + temp.getLast() + "');");
                     ResultSet update = sn.executeQuery("SELECT student_id FROM student WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
                     int maxID = -1;
                     while(update!=null&&update.next()) {

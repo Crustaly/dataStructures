@@ -78,7 +78,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
         add(academic);
         add(kap);
         add(ap);
-
+        repaint();
         save.setBounds(280,200,100,20);
         add(save);
         save.addActionListener(e ->

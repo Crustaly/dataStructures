@@ -151,7 +151,7 @@ public class sectionsPanel extends JPanel {
                         Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("student_id"));
                         allMyStudents.add(student);
                     }
-
+                    repaint();
                 } catch (SQLException ex) {
                     System.out.println("Exception in saving Student");
                 }
@@ -308,7 +308,7 @@ public class sectionsPanel extends JPanel {
 
             allMyStudents.clear();
             coursesData temp = myCourses.getSelectedValue();
-
+            System.out.println(myCourses);
             int tempId = Integer.parseInt(temp.getID());
             allMySections.clear();
             try {

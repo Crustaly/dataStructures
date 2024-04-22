@@ -24,6 +24,7 @@ public class TeacherPanel extends JPanel{
     JTable sectionsTable;
 
     public TeacherPanel(int width, int height, Statement sn) throws SQLException{
+        repaint();
         setSize(width, height);
         setLayout(null);
         System.out.println("HEREEEE");
