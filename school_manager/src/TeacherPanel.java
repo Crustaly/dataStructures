@@ -5,6 +5,11 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.awt.event.*;
 public class TeacherPanel extends JPanel{
+    /*
+    wait its like super broken sometimes teacher just takes over everything and then none of the panels work...
+    other times its fine i have no clue
+    the data doesnt appear uness you click view again after you go on a tab
+     */
     JLabel firstName = new JLabel("First Name: ");
     JLabel lastName = new JLabel("Last Name: ");
     JLabel ID = new JLabel("ID: ");

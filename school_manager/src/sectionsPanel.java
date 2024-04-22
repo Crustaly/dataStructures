@@ -6,15 +6,16 @@ import java.util.ArrayList;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 
 /*
-this is completely broken somehow
-fix gui
+we need to make teacher map
  */
 public class sectionsPanel extends JPanel {
 
 
     ArrayList<coursesData> allMyCourses = new ArrayList<>();
+    HashMap<Object, Integer> courseMap = new HashMap<Object, Integer>();
     JList<coursesData> myCourses = new JList<>();
     JScrollPane scrolling = new JScrollPane();
 
@@ -71,16 +72,19 @@ public class sectionsPanel extends JPanel {
             {
                 coursesData temp = new coursesData(rs.getString("course_id"), rs.getString("title"),  rs.getInt("type"));
                 allMyCourses.add(temp);
+
             }
             Collections.sort(allMyCourses);
 
             for(coursesData c: allMyCourses){
                 courseDrop.addItem(c.getCourseName());
+                courseMap.put(c.getCourseName(), Integer.parseInt(c.getID()));
             }
 
             rs=statementName.executeQuery("SELECT * FROM teacher");
             while(rs!=null&&rs.next()){
                 teachersDrop.addItem(rs.getString("last_name")+" "+rs.getString("first_name"));
+
             }
         }
         catch(Exception e)
@@ -307,9 +311,9 @@ public class sectionsPanel extends JPanel {
             }
 
             allMyStudents.clear();
-            coursesData temp = myCourses.getSelectedValue();
-            System.out.println(myCourses);
-            int tempId = Integer.parseInt(temp.getID());
+            Object temp = courseDrop.getSelectedItem();
+            System.out.println(courseDrop.getSelectedItem());
+            int tempId = courseMap.get(temp);
             allMySections.clear();
             try {
                 ResultSet ab = statementName.executeQuery("SELECT section_id, teacher_id, course_id FROM section;");
