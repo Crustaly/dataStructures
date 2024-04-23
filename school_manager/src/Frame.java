@@ -276,7 +276,7 @@ public class Frame extends JFrame implements WindowListener{
             System.out.println("added teacher");
 
             try {
-                teacherPanel=new TeacherPanel(700,700, sn);
+                teacherPanel=new TeacherPanel(700,700, sn, this);
             } catch (SQLException ex) {
                 System.out.println("Exception creating teacher");
                 ex.printStackTrace();
@@ -310,7 +310,9 @@ public class Frame extends JFrame implements WindowListener{
             }
             coursePanel.setLocation(50,50);
             add(coursePanel);
+            System.out.println("REPAINT DONE");
             repaint();
+            coursePanel.repaint();
         });
         section.addActionListener(e->
         {
@@ -332,12 +334,14 @@ public class Frame extends JFrame implements WindowListener{
             System.out.println("student clicked");
             try {
                 sectionPanel = new sectionsPanel(700,700,sn);
+                repaint();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
             sectionPanel.setLocation(50,50);
             add(sectionPanel);
             System.out.println("creating section");
+            sectionPanel.repaint();
             repaint();
         });
 
@@ -356,16 +360,16 @@ public class Frame extends JFrame implements WindowListener{
             if(coursePanel!=null) {
                 remove(coursePanel);
                 coursePanel=null;
-                repaint();
+
             }
             try {
-                studentPanel = new StudentPanel(700,700, sn);
+                studentPanel = new StudentPanel(700,700, sn, this);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
             studentPanel.setLocation(50,50);
             add(studentPanel);
-
+// wait
             repaint();
             if(studentPanel!=null) {
                 ResultSet rs = null;

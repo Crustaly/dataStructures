@@ -49,7 +49,7 @@ public class StudentPanel extends JPanel{
 
     JTable scheduleTable;
 
-    public StudentPanel(int width, int height, Statement sn) throws SQLException {
+    public StudentPanel(int width, int height, Statement sn, Frame f) throws SQLException {
         setSize(width, height);
         setLayout(null);
         //setBounds(0,0,w,h);
@@ -79,11 +79,16 @@ public class StudentPanel extends JPanel{
 
                 Data temp = new Data(rs.getString("first_name"), rs.getString("last_name"),  rs.getInt("student_id") + "");
                 System.out.println(temp);
+
                 storage.add(temp);
             }
             Collections.sort(storage);
             myContacts.setListData(storage.toArray(new Data[0]));
+            System.out.println("REPAINT");
+
             repaint();
+            f.repaint();
+
         }
         catch(Exception e) {
             System.out.println("exception in loading student info");
@@ -305,6 +310,7 @@ public class StudentPanel extends JPanel{
         scrolling.setBounds(50, 50, 180, 350);
         add(scrolling);
         setVisible(true);
+        repaint();
     }
 
 

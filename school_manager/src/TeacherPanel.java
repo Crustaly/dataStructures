@@ -28,7 +28,7 @@ public class TeacherPanel extends JPanel{
     ArrayList<sectionData> sections = new ArrayList<>();
     JTable sectionsTable;
 
-    public TeacherPanel(int width, int height, Statement sn) throws SQLException{
+    public TeacherPanel(int width, int height, Statement sn, Frame f) throws SQLException{
         repaint();
         setSize(width, height);
         setLayout(null);
@@ -114,8 +114,9 @@ public class TeacherPanel extends JPanel{
             deleteContact.setVisible(false);
 
             save.setVisible(true);
-            clear.setVisible(true);
 
+            clear.setVisible(true);
+            repaint();
             try
             {
                 String firstName = temp.getFirst();
@@ -123,6 +124,7 @@ public class TeacherPanel extends JPanel{
                 int ID = Integer.parseInt(temp.getID());
                 sn.executeUpdate("UPDATE teacher SET first_name='" + firstName +"' WHERE id=" + ID + ";");
                 sn.executeUpdate("UPDATE teacher SET last_name='" + lastName   +"' WHERE id=" +  ID + ";");
+                repaint();
             }
             catch(Exception a)
             {
@@ -148,6 +150,7 @@ public class TeacherPanel extends JPanel{
             save.setVisible(true);
             clear.setVisible(true);
             ArrayList<Integer> sectionIDList = new ArrayList<>();
+            repaint();
             try {
 
                 ResultSet rs = sn.executeQuery("SELECT * FROM section where teacher_id="+Integer.parseInt(IDs.getText())+";"); //removes teacher from sections
@@ -172,7 +175,8 @@ public class TeacherPanel extends JPanel{
                 sn.executeUpdate("DELETE FROM teacher WHERE teacher_id =" + ids + ";");
             } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
+            }   repaint();
+
         });
 
         save.setBounds(280, 280, 100, 20);
