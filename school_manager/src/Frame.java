@@ -404,11 +404,19 @@ public class Frame extends JFrame implements WindowListener{
         bar.add(help);
 
         setJMenuBar(bar);
+        /*
         sn.execute("CREATE TABLE IF NOT EXISTS student(" +
                 "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
                 "first_name TEXT NOT NULL," +
                 "last_name TEXT NOT NULL," +
                 "sections TEXT NOT NULL," +
+                "PRIMARY KEY(student_id)"+
+                ");");
+*/
+        sn.execute("CREATE TABLE IF NOT EXISTS student(" +
+                "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "first_name TEXT NOT NULL," +
+                "last_name TEXT NOT NULL," +
                 "PRIMARY KEY(student_id)"+
                 ");");
 
