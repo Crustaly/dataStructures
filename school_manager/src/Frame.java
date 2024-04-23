@@ -404,6 +404,42 @@ public class Frame extends JFrame implements WindowListener{
         bar.add(help);
 
         setJMenuBar(bar);
+        sn.execute("CREATE TABLE IF NOT EXISTS student(" +
+                "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "first_name TEXT NOT NULL," +
+                "last_name TEXT NOT NULL," +
+                "sections TEXT NOT NULL," +
+                "PRIMARY KEY(student_id)"+
+                ");");
+
+        // statementName.execute("DROP TABLE IF EXISTS teacher;");
+
+        sn.execute("CREATE TABLE IF NOT EXISTS teacher(" +
+                "teacher_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "first_name TEXT NOT NULL," +
+                "last_name TEXT NOT NULL," +
+                "PRIMARY KEY(teacher_id)"+
+                ");");
+
+        //statementName.execute("DROP TABLE IF EXISTS section;");
+
+        sn.execute("CREATE TABLE IF NOT EXISTS section(" +
+                "section_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "course_id INTEGER NOT NULL," +
+                "teacher_id INTEGER NOT NULL," +
+                "PRIMARY KEY(section_id)"+
+                ");");
+
+        //statementName.execute("DROP TABLE IF EXISTS course;");
+
+        sn.execute("CREATE TABLE IF NOT EXISTS course(" +
+                "course_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "title TEXT NOT NULL," +
+                "type INTEGER NOT NULL," +
+                "PRIMARY KEY(course_id)"+
+                ");");
+        sn.execute("describe student");
+
         setVisible(true);
     }
     @Override
