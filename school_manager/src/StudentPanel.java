@@ -216,7 +216,8 @@ public class StudentPanel extends JPanel{
                     temp.setID(maxID + "");
                     myContacts.setListData(storage.toArray(new Data[0]));
 */
-                    sn.executeUpdate("INSERT INTO student (first_name, last_name) VALUES ('" + temp.getFirst() + "', '" + temp.getLast() + "');");
+                    String blank = "";
+                    sn.executeUpdate("INSERT INTO student (first_name, last_name, sections) VALUES ('" + temp.getFirst() + "', '" + temp.getLast() + "', '" + blank+ "');");
                     ResultSet update = sn.executeQuery("SELECT student_id FROM student WHERE first_name = '" + temp.getFirst() + "' AND last_name = '" + temp.getLast() + "';");
                     int maxID = -1;
                     while(update!=null&&update.next()) {

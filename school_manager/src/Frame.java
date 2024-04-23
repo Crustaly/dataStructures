@@ -68,32 +68,37 @@ public class Frame extends JFrame implements WindowListener{
                 sn.execute("DROP TABLE IF EXISTS course");
                 sn.execute("DROP TABLE IF EXISTS section");
 
-                sn.execute("CREATE TABLE IF NOT EXISTS student(" +
-                        "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
-                        "first_name TEXT NOT NULL," +
-                        "last_name TEXT NOT NULL," +
-                        "PRIMARY KEY(id)"+
-                        ");");
+
+        sn.execute("CREATE TABLE IF NOT EXISTS student(" +
+                "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                "first_name TEXT NOT NULL," +
+                "last_name TEXT NOT NULL," +
+                "sections TEXT NOT NULL," +
+                "PRIMARY KEY(student_id)"+
+                ");");
+
+
+
 
                 sn.execute("CREATE TABLE IF NOT EXISTS teacher(" +
                         "teacher_id INTEGER NOT NULL AUTO_INCREMENT,"+
                         "first_name TEXT NOT NULL," +
                         "last_name TEXT NOT NULL," +
-                        "PRIMARY KEY(id)"+
+                        "PRIMARY KEY(teacher_id)"+
                         ");");
 
                 sn.execute("CREATE TABLE IF NOT EXISTS section(" +
                         "section_id INTEGER NOT NULL AUTO_INCREMENT,"+
                         "course_id INTEGER NOT NULL," +
                         "teacher_id INTEGER NOT NULL," +
-                        "PRIMARY KEY(id)"+
+                        "PRIMARY KEY(section_id)"+
                         ");");
 
                 sn.execute("CREATE TABLE IF NOT EXISTS course(" +
                         "course_id INTEGER NOT NULL AUTO_INCREMENT,"+
                         "title TEXT NOT NULL," +
                         "type INTEGER NOT NULL," +
-                        "PRIMARY KEY(id)"+
+                        "PRIMARY KEY(course_id)"+
                         ");");
 
             } catch (SQLException ex) {
@@ -115,7 +120,7 @@ public class Frame extends JFrame implements WindowListener{
                             break;
                         }
                         String[] ar = str.split(", ");
-                        sn.executeUpdate("INSERT into student(student_id, first_name, last_name) values ("+ar[0]+",\'"+ar[1]+"\', \'"+ar[2]+"\');");
+                        sn.executeUpdate(" insert into student(id, first_name, last_name, section_id) values ("+ar[0]+",\'"+ar[1]+"\', \'"+ar[2]+"\', \'"+ar[3]+"\');");
                     }
 
                     while(sc.hasNextLine()) {
@@ -189,9 +194,9 @@ public class Frame extends JFrame implements WindowListener{
                 }
 
                 try {
-                    ResultSet courses = sn.executeQuery("SELECT * FROM course;");
+                    ResultSet courses= sn.executeQuery("SELECT * FROM course;");
                     out.println("Courses");
-                    while (courses != null && courses.next()) {
+                    while (courses!= null && courses.next()) {
                         out.println(courses.getInt("course_id") + ", " + courses.getString("title") + ", " + courses.getInt("type"));
                     }
                 } catch (SQLException ioException) {
@@ -404,7 +409,7 @@ public class Frame extends JFrame implements WindowListener{
         bar.add(help);
 
         setJMenuBar(bar);
-        /*
+
         sn.execute("CREATE TABLE IF NOT EXISTS student(" +
                 "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
                 "first_name TEXT NOT NULL," +
@@ -412,13 +417,9 @@ public class Frame extends JFrame implements WindowListener{
                 "sections TEXT NOT NULL," +
                 "PRIMARY KEY(student_id)"+
                 ");");
-*/
-        sn.execute("CREATE TABLE IF NOT EXISTS student(" +
-                "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
-                "first_name TEXT NOT NULL," +
-                "last_name TEXT NOT NULL," +
-                "PRIMARY KEY(student_id)"+
-                ");");
+
+
+
 
         // statementName.execute("DROP TABLE IF EXISTS teacher;");
 

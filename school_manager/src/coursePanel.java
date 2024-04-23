@@ -141,7 +141,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
                         maxID = Math.max(maxID, results.getInt("course_id"));
                     }
                     temp.setID(maxID + "");
-                    //myContacts.setListData(storage.toArray(new courses[0]));
+                    //myContacts.setListData(storage.toArray(new coursesData[0]));
                     System.out.println("maxID: " + maxID);
                 }
                 catch(Exception b)

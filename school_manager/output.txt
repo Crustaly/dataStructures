@@ -1,3 +1,7 @@
+Student
+Teacher
+Courses
+Section
 Enrollment
 10, 1
 1, 1
