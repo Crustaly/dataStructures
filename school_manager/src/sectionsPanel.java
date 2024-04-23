@@ -157,18 +157,21 @@ public class sectionsPanel extends JPanel {
             if(mySections.getSelectedValue()!=null) {
                 try {
                     //im not sure if its student id
-                    ResultSet rs = statementName.executeQuery("SELECT * FROM student WHERE student_id=" + studentID.getText() + ";");
+                    ResultSet rs = statementName.executeQuery("SELECT * FROM student WHERE sections=" + studentID.getText() + ";");
                     String sectionStr="";
                     boolean alreadyContained=false;
+                    System.out.println("in here at least ");
                     while (rs != null && rs.next()) {
                         sectionStr = rs.getString("sections");
                         if(sectionStr.contains(" "+mySections.getSelectedValue().getId())||sectionStr.contains(""+mySections.getSelectedValue().getId()+" ")) {
                             alreadyContained=true;
                             System.out.println("-----ALREADY CONTAINED----");
+                            System.out.println("broke");
                             break;
                         }
+                        System.out.println(mySections.getSelectedValue());
                         sectionStr+=" " + mySections.getSelectedValue().getId();
-                        Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("id"));
+                        Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("student_id"));
                         allMyStudents.add(student);
                         System.out.println(studentID.getText()+" yes");
                         //statementName.executeUpdate("UPDATE student SET first_name= \'test\' WHERE id=" + studentID.getText() + ";");
@@ -176,9 +179,12 @@ public class sectionsPanel extends JPanel {
 
                         //statementName.executeUpdate("UPDATE student SET sections='"+sectionStr+"' WHERE id="+studentID.getText()+";");
                         //adds section into the student's list of sections
+                        System.out.println("not in already contained ");
                     }
                     if(!alreadyContained) {
                         //still student?
+                        System.out.println("Trying to execute the containted ");
+                        System.out.println(sectionStr);
                         statementName.executeUpdate("UPDATE student SET sections=\'" + sectionStr +"\' WHERE student_id=" + studentID.getText() + ";");
                         //allMyStudents.add(student);
                     }
@@ -399,6 +405,7 @@ public class sectionsPanel extends JPanel {
                 }
                 //allMySections.add(new sectionData(tempID, Integer.parseInt(courseText.getText()), Integer.parseInt(teacherText.getText())));
                 mySections.setListData(allMySections.toArray(new sectionData[0]));
+                System.out.println(allMySections.toArray(new sectionData[0]));
                 System.out.print(allMySections);
                 //repaint();
 

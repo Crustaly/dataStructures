@@ -41,7 +41,27 @@ public class sectionData implements Comparable<sectionData>{
     }
 
     @Override
-    public String toString(){
-        return id +"";
+    public String toString() {
+        //name of course
+        ResultSet rs = null;
+        int course_id=-1;
+        String course_name="";
+        try {
+            rs = sn.executeQuery("SELECT course_id from section where section_id="+id+";");
+            while(rs!=null&&rs.next()) {
+                course_id=rs.getInt("course_id");
+            }
+            System.out.println("\tcourse_id: " + course_id);
+            rs = sn.executeQuery("SELECT title from course where course_id ="+course_id+";");
+            while(rs!=null&&rs.next()) {
+                course_name=rs.getString("title");
+            }
+            System.out.println("\ttitle: " + course_name);
+        } catch (SQLException e) {
+            System.out.println("Exception retrieiving course name");
+        }
+
+        return "ID: " + id + " Course: " + course_name;
+        //return ""+id+" " + courseId+" " + teacherId;
     }
 }
