@@ -90,6 +90,9 @@ public class TeacherPanel extends JPanel{
         Collections.sort(data);
         dataList.setListData(data.toArray(new Data[0]));
         dataList.repaint();
+
+        System.out.println(dataList);
+        repaint();
         //ask tully why it isnt showing up when we first make the panel
 
 
@@ -201,6 +204,7 @@ public class TeacherPanel extends JPanel{
                     }
                     temp.setID(maxID + "");
                     dataList.setListData(data.toArray(new Data[0]));
+                    repaint();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -268,6 +272,7 @@ public class TeacherPanel extends JPanel{
                     Collections.sort(sections);
 
                     sectionsTable.setModel(mod);
+
                     sectionsTable.repaint();
                     repaint();
                     //why do the column labels disappear after setting model?
@@ -284,8 +289,9 @@ public class TeacherPanel extends JPanel{
         scrollSections = new JScrollPane(sectionsTable);
         scrollSections.setBounds(50, 450, 400, 350);
         add(scrollSections);
-
+        repaint();
         setVisible(true);
+        repaint();
     }
 
 }

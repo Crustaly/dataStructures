@@ -284,6 +284,11 @@ public class Frame extends JFrame implements WindowListener{
             teacherPanel.setLocation(50,50);
             add(teacherPanel);
             System.out.println("creating teacher");
+
+
+            System.out.println("REPAINTING NOW");
+            this.repaint();
+            teacherPanel.repaint();
             repaint();
         });
         course.addActionListener(e->
