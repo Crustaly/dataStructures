@@ -444,7 +444,16 @@ public class sectionsPanel extends JPanel {
                             ResultSet rs2 = sn2.executeQuery("SELECT * FROM student WHERE student_id = " + rs.getInt("student_id") + ";");
                             while (rs2 != null & rs2.next()) {
                                 Data student = new Data(rs2.getString("last_name"), rs2.getString("first_name"), "" + rs2.getInt("student_id"));
-                                allMyStudents.add(student);
+
+                                boolean containsStudent = false;
+                                for(Data ss: allMyStudents){
+                                    if(student.getID() == ss.getID()){
+                                        containsStudent = true;
+                                    }
+                                }
+
+                                if(!containsStudent) allMyStudents.add(student);
+                                System.out.println(student);
                             }
                         }
                     } catch (SQLException ex) {
