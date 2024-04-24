@@ -17,6 +17,8 @@ public class sectionsPanel extends JPanel {
     / students in those section to no longer have those sections.
     Deleting a section will update the teachers / students in those section to no longer have those sections.
     */
+    JComboBox<String> teachersDrop=new JComboBox<>();
+    JComboBox<String> courseDrop=new JComboBox<>();
 
     ArrayList<coursesData> allMyCourses= new ArrayList<>();
     JList<coursesData>  myCourses= new JList<>();
@@ -45,7 +47,7 @@ public class sectionsPanel extends JPanel {
     JLabel ID = new JLabel("ID");
     JTextField IDText = new JTextField("");
 
-    JLabel course = new JLabel("Course ID:");
+    JLabel studentIdAdd = new JLabel("Student ID:");
     JTextField courseText = new JTextField();
 
     JLabel teacher = new JLabel("Teacher ID:");
@@ -63,6 +65,12 @@ public class sectionsPanel extends JPanel {
     JLabel sectionLabel = new JLabel("Sections");
     JLabel courseLabel = new JLabel("Courses");
     JLabel studentLabel = new JLabel("Students");
+    JLabel teacherSelect = new JLabel("Select a teacher: ");
+    JLabel courseSelect = new JLabel("Select a course: ");
+
+    int selectedTeacher = -1;
+    int selectedCourse = -1;
+
 
     //deleting teacher
 
@@ -86,11 +94,63 @@ public class sectionsPanel extends JPanel {
             System.out.println("HEREaaa");
 
 
+
+        for(coursesData c: allMyCourses){
+            courseDrop.addItem(c.getCourseName() + "," + c.getID());
+           // courseMap.put(c.getCourseName(), Integer.parseInt(c.getID()));
         }
+
+         rs=statementName.executeQuery("SELECT * FROM teacher");
+        while(rs!=null&&rs.next()){
+            teachersDrop.addItem(rs.getString("last_name")+","+rs.getString("first_name") +","+rs.getInt("teacher_id"));
+        }
+    }
         catch(Exception e)
-        {
-            System.out.println("Exception in loading sections poop");
+    {
+        System.out.println("Exception in loading sections");
+    }
+/*
+        teachersDrop.addActionListener(e ->{
+        String s[] = e.getActionCommand().split(",");
+            System.out.println(Arrays.toString(s));
+        selectedTeacher = Integer.parseInt(s[2]);
+        if(selectedCourse > 0){
+         //   populateSections(selectedTeacher, selectedCourse,statementName);
+            allMyStudents.clear();
         }
+    });
+
+        courseDrop.addActionListener(e ->{
+      //  String s[] = e.getActionCommand().split(",");
+
+          //  System.out.println(Arrays.toString(s));
+      //  selectedCourse = Integer.parseInt(s[1]);
+
+        if(selectedTeacher > 0){
+          //  populateSections(selectedTeacher, selectedCourse,statementName);
+            allMyStudents.clear();
+        }
+    });
+
+ */
+
+        sectionLabel.setBounds(250,20,100,40);
+    add(sectionLabel);
+    /*
+        courseLabel.setBounds(50,20,100,40);
+    add(courseLabel);
+    */
+
+        courseDrop.setBounds(50,460,180,40);
+    add(courseDrop);
+        courseSelect.setBounds(50,440,180,20);
+        add(courseSelect);
+      //  teacherLabel.setBounds(50,200,100,40);
+   // add(teacherLabel);
+        teachersDrop.setBounds(50,540,180,40);
+        add(teachersDrop);
+        teacherSelect.setBounds(50,520,180,20);
+    add(teacherSelect);
 
         sectionLabel.setBounds(250,20,100,40);
         add(sectionLabel);
@@ -118,9 +178,9 @@ public class sectionsPanel extends JPanel {
         IDText.setBounds(330,420,70,30);
         add(IDText);
 
-        course.setBounds(250,460,70,30);
-        add(course);
-
+        studentIdAdd.setBounds(450,420,70,30);
+        add(studentIdAdd);
+/*
         courseText.setBounds(330,460,70,30);
         add(courseText);
 
@@ -132,7 +192,7 @@ public class sectionsPanel extends JPanel {
 
         studentIDLabel.setBounds(450,420,70,30);
         add(studentIDLabel);
-
+*/
         //studentID.setEditable(false);
         studentID.setBounds(530,420,70,30);
         add(studentID);
@@ -305,7 +365,13 @@ public class sectionsPanel extends JPanel {
                 int index = allMySections.indexOf(s);
                 sectionData temporary = null;
                 try {
-                    temporary = new sectionData(Integer.parseInt(IDText.getText()), Integer.parseInt(courseText.getText()), Integer.parseInt(teacherText.getText()), statementName);
+                    String x = courseDrop.getSelectedItem().toString();
+                    String []aa = x.split(",");
+                    int cur = Integer.parseInt(aa[1]);
+                    String y = teachersDrop.getSelectedItem().toString();
+                    String []bb = y.split(",");
+                    int teach = Integer.parseInt(bb[2]);
+                    temporary = new sectionData(Integer.parseInt(IDText.getText()), cur, teach, statementName);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -392,8 +458,14 @@ public class sectionsPanel extends JPanel {
         save.addActionListener(e-> {
             //INSERT INTO student (first_name, last_name) VALUES (‘Jim’, ‘Smith’);
             try {
-                statementName.executeUpdate("INSERT INTO section (course_id, teacher_id) VALUES ('" + courseText.getText()+"', '" + teacherText.getText()+"');");
-                ResultSet ab = statementName.executeQuery("SELECT section_id FROM section WHERE course_id = '" + courseText.getText() + "' AND teacher_id = '" + teacherText.getText()+"';");
+                String x = courseDrop.getSelectedItem().toString();
+                String []aa = x.split(",");
+                int cur = Integer.parseInt(aa[1]);
+                String y = teachersDrop.getSelectedItem().toString();
+                String []bb = y.split(",");
+                int teach = Integer.parseInt(bb[2]);
+                statementName.executeUpdate("INSERT INTO section (course_id, teacher_id) VALUES ('" + cur+"', '" + teach+"');");
+                ResultSet ab = statementName.executeQuery("SELECT section_id FROM section WHERE course_id = '" + cur + "' AND teacher_id = '" + teach+"';");
                 int tempID = -1;
                 while(ab!=null&&ab.next())
                 {
@@ -418,10 +490,10 @@ public class sectionsPanel extends JPanel {
 
             //add section repainted code here
             allMyStudents.clear();
-            coursesData temp = myCourses.getSelectedValue();
-            System.out.println(temp);
-            //courseText.setText(temp.getID());
-            int tempId = Integer.parseInt(temp.getID());
+            String x = courseDrop.getSelectedItem().toString();
+            String []aa = x.split(",");
+            int tempId = Integer.parseInt(aa[1]);
+
             allMySections.clear();
             System.out.println("SDBIHSBDIHFS");
             try {
