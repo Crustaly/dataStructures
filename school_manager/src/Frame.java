@@ -447,6 +447,12 @@ public class Frame extends JFrame implements WindowListener{
                 "type INTEGER NOT NULL," +
                 "PRIMARY KEY(course_id)"+
                 ");");
+
+
+        sn.execute("CREATE TABLE IF NOT EXISTS enrollment(" +
+                "section_id INTEGER NOT NULL," +
+                "student_id INTEGER NOT NULL" +
+                ");");
         sn.execute("describe student");
 
         setVisible(true);
