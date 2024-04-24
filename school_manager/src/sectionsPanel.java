@@ -169,7 +169,7 @@ public class sectionsPanel extends JPanel {
                             System.out.println("broke");
                             break;
                         }
-                        System.out.println(mySections.getSelectedValue());
+                      //  System.out.println(mySections.getSelectedValue());
                         sectionStr+=" " + mySections.getSelectedValue().getId();
                         Data student = new Data(rs.getString("first_name"), rs.getString("last_name"), ""+rs.getInt("student_id"));
                         allMyStudents.add(student);
@@ -184,8 +184,10 @@ public class sectionsPanel extends JPanel {
                     if(!alreadyContained) {
                         //still student?
                         System.out.println("Trying to execute the containted ");
-                        System.out.println(sectionStr);
-                        statementName.executeUpdate("UPDATE student SET sections=\'" + sectionStr +"\' WHERE student_id=" + studentID.getText() + ";");
+                       System.out.println(sectionStr+"this is section string");
+                       // sectionStr+=" " + mySections.getSelectedValue().getId();
+                        System.out.println(studentID.getText()+" yes");
+                        statementName.executeUpdate("UPDATE student SET sections=\'" + mySections.getSelectedValue() +"\' WHERE student_id=" + studentID.getText() + ";");
                         //allMyStudents.add(student);
                     }
                     //statementName.executeUpdate("UPDATE student SET first_name=\'Matt\' WHERE id=4;");
