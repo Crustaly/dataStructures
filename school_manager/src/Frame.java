@@ -99,6 +99,11 @@ public class Frame extends JFrame implements WindowListener{
                         "PRIMARY KEY(course_id)"+
                         ");");
 
+                sn.execute("CREATE TABLE IF NOT EXISTS enrollment(" +
+                        "section_id INTEGER NOT NULL," +
+                        "student_id INTEGER NOT NULL" +
+                        ");");
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -231,6 +236,7 @@ public class Frame extends JFrame implements WindowListener{
                 sn.execute("DROP TABLE IF EXISTS student");
                 sn.execute("DROP TABLE IF EXISTS course");
                 sn.execute("DROP TABLE IF EXISTS section");
+                sn.execute("DROP TABLE IF EXISTS enrollment");
             }
             catch (Exception o){
                 o.printStackTrace();
