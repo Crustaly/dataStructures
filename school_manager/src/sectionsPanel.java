@@ -84,7 +84,7 @@ public class sectionsPanel extends JPanel {
         }
     }
 
-    public sectionsPanel(int w, int h, Statement statementName) throws SQLException {
+    public sectionsPanel(int w, int h, Statement statementName, Statement sn2) throws SQLException {
         setSize(w, h);
         setLayout(null);
         try {
@@ -438,7 +438,7 @@ public class sectionsPanel extends JPanel {
                     try {
                         ResultSet rs = statementName.executeQuery("SELECT student_id FROM enrollment WHERE section_id = " + temp.getId() + ";");
                         while(rs!=null&&rs.next()) {
-                            ResultSet rs2 = statementName.executeQuery("SELECT * FROM student WHERE student_id = " + rs.getInt("student_id") + ";");
+                            ResultSet rs2 = sn2.executeQuery("SELECT * FROM student WHERE student_id = " + rs.getInt("student_id") + ";");
                             while(rs2!=null&rs2.next()){
                                 Data student = new Data(rs2.getString("last_name"), rs2.getString("first_name"), ""+rs2.getInt("student_id"));
                                 allMyStudents.add(student);

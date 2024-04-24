@@ -30,6 +30,7 @@ public class Frame extends JFrame implements WindowListener{
     static JMenuItem about;
 
     Statement sn;
+    Statement sn2;
 
     static JPanel teacherPanel;
     static JPanel studentPanel;
@@ -47,6 +48,8 @@ public class Frame extends JFrame implements WindowListener{
                 DriverManager.getConnection("jdbc:mysql://localhost:3306/school_manager","root","password");
         sn = con.createStatement();
         sn.execute("USE school_manager");
+        sn2 = con.createStatement();
+        sn2.execute("USE school_manager");
 
         setSize(1000,1000);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -72,28 +75,28 @@ public class Frame extends JFrame implements WindowListener{
                         "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
                         "first_name TEXT NOT NULL," +
                         "last_name TEXT NOT NULL," +
-                        "PRIMARY KEY(id)"+
+                        "PRIMARY KEY(student_id)"+
                         ");");
 
                 sn.execute("CREATE TABLE IF NOT EXISTS teacher(" +
                         "teacher_id INTEGER NOT NULL AUTO_INCREMENT,"+
                         "first_name TEXT NOT NULL," +
                         "last_name TEXT NOT NULL," +
-                        "PRIMARY KEY(id)"+
+                        "PRIMARY KEY(teacher_id)"+
                         ");");
 
                 sn.execute("CREATE TABLE IF NOT EXISTS section(" +
                         "section_id INTEGER NOT NULL AUTO_INCREMENT,"+
                         "course_id INTEGER NOT NULL," +
                         "teacher_id INTEGER NOT NULL," +
-                        "PRIMARY KEY(id)"+
+                        "PRIMARY KEY(section_id)"+
                         ");");
 
                 sn.execute("CREATE TABLE IF NOT EXISTS course(" +
                         "course_id INTEGER NOT NULL AUTO_INCREMENT,"+
                         "title TEXT NOT NULL," +
                         "type INTEGER NOT NULL," +
-                        "PRIMARY KEY(id)"+
+                        "PRIMARY KEY(course_id)"+
                         ");");
 
             } catch (SQLException ex) {
@@ -276,7 +279,7 @@ public class Frame extends JFrame implements WindowListener{
             System.out.println("added teacher");
 
             try {
-                teacherPanel=new TeacherPanel(700,700, sn, this);
+                teacherPanel=new TeacherPanel(700,700, sn, sn2,this);
             } catch (SQLException ex) {
                 System.out.println("Exception creating teacher");
                 ex.printStackTrace();
@@ -338,7 +341,7 @@ public class Frame extends JFrame implements WindowListener{
             }
             System.out.println("student clicked");
             try {
-                sectionPanel = new sectionsPanel(700,700,sn);
+                sectionPanel = new sectionsPanel(700,700,sn, sn2);
                 repaint();
             } catch (SQLException ex) {
                 ex.printStackTrace();

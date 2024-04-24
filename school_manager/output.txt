@@ -1,3 +1,67 @@
+Student
+1, Londyn, Mills
+2, Nina, Munoz
+3, Raegan, McDowell
+4, Yareli, Warren
+5, Rosa, Mills
+6, Meadow, Cuevas
+7, Ramona, Vang
+8, Londyn, Mills
+9, Teresa, Zamora
+10, Bailee, Barrera
+11, Victoria, Hodges
+12, Rosa, Barnes
+13, Charleigh, Bernard
+14, Rosa, Barnes
+15, Khaleesi, Hubbard
+16, Brielle, Smith
+17, Khloe, Parra
+18, Zoe, Zamora
+19, Hank , Barnes
+20, Flora, Evans
+21, Zoe, Meza
+22, Skye, Vaughn
+23, Zoe, Cole
+24, Wren, Castaneda
+25, Braelyn, Trejo
+26, DSH, FH
+27, dgf, dfg
+Teacher
+-1, Teacher, No
+1, Jason, Tully
+2, Sarah, Bauguss
+3, Bryan, Johnson
+4, Annette, Prewitt
+5, Nicole, Sadefur
+6, asdfsdf, sdf
+7, srjt, gjd
+8, sdg, dfg
+Courses
+1, Compuer Science Into, 0
+2, Compuer Science I, 0
+3, Compuer Science AP A, 2
+4, Compuer Science AP Principles, 2
+5, Compuer Science 2, 1
+6, Compuer Science Game Development, 1
+7, Compuer Science Data Structures, 1
+8, Compuer Science AWS, 1
+9, Compuer Science Independent Study, 1
+Section
+1, 7, 1
+2, 6, 1
+3, 9, 1
+4, 7, 2
+5, 3, 2
+6, 3, 2
+7, 1, 3
+8, 5, 3
+9, 8, 3
+10, 4, 4
+11, 4, 4
+12, 2, 4
+13, 4, 5
+14, 4, 5
+15, 3, 5
 Enrollment
 10, 1
 1, 1

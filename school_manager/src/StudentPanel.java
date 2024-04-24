@@ -255,7 +255,7 @@ public class StudentPanel extends JPanel{
                             Integer.parseInt(myContacts.getSelectedValue().getID());
 
                     sections.clear();
-                    DefaultTableModel mod = new DefaultTableModel();
+                    ArrayList<String[]> mod = new ArrayList<>();
 
                     try {
                         ResultSet rs = sn.executeQuery("SELECT section_id FROM enrollment WHERE student_id=" + myContacts.getSelectedValue().getID());
@@ -285,17 +285,32 @@ public class StudentPanel extends JPanel{
                             int tempCourseID = sd.getCourseId();
                             String tempSectionID = sd.getId() + "";
                             int tempTeacherID = sd.getTeacherId();
-                            rs = sn.executeQuery("SELECT * FROM course where course_id=" + tempCourseID + ";");
-                            String course = rs.getString("title");
-                            rs = sn.executeQuery("SELECT * FROM teacher where teacher_id=" + tempTeacherID + ";");
-                            String teachLast = rs.getString("last_name");
-                            String[] sss = new String[]{tempSectionID, course, teachLast};
-                            mod.addRow(sss);
-                        }
-                        scheduleTable.setModel(mod);
-                        //again, the column labels disappear T-T
+                            ResultSet rs3 = sn.executeQuery("SELECT course.title, teacher.last_name FROM course, teacher WHERE course.course_id=" + tempCourseID + " AND teacher.teacher_id = " + tempTeacherID+ ";");
+                            while(rs3 != null && rs3.next()){
 
-                    } catch (SQLException ex) {
+                                String course = rs3.getString("title");
+                                String teachLast = rs3.getString("last_name");
+                                System.out.println(course + " " + teachLast);
+                                String[] sss = new String[]{tempSectionID, course, teachLast};
+                                mod.add(sss);
+                            }
+                        }
+                        remove(scheduleScrolling);
+
+                        if(mod.size() > 0 ){
+                            Collections.sort(sections);
+                            scheduleTable = new JTable(alToAr(mod), tableCols);
+                        }
+                        else {
+                            scheduleTable = new JTable(ss, tableCols);
+                        }
+                        scheduleScrolling = new JScrollPane(scheduleTable);
+                        scheduleScrolling.setBounds(50, 450, 450, 350);
+                        scheduleTable.setDefaultEditor(Object.class, null);
+                        add(scheduleScrolling);
+
+                    }
+                    catch (SQLException ex) {
                         ex.printStackTrace();
                     }
                 }
@@ -313,8 +328,14 @@ public class StudentPanel extends JPanel{
         repaint();
     }
 
-
-
-
-
+    public String[][] alToAr(ArrayList<String[]> al){
+        if(al.size() > 0) {
+            String[][] ar = new String[al.size()][al.get(0).length];
+            for(int i = 0; i<al.size(); i++){
+                ar[i] = al.get(i);
+            }
+            return ar;
+        }
+        return null;
+    }
 }
