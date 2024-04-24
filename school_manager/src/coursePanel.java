@@ -63,7 +63,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
         courseName.setBounds(280, 150, 100, 20);
         add(courseName);
         course.setText("");
-        course.setBounds(390, 150, 100, 20);
+        course.setBounds(390, 150, 300, 20);
         add(course);
 
         bg.add(academic);

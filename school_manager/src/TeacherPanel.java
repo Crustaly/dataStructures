@@ -28,7 +28,9 @@ public class TeacherPanel extends JPanel{
     ArrayList<sectionData> sections = new ArrayList<>();
     JTable sectionsTable;
 
-    public TeacherPanel(int width, int height, Statement sn, Frame f) throws SQLException{
+    Statement sn2;
+
+    public TeacherPanel(int width, int height, Statement sn, Statement sn2, Frame f) throws SQLException{
         repaint();
         setSize(width, height);
         setLayout(null);
@@ -243,8 +245,7 @@ public class TeacherPanel extends JPanel{
 
                 //show teacher sections
                 sections.clear();
-                DefaultTableModel mod = new DefaultTableModel();
-                mod.addRow(colNames);
+                ArrayList<String[]> mod = new ArrayList<>();
                 if(dataList.getSelectedValue()==null) {
                     return;
                 }
@@ -259,21 +260,34 @@ public class TeacherPanel extends JPanel{
                         //System.out.println(section.getTeacherId() + " is the teacher id");
                         sections.add(section);
 
-                        ResultSet rrs = sn.executeQuery("SELECT * FROM course WHERE course_id=" + section.getCourseId() + ";");
+                        ResultSet rrs = sn2.executeQuery("SELECT * FROM course WHERE course_id=" + section.getCourseId() + ";");
                         while(rrs != null && rrs.next()) {
-                            System.out.println(section.getCourseId());
+                            System.out.println(rrs.getString("title"));
                             String[] sss = new String[]{section.getId()+"", rrs.getString("title")};
-                            mod.addRow(sss);
+                            mod.add(sss);
                         }
+                        rrs.close();
+                    }
+                    rs.close();
+                    remove(scrollSections);
 
-
+                    if(mod.size() > 0 ){
+                        Collections.sort(sections);
+                        sectionsTable = new JTable(alToAr(mod), colNames);
+                        scrollSections = new JScrollPane(sectionsTable);
+                        scrollSections.setBounds(50, 450, 400, 350);
+                        sectionsTable.setDefaultEditor(Object.class, null);
+                        add(scrollSections);
+                    }
+                    else {
+                        sectionsTable = new JTable(ss,colNames);
+                        scrollSections = new JScrollPane(sectionsTable);
+                        scrollSections.setBounds(50, 450, 400, 350);
+                        sectionsTable.setDefaultEditor(Object.class, null);
+                        add(scrollSections);
                     }
 
-                    Collections.sort(sections);
 
-                    sectionsTable.setModel(mod);
-
-                    sectionsTable.repaint();
                     repaint();
                     //why do the column labels disappear after setting model?
 
@@ -281,17 +295,27 @@ public class TeacherPanel extends JPanel{
                     ex.printStackTrace();
                 }
 
-
             }
         });
-
 
         scrollSections = new JScrollPane(sectionsTable);
         scrollSections.setBounds(50, 450, 400, 350);
         add(scrollSections);
+
         repaint();
         setVisible(true);
         repaint();
+    }
+
+    public String[][] alToAr(ArrayList<String[]> al){
+        if(al.size() > 0) {
+            String[][] ar = new String[al.size()][al.get(0).length];
+            for(int i = 0; i<al.size(); i++){
+                ar[i] = al.get(i);
+            }
+            return ar;
+        }
+        return null;
     }
 
 }

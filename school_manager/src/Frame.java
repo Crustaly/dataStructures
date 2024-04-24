@@ -30,6 +30,7 @@ public class Frame extends JFrame implements WindowListener{
     static JMenuItem about;
 
     Statement sn;
+    Statement sn2;
 
     static JPanel teacherPanel;
     static JPanel studentPanel;
@@ -47,6 +48,8 @@ public class Frame extends JFrame implements WindowListener{
                 DriverManager.getConnection("jdbc:mysql://localhost:3306/school_manager","root","password");
         sn = con.createStatement();
         sn.execute("USE school_manager");
+        sn2 = con.createStatement();
+        sn2.execute("USE school_manager");
 
         setSize(1000,1000);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -68,17 +71,12 @@ public class Frame extends JFrame implements WindowListener{
                 sn.execute("DROP TABLE IF EXISTS course");
                 sn.execute("DROP TABLE IF EXISTS section");
 
-
-        sn.execute("CREATE TABLE IF NOT EXISTS student(" +
-                "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
-                "first_name TEXT NOT NULL," +
-                "last_name TEXT NOT NULL," +
-                "sections TEXT NOT NULL," +
-                "PRIMARY KEY(student_id)"+
-                ");");
-
-
-
+                sn.execute("CREATE TABLE IF NOT EXISTS student(" +
+                        "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
+                        "first_name TEXT NOT NULL," +
+                        "last_name TEXT NOT NULL," +
+                        "PRIMARY KEY(student_id)"+
+                        ");");
 
                 sn.execute("CREATE TABLE IF NOT EXISTS teacher(" +
                         "teacher_id INTEGER NOT NULL AUTO_INCREMENT,"+
@@ -120,7 +118,7 @@ public class Frame extends JFrame implements WindowListener{
                             break;
                         }
                         String[] ar = str.split(", ");
-                        sn.executeUpdate(" insert into student(id, first_name, last_name, section_id) values ("+ar[0]+",\'"+ar[1]+"\', \'"+ar[2]+"\', \'"+ar[3]+"\');");
+                        sn.executeUpdate("INSERT into student(student_id, first_name, last_name) values ("+ar[0]+",\'"+ar[1]+"\', \'"+ar[2]+"\');");
                     }
 
                     while(sc.hasNextLine()) {
@@ -194,9 +192,9 @@ public class Frame extends JFrame implements WindowListener{
                 }
 
                 try {
-                    ResultSet courses= sn.executeQuery("SELECT * FROM course;");
+                    ResultSet courses = sn.executeQuery("SELECT * FROM course;");
                     out.println("Courses");
-                    while (courses!= null && courses.next()) {
+                    while (courses != null && courses.next()) {
                         out.println(courses.getInt("course_id") + ", " + courses.getString("title") + ", " + courses.getInt("type"));
                     }
                 } catch (SQLException ioException) {
@@ -281,7 +279,7 @@ public class Frame extends JFrame implements WindowListener{
             System.out.println("added teacher");
 
             try {
-                teacherPanel=new TeacherPanel(700,700, sn, this);
+                teacherPanel=new TeacherPanel(700,700, sn, sn2,this);
             } catch (SQLException ex) {
                 System.out.println("Exception creating teacher");
                 ex.printStackTrace();
@@ -343,7 +341,7 @@ public class Frame extends JFrame implements WindowListener{
             }
             System.out.println("student clicked");
             try {
-                sectionPanel = new sectionsPanel(700,700,sn);
+                sectionPanel = new sectionsPanel(700,700,sn, sn2);
                 repaint();
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -409,7 +407,6 @@ public class Frame extends JFrame implements WindowListener{
         bar.add(help);
 
         setJMenuBar(bar);
-
         sn.execute("CREATE TABLE IF NOT EXISTS student(" +
                 "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
                 "first_name TEXT NOT NULL," +
@@ -417,9 +414,6 @@ public class Frame extends JFrame implements WindowListener{
                 "sections TEXT NOT NULL," +
                 "PRIMARY KEY(student_id)"+
                 ");");
-
-
-
 
         // statementName.execute("DROP TABLE IF EXISTS teacher;");
 
