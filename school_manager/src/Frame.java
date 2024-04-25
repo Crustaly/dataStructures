@@ -377,7 +377,7 @@ public class Frame extends JFrame implements WindowListener{
 
             }
             try {
-                studentPanel = new StudentPanel(700,700, sn, this);
+                studentPanel = new StudentPanel(700,700, sn,this);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -417,7 +417,6 @@ public class Frame extends JFrame implements WindowListener{
                 "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
                 "first_name TEXT NOT NULL," +
                 "last_name TEXT NOT NULL," +
-                "sections TEXT NOT NULL," +
                 "PRIMARY KEY(student_id)"+
                 ");");
 
@@ -453,6 +452,7 @@ public class Frame extends JFrame implements WindowListener{
                 "section_id INTEGER NOT NULL," +
                 "student_id INTEGER NOT NULL" +
                 ");");
+
         sn.execute("describe student");
 
         setVisible(true);

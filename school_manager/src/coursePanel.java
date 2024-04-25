@@ -149,6 +149,9 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
                     b.printStackTrace();
                 }
             }
+            academic.setSelected(false);
+            kap.setSelected(false);
+            ap.setSelected(false);
         });
 
 
@@ -214,7 +217,9 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
             academic.setSelected(false);
             System.out.print(academic.isSelected());
             repaint();
-
+            academic.setSelected(false);
+            kap.setSelected(false);
+            ap.setSelected(false);
         });
 
         clear.setBounds(390,200,100,20);
@@ -323,7 +328,7 @@ Type (Radio Buttons Academic / AP / KAP), (Editable)
         });
 
         scrolling = new JScrollPane(myContacts);
-        scrolling.setBounds(50, 50, 180, 350);
+        scrolling.setBounds(3, 3, 250, 350);
         add(scrolling);
         repaint();
     }

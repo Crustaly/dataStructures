@@ -275,6 +275,7 @@ public class StudentPanel extends JPanel{
                             ResultSet rs2 = sn.executeQuery("SELECT * FROM section WHERE section_id=" + Integer.parseInt(str));
                             while (rs2 != null && rs2.next()) {
                                 sectionData curSection = new sectionData(rs2.getInt("section_id"), rs2.getInt("course_id"), rs2.getInt("teacher_id"), sn);
+                                System.out.println(curSection.getTeacherId());
                                 sections.add(curSection);
                             }
                         }
@@ -288,7 +289,6 @@ public class StudentPanel extends JPanel{
                             int tempTeacherID = sd.getTeacherId();
                             ResultSet rs3 = sn.executeQuery("SELECT course.title, teacher.last_name FROM course, teacher WHERE course.course_id=" + tempCourseID + " AND teacher.teacher_id = " + tempTeacherID+ ";");
                             while(rs3 != null && rs3.next()){
-
                                 String course = rs3.getString("title");
                                 String teachLast = rs3.getString("last_name");
                                 System.out.println(course + " " + teachLast);

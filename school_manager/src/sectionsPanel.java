@@ -185,8 +185,10 @@ public class sectionsPanel extends JPanel {
                 //put update code here
                 Collections.sort(allMyStudents);
                 myStudents.setListData(allMyStudents.toArray(new Data[0]));
+
+                repaint();
             }
-            repaint();
+
         });
 
         deleteStudent.setBounds(450, 580, 140,30);
@@ -482,7 +484,9 @@ public class sectionsPanel extends JPanel {
                 coursesData temp = myCourses.getSelectedValue();
                 //courseText.setText(temp.getID());
                 int tempId = Integer.parseInt(temp.getID());
-                allMySections.clear();  System.out.println("pooop]");
+                allMySections.clear();
+                ID.setText("");
+                System.out.println("pooop]");
                 try {
                     ResultSet ab = statementName.executeQuery("SELECT section_id, teacher_id, course_id FROM section;");
                     while(ab!=null&&ab.next()) {

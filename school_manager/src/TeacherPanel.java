@@ -156,9 +156,9 @@ public class TeacherPanel extends JPanel{
             clear.setVisible(true);
             ArrayList<Integer> sectionIDList = new ArrayList<>();
             repaint();
+            System.out.println("ID" + ids);
             try {
-
-                ResultSet rs = sn.executeQuery("SELECT * FROM section where teacher_id="+Integer.parseInt(IDs.getText())+";"); //removes teacher from sections
+                ResultSet rs = sn.executeQuery("SELECT * FROM section where teacher_id="+ids+";"); //removes teacher from sections
                 while(rs!=null&&rs.next()) {
                     int sectionId = rs.getInt("section_id");
                     sectionIDList.add(sectionId);
@@ -168,7 +168,7 @@ public class TeacherPanel extends JPanel{
             }
             for(int sectionID : sectionIDList) {
                 try {
-                    sn.executeUpdate("UPDATE section set teacher_id=-1 where teacher_id="+sectionID+";");
+                    sn.executeUpdate("UPDATE section set teacher_id=-1 where teacher_id="+ids+";");
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
