@@ -417,7 +417,6 @@ public class Frame extends JFrame implements WindowListener{
                 "student_id INTEGER NOT NULL AUTO_INCREMENT,"+
                 "first_name TEXT NOT NULL," +
                 "last_name TEXT NOT NULL," +
-                "sections TEXT NOT NULL," +
                 "PRIMARY KEY(student_id)"+
                 ");");
 
