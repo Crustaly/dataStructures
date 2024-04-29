@@ -157,6 +157,7 @@ public class TeacherPanel extends JPanel{
             ArrayList<Integer> sectionIDList = new ArrayList<>();
             repaint();
             System.out.println("ID" + ids);
+
             try {
                 ResultSet rs = sn.executeQuery("SELECT * FROM section where teacher_id="+ids+";"); //removes teacher from sections
                 while(rs!=null&&rs.next()) {

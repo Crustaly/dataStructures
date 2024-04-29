@@ -31,6 +31,6 @@ public class Data implements Comparable<Data>{
             if(getFirst().equals(o.getFirst())) return getID().compareTo(o.getID());
             return getFirst().compareTo(o.getFirst());
         }
-        return getLast().compareTo(o.getLast());
+        return getLast().compareToIgnoreCase(o.getLast());
     }
 }
