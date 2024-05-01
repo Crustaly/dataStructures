@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -14,8 +15,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
     private int status;
     private WumpusPlayer player;
     private WumpusMap map;
-
-    private BufferedImage buffer;
     private BufferedImage floor, arrow, fog, gold, ladder, pit, breeze, wumpus, deadWumpus, stench, playerUp, playerDown, playerLeft, playerRight;
 
     public WumpusPanel() throws IOException {
@@ -35,10 +34,20 @@ public class WumpusPanel extends JPanel implements KeyListener {
         playerDown = ImageIO.read(new File("playerDown.png"));
         playerLeft = ImageIO.read(new File("playerLeft.png"));
         playerRight = ImageIO.read(new File("playerRight.png"));
-
-        buffer = new BufferedImage(500,500,BufferedImage.TYPE_4BYTE_ABGR);
     }
 
+    public void reset(){
+
+    }
+
+    public void paint(Graphics g){
+        g.setColor(Color.black);
+        g.fillRect(0,500,500,200);
+
+        g.setColor(Color.red);
+
+        g.drawString("Inventory", 10,550);
+    }
     @Override
     public void keyTyped(KeyEvent e) {
 
