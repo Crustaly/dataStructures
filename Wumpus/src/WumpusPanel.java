@@ -13,10 +13,13 @@ public class WumpusPanel extends JPanel implements KeyListener {
     public static final int DEAD = 1;
     public static final int WON = 2;
     private int status;
+
+    private boolean cheat=false;
     private WumpusPlayer player;
     private WumpusMap map;
     private BufferedImage floor, arrow, fog, gold, ladder, pit, breeze, wumpus, deadWumpus, stench, playerUp, playerDown, playerLeft, playerRight;
-
+    static ArrayList<String> list;
+    private BufferedImage buffer;
     public WumpusPanel() throws IOException {
         addKeyListener(this);
         setSize(500,500);
@@ -34,12 +37,113 @@ public class WumpusPanel extends JPanel implements KeyListener {
         playerDown = ImageIO.read(new File("playerDown.png"));
         playerLeft = ImageIO.read(new File("playerLeft.png"));
         playerRight = ImageIO.read(new File("playerRight.png"));
+
+        buffer = new BufferedImage(500, 500, BufferedImage.TYPE_4BYTE_ABGR);
+        reset();
+        //add src if no work
     }
 
     public void reset(){
+        list = new ArrayList<>();
+        list.add("You bumped into a ladder!");
+        status = PLAYING;
+        map = new WumpusMap();
+        player = new WumpusPlayer();
+        player.setColPosition(map.ladderC);
+        player.setRowPosition(map.ladderR);
+        WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
 
+        sq.setVisited(true);
     }
+    public void paint(Graphics g) {
+        System.out.println("inside paint");
 
+        Graphics b = buffer.getGraphics();
+        //System.out.println(Arrays.deepToString(map.getGrid()));
+        g.setColor(Color.black);
+        g.fillRect(0, 500, 500, 200);
+
+        g.setColor(Color.red);
+        //g.setFont();
+        g.drawString("Inventory", 10, 550);
+        if(player.getArrow()) {
+            g.drawImage(arrow, 0, 560, null);
+        }
+        if(player.getGold()) {
+            if(player.getArrow())  {
+                g.drawImage(gold, 60, 560, null);
+            } else {
+                g.drawImage(gold, 0, 560, null);
+            }
+        }
+        g.drawString("Messages", 150, 550);
+
+
+        g.setColor(Color.GRAY);
+        g.fillRect(120, 500, 20, 200);
+
+
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                WumpusSquare sq = map.getSquare(i, j);
+                int r = i * 50;int c = j * 50;
+                /*if(wumpus) {return "W";}
+                    if(deadWumpus) {return "D";}
+                    if(ladder) {return "L";}
+                    if(pit) {return "P";}
+                    if(gold) {return "G";}
+                    return "*";*/
+                //System.out.println(sq);
+                if(!cheat && !sq.getVisited()) {
+                    g.drawImage(fog, r, c, null);
+                    continue;
+                }
+                g.drawImage(floor, r, c, null);
+                if(sq.getWumpus()) {
+                    g.drawImage(wumpus, r, c, null);
+                }
+                if(sq.getDeadWumpus()) {
+                    g.drawImage(deadWumpus, r, c, null);
+                }
+                if(sq.getLadder()) {
+                    g.drawImage(ladder, r, c, null);
+                }
+                if(sq.getPit()) {
+                    g.drawImage(pit, r, c, null);
+                }
+                if(sq.getGold()) {
+                    g.drawImage(gold, r, c, null);
+                }
+                if(sq.getBreeze()) {
+                    //g.drawImage()
+                    g.drawImage(breeze, r, c, null);
+                }
+                if(sq.getStench()) {
+                    //g.drawImage()
+                    g.drawImage(stench, r, c, null);
+                }
+
+
+                if(player.getRowPosition() == i && player.getColPosition() == j) {
+                    if(player.getDirection()==WumpusPlayer.NORTH) {
+                        g.drawImage(playerUp, r, c, null);
+                    }
+                    if(player.getDirection()==WumpusPlayer.SOUTH) {
+                        g.drawImage(playerDown, r, c, null);
+                    }
+                    if(player.getDirection()==WumpusPlayer.EAST) {
+                        g.drawImage(playerRight, r, c, null);
+                    }
+                    if(player.getDirection()==WumpusPlayer.WEST) {
+                        g.drawImage(playerLeft, r, c, null);
+                    }
+                }
+
+
+
+            }
+        }
+/*
     public void paint(Graphics g){
         g.setColor(Color.BLACK);
         g.fillRect(0,500,500,200);
@@ -62,9 +166,10 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
         g.setColor(Color.GRAY);
         g.fillRect(120,500,20,200);
-
+*/
 
     }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
