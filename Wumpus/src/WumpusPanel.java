@@ -177,7 +177,148 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        char dir = e.getKeyChar();
+        if(dir == 'n') {
+            reset();
+            repaint();
+            return;
+        }
+        if(status == WON || status == DEAD) {
+            return;
+        }
 
+        if(dir == 'w' && player.getColPosition() > 0) {
+
+            map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+            player.setColPosition(player.getColPosition()-1);
+            player.setDirection(WumpusPlayer.NORTH);
+            WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
+
+            listAdder(sq);
+        }
+
+        if(dir == 's'&& player.getColPosition() < 9) {
+            map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+            player.setColPosition(player.getColPosition()+1);
+            player.setDirection(WumpusPlayer.SOUTH);
+            //change
+            WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
+
+            listAdder(sq);
+
+        }
+        if(dir == 'a'&& player.getRowPosition() > 0) {
+            map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+            player.setRowPosition(player.getRowPosition()-1);
+            player.setDirection(WumpusPlayer.WEST);
+            WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
+
+            listAdder(sq);
+
+        }
+        if(dir == 'd'&& player.getRowPosition() < 9) {
+            map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+            player.setRowPosition(player.getRowPosition()+1);
+            player.setDirection(WumpusPlayer.EAST);
+            WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
+
+            listAdder(sq);
+
+        }
+        if(dir =='i'&&player.getArrow()) {
+            player.setArrow(false);
+            for(int i = player.getColPosition(); i >= 0; i--) {
+                if(map.getSquare(player.getRowPosition(), i).getWumpus()) {
+                    map.getSquare(player.getRowPosition(),i).setWumpus(false);
+                    map.getSquare(player.getRowPosition(),i).setDeadWumpus(true);
+                    list.add("You hear a scream");
+                    break;
+                }
+            }
+        }
+        if(dir == 'k'&&player.getArrow()) {
+            player.setArrow(false);
+            for(int i = player.getColPosition(); i <10; i++) {
+                if(map.getSquare(player.getRowPosition(), i).getWumpus()) {
+                    map.getSquare(player.getRowPosition(),i).setWumpus(false);
+                    map.getSquare(player.getRowPosition(),i).setDeadWumpus(true);
+                    System.out.println("scream arrow down");
+                    list.add("You hear a scream");
+                    break;
+                }
+            }
+        }
+        if(dir == 'l' && player.getArrow()) {
+            player.setArrow(false);
+            for(int i = player.getRowPosition(); i <10; i++) {
+                if(map.getSquare(i, player.getColPosition()).getWumpus()) {
+                    map.getSquare(i, player.getColPosition()).setWumpus(false);
+                    map.getSquare(i, player.getColPosition()).setDeadWumpus(true);
+                    System.out.println("scream arrow right");
+                    list.add("You hear a scream");
+                    break;
+                }
+            }
+        }
+        if(dir == 'j' && player.getArrow()) {
+            player.setArrow(false);
+            for(int i = player.getRowPosition(); i >= 0; i--) {
+                if(map.getSquare(i, player.getColPosition()).getWumpus()) {
+                    map.getSquare(i, player.getColPosition()).setWumpus(false);
+                    map.getSquare(i, player.getColPosition()).setDeadWumpus(true);
+                    System.out.println("scream arrow left");
+                    list.add("You hear a scream");
+                    break;
+                }
+            }
+        }
+        if(dir == '*') {
+            cheat = !cheat;
+        }
+        if(dir == 'n') {
+            reset();
+        }
+        if(dir == 'p'&&map.getSquare(player.getRowPosition(),player.getColPosition()).getGold()) {
+            player.setGold(true);
+            map.getSquare(player.getRowPosition(),player.getColPosition()).setGold(false);
+        }
+        if(dir == 'c' & player.getGold() && map.getSquare(player.getRowPosition(), player.getColPosition()).getLadder()) {
+            status = WON;
+            System.out.println("won");
+            list.add("You win. (N for new game)");
+        }
+        System.out.println("KeyPressed: " + dir +" | Row: " + player.getRowPosition() + " | Col: " + player.getColPosition());
+        map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+        repaint();
+
+
+    }
+    public void listAdder(WumpusSquare sq) {
+        if(sq.getStench()) {
+            list.add("You smell a stench");
+        }
+        if(sq.getBreeze()) {
+            list.add("You feel a breeze");
+        }
+        if(sq.getGold()) {
+            list.add("You see a glimmer");
+        }
+        if(sq.getPit()) {
+            list.add("You fell down a pit to your death");
+            list.add("Game Over. (N for new game)");
+            status = DEAD;
+        }
+        if(sq.getLadder()) {
+            list.add("You bump into a ladder");
+        }
+        if(sq.getDeadWumpus()) {
+            list.add("You smell a stench");
+        }
+        if(sq.getWumpus()) {
+            list.add("You are eaten by the Wumpus");
+            list.add("Game Over. (N for new game)");
+            status = DEAD;
+        }
     }
 
     @Override
