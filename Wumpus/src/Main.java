@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Frame f = new WumpusFrame();
+    public static void main(String[] args) throws Exception {
+        Frame f = new WumpusFrame("Wumpy");
     }
 }
