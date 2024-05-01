@@ -41,12 +41,29 @@ public class WumpusPanel extends JPanel implements KeyListener {
     }
 
     public void paint(Graphics g){
-        g.setColor(Color.black);
+        g.setColor(Color.BLACK);
         g.fillRect(0,500,500,200);
 
-        g.setColor(Color.red);
+        g.setColor(Color.RED);
 
         g.drawString("Inventory", 10,550);
+        if(player.getArrow()){
+            g.drawImage(arrow, 0,560, null);
+        }
+        if(player.getGold()){
+            if(player.getArrow())  {
+                g.drawImage(gold, 60, 560, null);
+            } else {
+                g.drawImage(gold, 0, 560, null);
+            }
+        }
+        
+        g.drawString("Messages", 150,550);
+
+        g.setColor(Color.GRAY);
+        g.fillRect(120,500,20,200);
+
+
     }
     @Override
     public void keyTyped(KeyEvent e) {
