@@ -25,11 +25,13 @@ public class WumpusSquare {
 
     @Override
     public String toString() {
-        if(wumpus) {return "W";}
-        if(deadWumpus) {return "D";}
-        if(ladder) {return "L";}
-        if(pit) {return "P";}
-        if(gold) {return "G";}
+        if(wumpus && gold) return "@";
+        if(deadWumpus && gold) return "!";
+        if(wumpus) return "W";
+        if(deadWumpus) return "D";
+        if(ladder) return "L";
+        if(pit) return "P";
+        if(gold) return "G";
         return "*";
     }
 }
