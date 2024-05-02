@@ -15,6 +15,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
     private int status;
     private WumpusPlayer player;
     private WumpusMap map;
+    private BufferedImage buffer;
     private BufferedImage floor, arrow, fog, gold, ladder, pit, breeze, wumpus, deadWumpus, stench, playerUp, playerDown, playerLeft, playerRight;
 
     public WumpusPanel() throws IOException {
