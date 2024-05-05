@@ -145,42 +145,50 @@ public class WumpusPanel extends JPanel implements KeyListener {
             repaint();
             return;
         }
+<<<<<<< HEAD
         if(player.getColPosition()>0&&keyPress == 'w') {
             System.out.println("W");
+=======
+        if(player.getRowPosition()>0&&keyPress == 'w') {
+>>>>>>> 2f9b2efd31270ebd65fa77680df1ffa9cb752ac2
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go up by 1, col-1
-            player.setColPosition(player.getColPosition()-1);
+            player.setColPosition(player.getRowPosition()-1);
             player.setDirection(WumpusPlayer.NORTH);
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
         }
 
+<<<<<<< HEAD
         if(player.getColPosition() < 9&&keyPress =='s') {
             System.out.println("S");
+=======
+        if(player.getRowPosition() < 9&&keyPress =='s') {
+>>>>>>> 2f9b2efd31270ebd65fa77680df1ffa9cb752ac2
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go down by 1, col+1
-            player.setColPosition(player.getColPosition()+1);
+            player.setColPosition(player.getRowPosition()+1);
             player.setDirection(WumpusPlayer.SOUTH);
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
-        if(keyPress== 'a'&& player.getRowPosition() > 0) {
+        if(keyPress== 'a'&& player.getColPosition() > 0) {
             //going left
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //left is row-1
-            player.setRowPosition(player.getRowPosition()-1);
+            player.setRowPosition(player.getColPosition()-1);
             player.setDirection(WumpusPlayer.WEST);
 
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
-        if(keyPress == 'd'&& player.getRowPosition() < 9) {
+        if(keyPress == 'd'&& player.getColPosition() < 9) {
             //going right
 
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //left is row+1
-            player.setRowPosition(player.getRowPosition()+1);
+            player.setRowPosition(player.getColPosition()+1);
             player.setDirection(WumpusPlayer.EAST);
 
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
