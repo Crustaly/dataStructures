@@ -209,11 +209,20 @@ public class WumpusPanel extends JPanel implements KeyListener {
             //Picks up the gold
             //
             //(only when on the square with the gold)
+            boolean pickUp = true;
+            player.setGold(pickUp);
+
+            //set map gold as not true because you picked it up
+            boolean gold = false;
+            map.getSquare(player.getRowPosition(),player.getColPosition()).setGold(gold);
         }
         if(player.getGold() && map.getSquare(player.getRowPosition(), player.getColPosition()).getLadder()&&keyPress == 'c' ) {
 
             //    Climbs the ladder
             //         (only works if you have the gold)
+            status = WON;
+
+            msgs.add("YOU WON! PRESS N TO RESTART THE GAME");
         }
         if(keyPress == '*') {
             if(cheatMode){
