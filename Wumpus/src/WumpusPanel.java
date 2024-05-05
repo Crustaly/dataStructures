@@ -9,11 +9,8 @@ import java.util.*;
 
 public class WumpusPanel extends JPanel implements KeyListener {
 
-
-    private boolean cheat=false;
     private WumpusPlayer player;
-    private BufferedImage   pit, breeze, stench,wumpus, deadWumpus, gold, fog, ladder, floor, arrow, playerUp, playerDown, playerLeft, playerRight;
-    static ArrayList<String> list;
+    private BufferedImage  pit, breeze, stench,wumpus, deadWumpus, gold, fog, ladder, floor, arrow, playerUp, playerDown, playerLeft, playerRight;
     private WumpusMap map;
     private BufferedImage buffer;
     public static final int PLAYING = 0;
@@ -38,14 +35,12 @@ public class WumpusPanel extends JPanel implements KeyListener {
         playerLeft = ImageIO.read(new File("playerLeft.png"));
         playerRight = ImageIO.read(new File("playerRight.png"));
 
-        buffer = new BufferedImage(500, 500, BufferedImage.TYPE_4BYTE_ABGR);
        // reset();
         //add src if no work
     }
 
 
     public void paint(Graphics g) {
-        Graphics b = buffer.getGraphics();
 
         g.setColor(Color.red);
         //g.setFont();
@@ -131,14 +126,12 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
     }
     public void resetGame() {
-        list = new ArrayList<>();
         player = new WumpusPlayer();
-        status = 0;
+        status = PLAYING;
         map = new WumpusMap();
         WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
-        list.add("YOU JUST BUMPED INTO A LADDER");
+        sq.setVisited(true);
         player.setColPosition(map.getLadderCol());
         player.setRowPosition(map.getLadderCol());
-        sq.setVisited(true);
     }
 }
