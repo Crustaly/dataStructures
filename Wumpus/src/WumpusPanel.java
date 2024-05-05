@@ -9,13 +9,10 @@ import java.util.*;
 
 public class WumpusPanel extends JPanel implements KeyListener {
 
-
-    private boolean cheat=false;
     private WumpusPlayer player;
     private BufferedImage fog, gold, ladder, floor, arrow, pit, breeze, stench,wumpus, deadWumpus,  playerUp, playerDown, playerLeft, playerRight;
-    static ArrayList<String> list;
     private WumpusMap map;
-    private BufferedImage buffer;
+    private BufferedImage buffer; //idk what to do with this
     public static final int PLAYING = 0;
     public static final int DEAD = 1;
     public static final int WON = 2;
@@ -37,12 +34,17 @@ public class WumpusPanel extends JPanel implements KeyListener {
         playerDown = ImageIO.read(new File("playerDown.png"));
         playerLeft = ImageIO.read(new File("playerLeft.png"));
         playerRight = ImageIO.read(new File("playerRight.png"));
-
-        buffer = new BufferedImage(500, 500, BufferedImage.TYPE_4BYTE_ABGR);
-       // reset();
         //add src if no work
+
+        player = new WumpusPlayer();
+        map = new WumpusMap();
+        status = PLAYING;
     }
 
+    public void reset(){
+        status = PLAYING;
+        map = new WumpusMap();
+    }
 
     public void paint(Graphics g) {
         Graphics b = buffer.getGraphics();
