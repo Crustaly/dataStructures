@@ -60,34 +60,34 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                WumpusSquare sq = map.getSquare(i, j);
+                WumpusSquare loc = map.getSquare(i, j);
                 int r = i * 50;
                 int c = j * 50;
-                if (!cheatMode && !sq.getVisited()) {
+                if (!cheatMode && !loc.getVisited()) {
                     g.drawImage(fog, r, c, null);
                     continue;
                 }
                 g.drawImage(floor, r, c, null);
-                if (sq.getWumpus()) {
+                if (loc.getWumpus()) {
                     g.drawImage(wumpus, r, c, null);
                 }
-                if (sq.getDeadWumpus()) {
+                if (loc.getDeadWumpus()) {
                     g.drawImage(deadWumpus, r, c, null);
                 }
-                if (sq.getLadder()) {
+                if (loc.getLadder()) {
                     g.drawImage(ladder, r, c, null);
                 }
-                if (sq.getPit()) {
+                if (loc.getPit()) {
                     g.drawImage(pit, r, c, null);
                 }
-                if (sq.getGold()) {
+                if (loc.getGold()) {
                     g.drawImage(gold, r, c, null);
                 }
-                if (sq.getBreeze()) {
+                if (loc.getBreeze()) {
                     //g.drawImage()
                     g.drawImage(breeze, r, c, null);
                 }
-                if (sq.getStench()) {
+                if (loc.getStench()) {
                     //g.drawImage()
                     g.drawImage(stench, r, c, null);
                 }
@@ -141,19 +141,42 @@ public class WumpusPanel extends JPanel implements KeyListener {
             return;
         }
         if(player.getColPosition()>0&&keyPress == 'w') {
-            //going up
+            //mark as vis!
+            map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+            //go up by 1, col-1
+            player.setColPosition(player.getColPosition()-1);
+            player.setDirection(WumpusPlayer.NORTH);
+            addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
         }
 
         if(player.getColPosition() < 9&&keyPress =='s') {
-            //going down
+            //mark as vis!
+            map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+            //go down by 1, col+1
+            player.setColPosition(player.getColPosition()+1);
+            player.setDirection(WumpusPlayer.SOUTH);
+            addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
         if(keyPress== 'a'&& player.getRowPosition() > 0) {
             //going left
+            map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+            //left is row-1
+            player.setRowPosition(player.getRowPosition()-1);
+            player.setDirection(WumpusPlayer.WEST);
+
+            addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
         if(keyPress == 'd'&& player.getRowPosition() < 9) {
             //going right
+
+            map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+            //left is row+1
+            player.setRowPosition(player.getRowPosition()+1);
+            player.setDirection(WumpusPlayer.EAST);
+
+            addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
         if(keyPress =='i'&&player.getArrow()) {
@@ -228,11 +251,20 @@ public class WumpusPanel extends JPanel implements KeyListener {
             //Picks up the gold
             //
             //(only when on the square with the gold)
+            boolean pickUp = true;
+            player.setGold(pickUp);
+
+            //set map gold as not true because you picked it up
+            boolean gold = false;
+            map.getSquare(player.getRowPosition(),player.getColPosition()).setGold(gold);
         }
         if(player.getGold() && map.getSquare(player.getRowPosition(), player.getColPosition()).getLadder()&&keyPress == 'c' ) {
 
             //    Climbs the ladder
             //         (only works if you have the gold)
+            status = WON;
+
+            msgs.add("YOU WON! PRESS N TO RESTART THE GAME");
         }
         if(keyPress == '*') {
             if(cheatMode){
