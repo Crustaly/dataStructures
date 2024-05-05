@@ -17,6 +17,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
     public static final int DEAD = 1;
     public static final int WON = 2;
     private int status;
+
+    private ArrayList<String> msgs;
     public WumpusPanel() throws IOException {
         addKeyListener(this);
         setSize(500,500);
@@ -35,6 +37,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
         playerLeft = ImageIO.read(new File("playerLeft.png"));
         playerRight = ImageIO.read(new File("playerRight.png"));
 
+        resetGame();
        // reset();
         //add src if no work
     }
@@ -111,6 +114,23 @@ public class WumpusPanel extends JPanel implements KeyListener {
         }
     }
 
+    public void addToMsgs(WumpusSquare square){
+        if(square.getBreeze())
+            msgs.add("You feel a breeze");
+        else if(square.getStench()) msgs.add("You smell a stench");
+        else if(square.getGold()) msgs.add("You see a glimmer");
+        else if(square.getLadder()) msgs.add("You bumped into a ladder");
+        else if(square.getPit()) {
+            msgs.add("You fell down a pit to your death. Press N to restart");
+            status = DEAD;
+        }
+        else if(square.getWumpus()) {
+            msgs.add("You are eaten by the Wumpus. Press N to restart.");
+            status = DEAD;
+        }
+
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -133,5 +153,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
         sq.setVisited(true);
         player.setColPosition(map.getLadderCol());
         player.setRowPosition(map.getLadderCol());
+        msgs = new ArrayList<>();
     }
 }
