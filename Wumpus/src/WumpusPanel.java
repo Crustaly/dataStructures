@@ -47,7 +47,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
         g.setColor(Color.red);
         //g.setFont();
-        g.drawString("Current Inventory: ", 5, 550);
+        g.drawString("Inventory: ", 5, 550);
         if (player.getArrow()) {
             g.drawImage(arrow, 0, 560, null);
             //starts out with an arrow
@@ -57,6 +57,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
         }
 
         g.drawString("Game Messages: ", 155, 550);
+        if(msgs.size() > 0) g.drawString(msgs.get(msgs.size() -1), 155, 600);
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -134,6 +135,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         char keyPress = e.getKeyChar();
+        if(status != PLAYING) return;
         if(keyPress == 'n') {
             //the game gets reset
             resetGame();
