@@ -128,7 +128,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
             msgs.add("You are eaten by the Wumpus. Press N to restart.");
             status = DEAD;
         }
-
     }
 
     @Override
