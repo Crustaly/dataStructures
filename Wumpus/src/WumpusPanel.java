@@ -145,12 +145,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             repaint();
             return;
         }
-<<<<<<< HEAD
-        if(player.getColPosition()>0&&keyPress == 'w') {
-            System.out.println("W");
-=======
         if(player.getRowPosition()>0&&keyPress == 'w') {
->>>>>>> 2f9b2efd31270ebd65fa77680df1ffa9cb752ac2
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go up by 1, col-1
@@ -159,12 +154,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
         }
 
-<<<<<<< HEAD
-        if(player.getColPosition() < 9&&keyPress =='s') {
-            System.out.println("S");
-=======
         if(player.getRowPosition() < 9&&keyPress =='s') {
->>>>>>> 2f9b2efd31270ebd65fa77680df1ffa9cb752ac2
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go down by 1, col+1
