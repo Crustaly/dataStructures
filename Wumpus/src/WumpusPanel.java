@@ -49,7 +49,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
         g.setColor(Color.red);
         //g.setFont();
-        g.drawString("Inventory", 5, 550);
+        g.drawString("Current Inventory: ", 5, 550);
         if (player.getArrow()) {
             g.drawImage(arrow, 0, 560, null);
             //starts out with an arrow
@@ -58,7 +58,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             g.drawImage(gold, 60, 560, null);
         }
 
-        g.drawString("Messages", 150, 550);
+        g.drawString("Game Messages: ", 155, 550);
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
