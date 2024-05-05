@@ -299,11 +299,12 @@ public class WumpusPanel extends JPanel implements KeyListener {
         player = new WumpusPlayer();
         status = PLAYING;
         map = new WumpusMap();
+        player.setColPosition(map.getLadderCol());
+        player.setRowPosition(map.getLadderRow());
         WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
         sq.setVisited(true);
-        player.setColPosition(map.getLadderCol());
-        player.setRowPosition(map.getLadderCol());
         msgs = new ArrayList<>();
+        msgs.add("You bumped into a ladder");
         cheatMode = false;
     }
 }
