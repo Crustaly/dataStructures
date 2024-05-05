@@ -17,7 +17,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
     private boolean cheat=false;
     private WumpusPlayer player;
     private WumpusMap map;
-    private BufferedImage buffer;
+    private BufferedImage buffer; //idk what to do with this
     private BufferedImage floor, arrow, fog, gold, ladder, pit, breeze, wumpus, deadWumpus, stench, playerUp, playerDown, playerLeft, playerRight;
     static ArrayList<String> list;
     public WumpusPanel() throws IOException {
@@ -38,7 +38,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
         playerLeft = ImageIO.read(new File("playerLeft.png"));
         playerRight = ImageIO.read(new File("playerRight.png"));
 
-        buffer = new BufferedImage(500, 500, BufferedImage.TYPE_4BYTE_ABGR);
         reset();
         //add src if no work
     }
@@ -56,8 +55,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
         sq.setVisited(true);
     }
     public void paint(Graphics g) {
-        Graphics b = buffer.getGraphics();
-
         g.setColor(Color.red);
         //g.setFont();
         g.drawString("Inventory", 5, 550);
@@ -120,8 +117,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
                         g.drawImage(playerLeft, r, c, null);
                     }
                 }
-
-
             }
         }
     }
