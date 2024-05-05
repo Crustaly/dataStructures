@@ -9,10 +9,13 @@ import java.util.*;
 
 public class WumpusPanel extends JPanel implements KeyListener {
 
+
+    private boolean cheat=false;
     private WumpusPlayer player;
-    private BufferedImage fog, gold, ladder, floor, arrow, pit, breeze, stench,wumpus, deadWumpus,  playerUp, playerDown, playerLeft, playerRight;
+    private BufferedImage   pit, breeze, stench,wumpus, deadWumpus, gold, fog, ladder, floor, arrow, playerUp, playerDown, playerLeft, playerRight;
+    static ArrayList<String> list;
     private WumpusMap map;
-    private BufferedImage buffer; //idk what to do with this
+    private BufferedImage buffer;
     public static final int PLAYING = 0;
     public static final int DEAD = 1;
     public static final int WON = 2;
@@ -34,20 +37,12 @@ public class WumpusPanel extends JPanel implements KeyListener {
         playerDown = ImageIO.read(new File("playerDown.png"));
         playerLeft = ImageIO.read(new File("playerLeft.png"));
         playerRight = ImageIO.read(new File("playerRight.png"));
+
+        buffer = new BufferedImage(500, 500, BufferedImage.TYPE_4BYTE_ABGR);
+       // reset();
         //add src if no work
-
-        player = new WumpusPlayer();
-        map = new WumpusMap();
-        status = PLAYING;
     }
 
-    public void reset(){
-        status = PLAYING;
-        map = new WumpusMap();
-        player = new WumpusPlayer();
-        player.setColPosition(map.getLadderCol());
-        player.setRowPosition(map.getLadderRow());
-    }
 
     public void paint(Graphics g) {
         Graphics b = buffer.getGraphics();
@@ -104,15 +99,16 @@ public class WumpusPanel extends JPanel implements KeyListener {
                     if (player.getDirection() == WumpusPlayer.NORTH) {
                         g.drawImage(playerUp, r, c, null);
                     }
-                    if (player.getDirection() == WumpusPlayer.SOUTH) {
-                        g.drawImage(playerDown, r, c, null);
-                    }
                     if (player.getDirection() == WumpusPlayer.EAST) {
                         g.drawImage(playerRight, r, c, null);
                     }
                     if (player.getDirection() == WumpusPlayer.WEST) {
                         g.drawImage(playerLeft, r, c, null);
                     }
+                    if (player.getDirection() == WumpusPlayer.SOUTH) {
+                        g.drawImage(playerDown, r, c, null);
+                    }
+
                 }
 
 
@@ -133,5 +129,16 @@ public class WumpusPanel extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+    public void resetGame() {
+        list = new ArrayList<>();
+        player = new WumpusPlayer();
+        status = 0;
+        map = new WumpusMap();
+        WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
+        list.add("YOU JUST BUMPED INTO A LADDER");
+        player.setColPosition(map.getLadderCol());
+        player.setRowPosition(map.getLadderCol());
+        sq.setVisited(true);
     }
 }
