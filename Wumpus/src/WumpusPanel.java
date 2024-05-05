@@ -57,6 +57,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
         }
 
         g.drawString("Messages", 150, 550);
+        if(msgs.size() > 0)
+            g.drawString(msgs.get(msgs.size() - 1), 150, 600);
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -134,6 +136,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         char keyPress = e.getKeyChar();
+        if(status != PLAYING) return;
         if(keyPress == 'n') {
             //the game gets reset
             resetGame();
@@ -247,16 +250,12 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
 
         if(keyPress == 'p'&&map.getSquare(player.getRowPosition(),player.getColPosition()).getGold()) {
-            //
             //Picks up the gold
-            //
             //(only when on the square with the gold)
-            boolean pickUp = true;
-            player.setGold(pickUp);
+            player.setGold(true);
 
-            //set map gold as not true because you picked it up
-            boolean gold = false;
-            map.getSquare(player.getRowPosition(),player.getColPosition()).setGold(gold);
+            //set map gold as false because you picked it up
+            map.getSquare(player.getRowPosition(),player.getColPosition()).setGold(false);
         }
         if(player.getGold() && map.getSquare(player.getRowPosition(), player.getColPosition()).getLadder()&&keyPress == 'c' ) {
 
