@@ -13,7 +13,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
     private boolean cheat=false;
     private WumpusPlayer player;
     private BufferedImage   pit, breeze, stench,wumpus, deadWumpus, gold, fog, ladder, floor, arrow, playerUp, playerDown, playerLeft, playerRight;
-    static ArrayList<String> list;
     private WumpusMap map;
     private BufferedImage buffer;
     public static final int PLAYING = 0;
@@ -118,7 +117,75 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        char keyPress = e.getKeyChar();
+        if(keyPress == 'n') {
+            //the game gets reset
+            resetGame();
+            repaint();
+            return;
+        }
+        if(player.getColPosition()>0&&keyPress == 'w') {
+            //going up
+        }
 
+        if(player.getColPosition() < 9&&keyPress =='s') {
+            //going down
+
+        }
+        if(keyPress== 'a'&& player.getRowPosition() > 0) {
+           //going left
+
+        }
+        if(keyPress == 'd'&& player.getRowPosition() < 9) {
+           //going right
+
+        }
+        if(keyPress =='i'&&player.getArrow()) {
+           // Shoots upward
+
+           // (only works if you have an arrow)
+        }
+        if(keyPress == 'k'&&player.getArrow()) {
+           // Shoots downward
+
+           // (only works if you have an arrow)
+        }
+        if(keyPress=='j' &&player.getArrow()) {
+            //Shoots left
+
+      //      (only works if you have an arrow)
+
+        }
+        if(keyPress == 'l' && player.getArrow()) {
+           // Shoots right
+
+            //(only works if you have an arrow)
+        }
+
+
+        if(keyPress == 'p'&&map.getSquare(player.getRowPosition(),player.getColPosition()).getGold()) {
+        //
+            //Picks up the gold
+            //
+            //(only when on the square with the gold)
+        }
+        if(player.getGold() && map.getSquare(player.getRowPosition(), player.getColPosition()).getLadder()&&keyPress == 'c' ) {
+
+        //    Climbs the ladder
+           //         (only works if you have the gold)
+        }
+        if(keyPress == '*') {
+            if(cheat){
+                cheat = false;
+            }
+            else{
+                cheat=  true;
+            }
+        }
+
+
+        map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+        repaint();
     }
 
     @Override
