@@ -9,17 +9,17 @@ import java.util.*;
 
 public class WumpusPanel extends JPanel implements KeyListener {
 
+
+    private boolean cheat=false;
+    private WumpusPlayer player;
+    private BufferedImage fog, gold, ladder, floor, arrow, pit, breeze, stench,wumpus, deadWumpus,  playerUp, playerDown, playerLeft, playerRight;
+    static ArrayList<String> list;
+    private WumpusMap map;
+    private BufferedImage buffer;
     public static final int PLAYING = 0;
     public static final int DEAD = 1;
     public static final int WON = 2;
     private int status;
-
-    private boolean cheat=false;
-    private WumpusPlayer player;
-    private WumpusMap map;
-    private BufferedImage buffer;
-    private BufferedImage floor, arrow, fog, gold, ladder, pit, breeze, wumpus, deadWumpus, stench, playerUp, playerDown, playerLeft, playerRight;
-    static ArrayList<String> list;
     public WumpusPanel() throws IOException {
         addKeyListener(this);
         setSize(500,500);
