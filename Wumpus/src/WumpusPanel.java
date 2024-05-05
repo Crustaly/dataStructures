@@ -13,13 +13,11 @@ public class WumpusPanel extends JPanel implements KeyListener {
     private BufferedImage  pit, breeze, stench,wumpus, deadWumpus, gold, fog, ladder, floor, arrow, playerUp, playerDown, playerLeft, playerRight;
     private WumpusMap map;
     private BufferedImage buffer;
-
     private boolean cheatMode;
     public static final int PLAYING = 0;
     public static final int DEAD = 1;
     public static final int WON = 2;
     private int status;
-
     private ArrayList<String> msgs;
     public WumpusPanel() throws IOException {
         addKeyListener(this);
@@ -183,23 +181,67 @@ public class WumpusPanel extends JPanel implements KeyListener {
         }
         if(keyPress =='i'&&player.getArrow()) {
             // Shoots upward
-
+            if(player.getArrow()){
+                for(int i = 0; i<player.getRowPosition(); i++){
+                    WumpusSquare square = map.getSquare(i, player.getColPosition());
+                    if(square.getWumpus()){
+                        square.setWumpus(false);
+                        square.setDeadWumpus(true);
+                        msgs.add("You hear a scream");
+                    }
+                }
+                player.setArrow(false);
+                msgs.add("Wumpus is still alive!");
+            }
             // (only works if you have an arrow)
         }
         if(keyPress == 'k'&&player.getArrow()) {
             // Shoots downward
-
+            if(player.getArrow()){
+                for(int i = player.getRowPosition(); i<10; i++){
+                    WumpusSquare square = map.getSquare(i, player.getColPosition());
+                    if(square.getWumpus()){
+                        square.setWumpus(false);
+                        square.setDeadWumpus(true);
+                        msgs.add("You hear a scream");
+                    }
+                }
+                player.setArrow(false);
+                msgs.add("Wumpus is still alive!");
+            }
             // (only works if you have an arrow)
         }
         if(keyPress=='j' &&player.getArrow()) {
             //Shoots left
-
+            if(player.getArrow()){
+                for(int j = 0; j<player.getColPosition(); j++){
+                    WumpusSquare square = map.getSquare(player.getRowPosition(), j);
+                    if(square.getWumpus()){
+                        square.setWumpus(false);
+                        square.setDeadWumpus(true);
+                        msgs.add("You hear a scream");
+                    }
+                }
+                player.setArrow(false);
+                msgs.add("Wumpus is still alive!");
+            }
             //      (only works if you have an arrow)
 
         }
         if(keyPress == 'l' && player.getArrow()) {
             // Shoots right
-
+            if(player.getArrow()){
+                for(int j = player.getColPosition(); j<10; j++){
+                    WumpusSquare square = map.getSquare(player.getRowPosition(), j);
+                    if(square.getWumpus()){
+                        square.setWumpus(false);
+                        square.setDeadWumpus(true);
+                        msgs.add("You hear a scream");
+                    }
+                }
+                player.setArrow(false);
+                msgs.add("Wumpus is still alive!");
+            }
             //(only works if you have an arrow)
         }
 
