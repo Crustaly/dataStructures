@@ -57,7 +57,10 @@ public class WumpusPanel extends JPanel implements KeyListener {
         }
 
         g.drawString("Game Messages: ", 155, 550);
-        if(msgs.size() > 0) g.drawString(msgs.get(msgs.size() -1), 155, 600);
+        if(msgs.size() > 0) {
+            g.setColor(Color.black);
+            g.drawString(msgs.get(msgs.size() -1), 155, 600);
+        }
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -301,6 +304,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
         WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
         sq.setVisited(true);
         msgs = new ArrayList<>();
+        msgs.add("You bumped into a ladder");
         cheatMode = false;
     }
 }
