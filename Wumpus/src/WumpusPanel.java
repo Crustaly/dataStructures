@@ -71,7 +71,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
                     g.drawImage(fog, r, c, null);
                     continue;
                 }
-                g.drawImage(floor, r, c, null);
                 if (loc.getWumpus()) {
                     g.drawImage(wumpus, r, c, null);
                 }
@@ -95,7 +94,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
                     //g.drawImage()
                     g.drawImage(stench, r, c, null);
                 }
-
+                g.drawImage(floor, r, c, null);
 
                 if (player.getRowPosition() == i && player.getColPosition() == j) {
 
@@ -138,6 +137,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         char keyPress = e.getKeyChar();
+        System.out.println("Pressed: ");
         if(status != PLAYING) return;
         if(keyPress == 'n') {
             //the game gets reset
@@ -146,6 +146,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             return;
         }
         if(player.getColPosition()>0&&keyPress == 'w') {
+            System.out.println("W");
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go up by 1, col-1
@@ -155,6 +156,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
         }
 
         if(player.getColPosition() < 9&&keyPress =='s') {
+            System.out.println("S");
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go down by 1, col+1
