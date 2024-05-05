@@ -44,6 +44,9 @@ public class WumpusPanel extends JPanel implements KeyListener {
     public void reset(){
         status = PLAYING;
         map = new WumpusMap();
+        player = new WumpusPlayer();
+        player.setColPosition(map.getLadderCol());
+        player.setRowPosition(map.getLadderRow());
     }
 
     public void paint(Graphics g) {
