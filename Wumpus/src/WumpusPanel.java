@@ -99,15 +99,16 @@ public class WumpusPanel extends JPanel implements KeyListener {
                     if (player.getDirection() == WumpusPlayer.NORTH) {
                         g.drawImage(playerUp, r, c, null);
                     }
-                    if (player.getDirection() == WumpusPlayer.SOUTH) {
-                        g.drawImage(playerDown, r, c, null);
-                    }
                     if (player.getDirection() == WumpusPlayer.EAST) {
                         g.drawImage(playerRight, r, c, null);
                     }
                     if (player.getDirection() == WumpusPlayer.WEST) {
                         g.drawImage(playerLeft, r, c, null);
                     }
+                    if (player.getDirection() == WumpusPlayer.SOUTH) {
+                        g.drawImage(playerDown, r, c, null);
+                    }
+
                 }
 
 
