@@ -9,16 +9,16 @@ import java.util.*;
 
 public class WumpusPanel extends JPanel implements KeyListener {
 
-
-    private boolean cheat=false;
     private WumpusPlayer player;
-    private BufferedImage   pit, breeze, stench,wumpus, deadWumpus, gold, fog, ladder, floor, arrow, playerUp, playerDown, playerLeft, playerRight;
+    private BufferedImage  pit, breeze, stench,wumpus, deadWumpus, gold, fog, ladder, floor, arrow, playerUp, playerDown, playerLeft, playerRight;
     private WumpusMap map;
     private BufferedImage buffer;
     public static final int PLAYING = 0;
     public static final int DEAD = 1;
     public static final int WON = 2;
     private int status;
+
+    private ArrayList<String> msgs;
     public WumpusPanel() throws IOException {
         addKeyListener(this);
         setSize(500,500);
@@ -37,14 +37,13 @@ public class WumpusPanel extends JPanel implements KeyListener {
         playerLeft = ImageIO.read(new File("playerLeft.png"));
         playerRight = ImageIO.read(new File("playerRight.png"));
 
-        buffer = new BufferedImage(500, 500, BufferedImage.TYPE_4BYTE_ABGR);
+        resetGame();
        // reset();
         //add src if no work
     }
 
 
     public void paint(Graphics g) {
-        Graphics b = buffer.getGraphics();
 
         g.setColor(Color.red);
         //g.setFont();
@@ -116,77 +115,26 @@ public class WumpusPanel extends JPanel implements KeyListener {
         }
     }
 
+    public void addToMsgs(WumpusSquare square){
+        if(square.getBreeze())
+            msgs.add("You feel a breeze");
+        else if(square.getStench()) msgs.add("You smell a stench");
+        else if(square.getGold()) msgs.add("You see a glimmer");
+        else if(square.getLadder()) msgs.add("You bumped into a ladder");
+        else if(square.getPit()) {
+            msgs.add("You fell down a pit to your death. Press N to restart");
+            status = DEAD;
+        }
+        else if(square.getWumpus()) {
+            msgs.add("You are eaten by the Wumpus. Press N to restart.");
+            status = DEAD;
+        }
+
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
-        char keyPress = e.getKeyChar();
-        if(keyPress == 'n') {
-            //the game gets reset
-            resetGame();
-            repaint();
-            return;
-        }
-        if(player.getColPosition()>0&&keyPress == 'w') {
-            //going up
-        }
 
-        if(player.getColPosition() < 9&&keyPress =='s') {
-            //going down
-
-        }
-        if(keyPress== 'a'&& player.getRowPosition() > 0) {
-           //going left
-
-        }
-        if(keyPress == 'd'&& player.getRowPosition() < 9) {
-           //going right
-
-        }
-        if(keyPress =='i'&&player.getArrow()) {
-           // Shoots upward
-
-           // (only works if you have an arrow)
-        }
-        if(keyPress == 'k'&&player.getArrow()) {
-           // Shoots downward
-
-           // (only works if you have an arrow)
-        }
-        if(keyPress=='j' &&player.getArrow()) {
-            //Shoots left
-
-      //      (only works if you have an arrow)
-
-        }
-        if(keyPress == 'l' && player.getArrow()) {
-           // Shoots right
-
-            //(only works if you have an arrow)
-        }
-
-
-        if(keyPress == 'p'&&map.getSquare(player.getRowPosition(),player.getColPosition()).getGold()) {
-        //
-            //Picks up the gold
-            //
-            //(only when on the square with the gold)
-        }
-        if(player.getGold() && map.getSquare(player.getRowPosition(), player.getColPosition()).getLadder()&&keyPress == 'c' ) {
-
-        //    Climbs the ladder
-           //         (only works if you have the gold)
-        }
-        if(keyPress == '*') {
-            if(cheat){
-                cheat = false;
-            }
-            else{
-                cheat=  true;
-            }
-        }
-
-
-        map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
-        repaint();
     }
 
     @Override
@@ -199,14 +147,13 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
     }
     public void resetGame() {
-        list = new ArrayList<>();
         player = new WumpusPlayer();
-        status = 0;
+        status = PLAYING;
         map = new WumpusMap();
         WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
-        list.add("YOU JUST BUMPED INTO A LADDER");
+        sq.setVisited(true);
         player.setColPosition(map.getLadderCol());
         player.setRowPosition(map.getLadderCol());
-        sq.setVisited(true);
+        msgs = new ArrayList<>();
     }
 }
