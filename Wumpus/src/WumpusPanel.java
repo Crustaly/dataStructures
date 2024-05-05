@@ -13,6 +13,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
     private BufferedImage  pit, breeze, stench,wumpus, deadWumpus, gold, fog, ladder, floor, arrow, playerUp, playerDown, playerLeft, playerRight;
     private WumpusMap map;
     private BufferedImage buffer;
+
+    private boolean cheatMode;
     public static final int PLAYING = 0;
     public static final int DEAD = 1;
     public static final int WON = 2;
@@ -63,7 +65,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
                 WumpusSquare sq = map.getSquare(i, j);
                 int r = i * 50;
                 int c = j * 50;
-                if (!cheat && !sq.getVisited()) {
+                if (!cheatMode && !sq.getVisited()) {
                     g.drawImage(fog, r, c, null);
                     continue;
                 }
@@ -133,8 +135,77 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        char keyPress = e.getKeyChar();
+        if(keyPress == 'n') {
+            //the game gets reset
+            resetGame();
+            repaint();
+            return;
+        }
+        if(player.getColPosition()>0&&keyPress == 'w') {
+            //going up
+        }
 
+        if(player.getColPosition() < 9&&keyPress =='s') {
+            //going down
+
+        }
+        if(keyPress== 'a'&& player.getRowPosition() > 0) {
+            //going left
+
+        }
+        if(keyPress == 'd'&& player.getRowPosition() < 9) {
+            //going right
+
+        }
+        if(keyPress =='i'&&player.getArrow()) {
+            // Shoots upward
+
+            // (only works if you have an arrow)
+        }
+        if(keyPress == 'k'&&player.getArrow()) {
+            // Shoots downward
+
+            // (only works if you have an arrow)
+        }
+        if(keyPress=='j' &&player.getArrow()) {
+            //Shoots left
+
+            //      (only works if you have an arrow)
+
+        }
+        if(keyPress == 'l' && player.getArrow()) {
+            // Shoots right
+
+            //(only works if you have an arrow)
+        }
+
+
+        if(keyPress == 'p'&&map.getSquare(player.getRowPosition(),player.getColPosition()).getGold()) {
+            //
+            //Picks up the gold
+            //
+            //(only when on the square with the gold)
+        }
+        if(player.getGold() && map.getSquare(player.getRowPosition(), player.getColPosition()).getLadder()&&keyPress == 'c' ) {
+
+            //    Climbs the ladder
+            //         (only works if you have the gold)
+        }
+        if(keyPress == '*') {
+            if(cheatMode){
+                cheatMode = false;
+            }
+            else{
+                cheatMode=  true;
+            }
+        }
+
+
+        map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
+        repaint();
     }
+
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -154,5 +225,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
         player.setColPosition(map.getLadderCol());
         player.setRowPosition(map.getLadderCol());
         msgs = new ArrayList<>();
+        cheatMode = false;
     }
 }
