@@ -27,14 +27,14 @@ public class WumpusMap {
                 int c = (int) (Math.random() * 10);
                 if (!grid[r][c].getPit() && !grid[r][c].getBreeze()) {
                     grid[r][c].setPit(true);
-                    if (r - 1 >= 0)
-                        grid[r - 1][c].setBreeze(true);
-                    if (r + 1 < 10)
-                        grid[r + 1][c].setBreeze(true);
                     if (c - 1 >= 0)
                         grid[r][c - 1].setBreeze(true);
                     if (c + 1 < 10)
                         grid[r][c + 1].setBreeze(true);
+                    if (r - 1 >= 0)
+                        grid[r - 1][c].setBreeze(true);
+                    if (r + 1 < 10)
+                        grid[r + 1][c].setBreeze(true);
                     break;
                 }
             }
