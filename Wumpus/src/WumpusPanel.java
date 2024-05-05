@@ -12,7 +12,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
     private boolean cheat=false;
     private WumpusPlayer player;
-    private BufferedImage fog, gold, ladder, floor, arrow, pit, breeze, stench,wumpus, deadWumpus,  playerUp, playerDown, playerLeft, playerRight;
+    private BufferedImage  gold, fog, ladder, floor, arrow, pit, breeze, stench,wumpus, deadWumpus,  playerUp, playerDown, playerLeft, playerRight;
     static ArrayList<String> list;
     private WumpusMap map;
     private BufferedImage buffer;
