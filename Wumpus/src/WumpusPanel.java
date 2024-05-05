@@ -49,39 +49,27 @@ public class WumpusPanel extends JPanel implements KeyListener {
         status = PLAYING;
         map = new WumpusMap();
         player = new WumpusPlayer();
-        player.setColPosition(map.ladderC);
-        player.setRowPosition(map.ladderR);
+        player.setColPosition(map.getLadderCol());
+        player.setRowPosition(map.getLadderRow());
         WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
 
         sq.setVisited(true);
     }
     public void paint(Graphics g) {
-        System.out.println("inside paint");
-
         Graphics b = buffer.getGraphics();
-        //System.out.println(Arrays.deepToString(map.getGrid()));
-        g.setColor(Color.black);
-        g.fillRect(0, 500, 500, 200);
 
         g.setColor(Color.red);
         //g.setFont();
-        g.drawString("Inventory", 10, 550);
+        g.drawString("Inventory", 5, 550);
         if (player.getArrow()) {
             g.drawImage(arrow, 0, 560, null);
+            //starts out with an arrow
         }
         if (player.getGold()) {
-            if (player.getArrow()) {
-                g.drawImage(gold, 60, 560, null);
-            } else {
-                g.drawImage(gold, 0, 560, null);
-            }
+            g.drawImage(gold, 60, 560, null);
         }
+
         g.drawString("Messages", 150, 550);
-
-
-        g.setColor(Color.GRAY);
-        g.fillRect(120, 500, 20, 200);
-
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
