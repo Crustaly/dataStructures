@@ -130,4 +130,15 @@ public class WumpusPanel extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
 
     }
+    public void resetGame() {
+        list = new ArrayList<>();
+        player = new WumpusPlayer();
+        status = 0;
+        map = new WumpusMap();
+        WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
+        list.add("YOU JUST BUMPED INTO A LADDER");
+        player.setColPosition(map.getLadderCol());
+        player.setRowPosition(map.getLadderCol());
+        sq.setVisited(true);
+    }
 }
