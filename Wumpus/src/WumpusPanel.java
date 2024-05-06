@@ -71,6 +71,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
                     g.drawImage(fog, r, c, null);
                     continue;
                 }
+                g.drawImage(floor, r, c, null);
                 if (loc.getWumpus()) {
                     g.drawImage(wumpus, r, c, null);
                 }
@@ -79,6 +80,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
                 }
                 if (loc.getLadder()) {
                     g.drawImage(ladder, r, c, null);
+                    System.out.println("ladder" + r + " " + c);
                 }
                 if (loc.getPit()) {
                     g.drawImage(pit, r, c, null);
@@ -94,10 +96,10 @@ public class WumpusPanel extends JPanel implements KeyListener {
                     //g.drawImage()
                     g.drawImage(stench, r, c, null);
                 }
-                g.drawImage(floor, r, c, null);
+
 
                 if (player.getRowPosition() == i && player.getColPosition() == j) {
-
+                    System.out.println("player" + r + " " + c);
                     if (player.getDirection() == WumpusPlayer.EAST) {
                         g.drawImage(playerRight, r, c, null);
                     }
@@ -301,6 +303,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
         map = new WumpusMap();
         player.setColPosition(map.getLadderCol());
         player.setRowPosition(map.getLadderRow());
+        System.out.println(player.getColPosition() + " " + map.getLadderCol());
+        System.out.println(player.getRowPosition() + " " + map.getLadderRow());
         WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
         sq.setVisited(true);
         msgs = new ArrayList<>();
