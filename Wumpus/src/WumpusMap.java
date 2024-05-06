@@ -27,13 +27,13 @@ public class WumpusMap {
                 int c = (int) (Math.random() * 10);
                 if (!grid[r][c].getPit() && !grid[r][c].getBreeze()) {
                     grid[r][c].setPit(true);
-                    if (c - 1 >= 0)
+                    if (c - 1 >= 0 && !grid[r][c-1].getPit())
                         grid[r][c - 1].setBreeze(true);
-                    if (c + 1 < 10)
+                    if (c + 1 < 10 && !grid[r][c+1].getPit())
                         grid[r][c + 1].setBreeze(true);
-                    if (r - 1 >= 0)
+                    if (r - 1 >= 0 && !grid[r-1][c].getPit())
                         grid[r - 1][c].setBreeze(true);
-                    if (r + 1 < 10)
+                    if (r + 1 < 10 && !grid[r+1][c].getPit())
                         grid[r + 1][c].setBreeze(true);
                     break;
                 }
@@ -54,13 +54,13 @@ public class WumpusMap {
             int c = (int) (Math.random() * 10);
             if (!grid[r][c].getPit() && !grid[r][c].getLadder()) {
                 grid[r][c].setWumpus(true);
-                if(r-1 > 0)
+                if(r-1 >= 0 && !grid[r-1][c].getPit())
                     grid[r - 1][c].setStench(true);
-                if(r+1 < 10)
+                if(r+1 < 10 && !grid[r+1][c].getPit())
                     grid[r + 1][c].setStench(true);
-                if(c-1 > 0)
+                if(c-1 >= 0 && !grid[r][c-1].getPit())
                     grid[r][c - 1].setStench(true);
-                if(c+1 < 10)
+                if(c+1 < 10 && !grid[r][c+1].getPit())
                     grid[r][c + 1].setStench(true);
                 break;
             }
