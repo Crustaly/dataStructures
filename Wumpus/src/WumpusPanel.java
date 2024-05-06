@@ -188,8 +188,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
         if(keyCode == 73 && player.getArrow() && status != DEAD) {//i pressed
             // Shoots upward
             if(player.getArrow()){
-                for(int i = 0; i<player.getRowPosition(); i++){
-                    WumpusSquare square = map.getSquare(i, player.getColPosition());
+                for(int j = 0; j<player.getColPosition(); j++){
+                    WumpusSquare square = map.getSquare(player.getRowPosition(), j);
                     if(square.getWumpus()){
                         square.setWumpus(false);
                         square.setDeadWumpus(true);
@@ -199,6 +199,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
                 player.setArrow(false);
                 msgs.add("Wumpus is still alive!");
             }
+
             // (only works if you have an arrow)
         }
         if(keyCode == 75 && player.getArrow() && status != DEAD) {//k pressed
@@ -220,8 +221,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
         if(keyCode == 74 && player.getArrow() && status != DEAD) {//j pressed
             //Shoots left
             if(player.getArrow()){
-                for(int j = 0; j<player.getColPosition(); j++){
-                    WumpusSquare square = map.getSquare(player.getRowPosition(), j);
+                for(int i = 0; i<player.getRowPosition(); i++){
+                    WumpusSquare square = map.getSquare(i, player.getColPosition());
                     if(square.getWumpus()){
                         square.setWumpus(false);
                         square.setDeadWumpus(true);
