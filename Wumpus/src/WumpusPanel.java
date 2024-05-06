@@ -140,9 +140,17 @@ public class WumpusPanel extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         System.out.println("Pressed: ");
+        if(keyCode == 78) { //n pressed
+            //the game gets reset
+            System.out.println("GAME SHOULD RESET NOW");
+            resetGame();
+            repaint();
+            return;
+        }
         if(status != PLAYING) return;
         if(keyCode == 78) { //n pressed
             //the game gets reset
+            System.out.println("GAME SHOULD RESET NOW");
             resetGame();
             repaint();
             return;
@@ -291,8 +299,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
         map = new WumpusMap();
         player.setColPosition(map.getLadderCol());
         player.setRowPosition(map.getLadderRow());
-        System.out.println(player.getColPosition() + " " + map.getLadderCol());
-        System.out.println(player.getRowPosition() + " " + map.getLadderRow());
+      //  System.out.println(player.getColPosition() + " " + map.getLadderCol());
+      //  System.out.println(player.getRowPosition() + " " + map.getLadderRow());
         WumpusSquare sq = map.getSquare(player.getRowPosition(), player.getColPosition());
         sq.setVisited(true);
         msgs = new ArrayList<>();
