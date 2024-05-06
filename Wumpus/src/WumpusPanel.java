@@ -309,4 +309,8 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
     }
 
+    public void addNotify(){
+        super.addNotify();
+        requestFocus();
+    }
 }
