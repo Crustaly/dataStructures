@@ -137,56 +137,56 @@ public class WumpusPanel extends JPanel implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        char keyPress = e.getKeyChar();
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
         System.out.println("Pressed: ");
         if(status != PLAYING) return;
-        if(keyPress == 'n') {
+        if(keyCode == 78) { //n pressed
             //the game gets reset
             resetGame();
             repaint();
             return;
         }
-        if(player.getRowPosition()>0&&keyPress == 'w') {
+        if(player.getRowPosition() > 0 && keyCode == 87) { //w pressed
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go up by 1, col-1
-            player.setColPosition(player.getRowPosition()-1);
+            player.setRowPosition(player.getRowPosition()-1);
             player.setDirection(WumpusPlayer.NORTH);
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
         }
 
-        if(player.getRowPosition() < 9&&keyPress =='s') {
+        if(player.getRowPosition() < 9 && keyCode == 83) {//s pressed
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go down by 1, col+1
-            player.setColPosition(player.getRowPosition()+1);
+            player.setRowPosition(player.getRowPosition()+1);
             player.setDirection(WumpusPlayer.SOUTH);
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
-        if(keyPress== 'a'&& player.getColPosition() > 0) {
+        if(keyCode == 65 && player.getColPosition() > 0) {//a pressed
             //going left
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
-            //left is row-1
-            player.setRowPosition(player.getColPosition()-1);
+            //left is col-1
+            player.setColPosition(player.getColPosition()-1);
             player.setDirection(WumpusPlayer.WEST);
 
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
-        if(keyPress == 'd'&& player.getColPosition() < 9) {
+        if(keyCode == 68 && player.getColPosition() < 9) {//d pressed
             //going right
 
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
-            //left is row+1
-            player.setRowPosition(player.getColPosition()+1);
+            //left is col+1
+            player.setColPosition(player.getColPosition()+1);
             player.setDirection(WumpusPlayer.EAST);
 
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
-        if(keyPress =='i'&&player.getArrow()) {
+        if(keyCode == 73 && player.getArrow()) {//i pressed
             // Shoots upward
             if(player.getArrow()){
                 for(int i = 0; i<player.getRowPosition(); i++){
@@ -202,7 +202,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             }
             // (only works if you have an arrow)
         }
-        if(keyPress == 'k'&&player.getArrow()) {
+        if(keyCode == 75 && player.getArrow()) {//k pressed
             // Shoots downward
             if(player.getArrow()){
                 for(int i = player.getRowPosition(); i<10; i++){
@@ -218,7 +218,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             }
             // (only works if you have an arrow)
         }
-        if(keyPress=='j' &&player.getArrow()) {
+        if(keyCode == 74 && player.getArrow()) {//j pressed
             //Shoots left
             if(player.getArrow()){
                 for(int j = 0; j<player.getColPosition(); j++){
@@ -235,7 +235,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             //      (only works if you have an arrow)
 
         }
-        if(keyPress == 'l' && player.getArrow()) {
+        if(keyCode == 76 && player.getArrow()) {//L pressed
             // Shoots right
             if(player.getArrow()){
                 for(int j = player.getColPosition(); j<10; j++){
@@ -252,8 +252,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             //(only works if you have an arrow)
         }
 
-
-        if(keyPress == 'p'&&map.getSquare(player.getRowPosition(),player.getColPosition()).getGold()) {
+        if(keyCode == 80 && map.getSquare(player.getRowPosition(),player.getColPosition()).getGold()) {//P pressed
             //
             //Picks up the gold
             //
@@ -265,7 +264,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             boolean gold = false;
             map.getSquare(player.getRowPosition(),player.getColPosition()).setGold(gold);
         }
-        if(player.getGold() && map.getSquare(player.getRowPosition(), player.getColPosition()).getLadder()&&keyPress == 'c' ) {
+        if(player.getGold() && map.getSquare(player.getRowPosition(), player.getColPosition()).getLadder() && keyCode == 67) { //c pressed
 
             //    Climbs the ladder
             //         (only works if you have the gold)
@@ -273,7 +272,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
             msgs.add("YOU WON! PRESS N TO RESTART THE GAME");
         }
-        if(keyPress == '*') {
+        if(keyCode == 56) {
             if(cheatMode){
                 cheatMode = false;
             }
@@ -285,17 +284,6 @@ public class WumpusPanel extends JPanel implements KeyListener {
 
         map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
         repaint();
-    }
-
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
     public void resetGame() {
         player = new WumpusPlayer();
@@ -311,4 +299,14 @@ public class WumpusPanel extends JPanel implements KeyListener {
         msgs.add("You bumped into a ladder");
         cheatMode = false;
     }
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
 }
