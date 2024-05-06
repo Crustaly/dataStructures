@@ -147,46 +147,45 @@ public class WumpusPanel extends JPanel implements KeyListener {
             repaint();
             return;
         }
-        if(player.getRowPosition() > 0 && keyCode == 87) { //w pressed
+        if(player.getColPosition() > 0 && keyCode == 87) { //w pressed
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go up by 1, col-1
-            player.setRowPosition(player.getRowPosition()-1);
+            player.setColPosition(player.getColPosition()-1);
             player.setDirection(WumpusPlayer.NORTH);
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
         }
 
-        if(player.getRowPosition() < 9 && keyCode == 83) {//s pressed
+        if(player.getColPosition() < 9 && keyCode == 83) {//s pressed
             //mark as vis!
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //go down by 1, col+1
-            player.setRowPosition(player.getRowPosition()+1);
+            player.setColPosition(player.getColPosition()+1);
             player.setDirection(WumpusPlayer.SOUTH);
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
-        if(keyCode == 65 && player.getColPosition() > 0) {//a pressed
+        if(keyCode == 65 && player.getRowPosition() > 0) {//a pressed
             //going left
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //left is col-1
-            player.setColPosition(player.getColPosition()-1);
+            player.setRowPosition(player.getRowPosition()-1);
             player.setDirection(WumpusPlayer.WEST);
 
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
-
         }
-        if(keyCode == 68 && player.getColPosition() < 9) {//d pressed
+        if(keyCode == 68 && player.getRowPosition() < 9) {//d pressed
             //going right
 
             map.getSquare(player.getRowPosition(), player.getColPosition()).setVisited(true);
             //left is col+1
-            player.setColPosition(player.getColPosition()+1);
+            player.setRowPosition(player.getRowPosition()+1);
             player.setDirection(WumpusPlayer.EAST);
 
             addToMsgs(map.getSquare(player.getRowPosition(), player.getColPosition()));
 
         }
-        if(keyCode == 73 && player.getArrow()) {//i pressed
+        if(keyCode == 73 && player.getArrow() && status != DEAD) {//i pressed
             // Shoots upward
             if(player.getArrow()){
                 for(int i = 0; i<player.getRowPosition(); i++){
@@ -202,7 +201,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             }
             // (only works if you have an arrow)
         }
-        if(keyCode == 75 && player.getArrow()) {//k pressed
+        if(keyCode == 75 && player.getArrow() && status != DEAD) {//k pressed
             // Shoots downward
             if(player.getArrow()){
                 for(int i = player.getRowPosition(); i<10; i++){
@@ -218,7 +217,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             }
             // (only works if you have an arrow)
         }
-        if(keyCode == 74 && player.getArrow()) {//j pressed
+        if(keyCode == 74 && player.getArrow() && status != DEAD) {//j pressed
             //Shoots left
             if(player.getArrow()){
                 for(int j = 0; j<player.getColPosition(); j++){
@@ -235,7 +234,7 @@ public class WumpusPanel extends JPanel implements KeyListener {
             //      (only works if you have an arrow)
 
         }
-        if(keyCode == 76 && player.getArrow()) {//L pressed
+        if(keyCode == 76 && player.getArrow() && status != DEAD) {//L pressed
             // Shoots right
             if(player.getArrow()){
                 for(int j = player.getColPosition(); j<10; j++){
